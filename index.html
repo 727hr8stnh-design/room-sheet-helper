@@ -4,205 +4,40 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111111">
+<link rel="manifest" href="manifest.webmanifest">
 <title>客室仕込みヘルパー</title>
-
 <style>
-:root{
-  --bg:#f4f4f4;
-  --card:#fff;
-  --text:#111;
-  --muted:#666;
-  --danger:#b00020;
-  --ok:#126a2f;
-  --border:#ddd;
-}
+:root{--bg:#f4f4f4;--card:#fff;--text:#111;--muted:#666;--danger:#b00020;--ok:#126a2f;--border:#ddd}
 *{box-sizing:border-box}
-
-body{
-  margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic",sans-serif;
-  background:var(--bg);
-  color:var(--text);
-}
-
-header{
-  position:sticky;
-  top:0;
-  z-index:20;
-  background:#111;
-  color:#fff;
-  padding:15px 16px;
-  font-size:19px;
-  font-weight:900;
-}
-
-main{
-  max-width:760px;
-  margin:auto;
-  padding:14px 14px 110px;
-}
-
-.card{
-  background:#fff;
-  border-radius:18px;
-  padding:16px;
-  margin-bottom:13px;
-  box-shadow:0 1px 8px #0001;
-}
-
-h1,h2{margin:0 0 12px}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic",sans-serif;background:var(--bg);color:var(--text)}
+header{position:sticky;top:0;z-index:5;background:#111;color:#fff;padding:14px 16px;font-size:18px;font-weight:800}
+main{max-width:760px;margin:auto;padding:14px 14px 100px}
+.card{background:var(--card);border-radius:16px;padding:16px;margin:0 0 12px;box-shadow:0 1px 8px #0001}
+h1,h2,h3{margin:0 0 12px}
 h1{font-size:30px}
-h2{font-size:22px}
-
-button,.btn{
-  appearance:none;
-  border:0;
-  border-radius:12px;
-  padding:14px 15px;
-  font-size:17px;
-  font-weight:900;
-  background:#111;
-  color:#fff;
-}
-
-.secondary{
-  background:#e7e7e7!important;
-  color:#111!important;
-}
-
-.ok{background:#126a2f!important}
-.danger{background:#b00020!important}
-
-input,select,textarea{
-  width:100%;
-  padding:13px;
-  border:1px solid var(--border);
-  border-radius:11px;
-  background:#fff;
-  font-size:18px;
-}
-
-.grid2{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-}
-
-.grid3{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:8px;
-}
-
-.hidden{display:none!important}
+h2{font-size:21px}
+button,.btn{appearance:none;border:0;border-radius:12px;padding:14px 16px;font-size:17px;font-weight:800;background:#111;color:#fff}
+button.secondary{background:#e7e7e7;color:#111}
+.danger{background:var(--danger)!important}
+.ok{background:var(--ok)!important}
+input,select,textarea{width:100%;font-size:18px;padding:13px;border:1px solid var(--border);border-radius:11px;background:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.big{font-size:38px;font-weight:900}
+.mid{font-size:25px;font-weight:900}
 .muted{color:var(--muted)}
-.warn{color:#b00020;font-weight:900}
-
-.stat{
-  background:#f0f0f0;
-  padding:12px 5px;
-  text-align:center;
-  border-radius:13px;
-}
-
-.stat strong{
-  display:block;
-  font-size:30px;
-}
-
-.big{
-  font-size:40px;
-  font-weight:900;
-}
-
-.mid{
-  font-size:27px;
-  font-weight:900;
-}
-
-.note{
-  border:3px solid #d00000;
-  background:#fff1f1;
-  border-radius:13px;
-  padding:13px;
-  font-size:19px;
-  font-weight:900;
-  white-space:pre-wrap;
-}
-
-.roomRow{
-  display:grid;
-  grid-template-columns:76px 1fr auto;
-  gap:8px;
-  align-items:center;
-  padding:11px 0;
-  border-bottom:1px solid #eee;
-}
-
-.pill{
-  display:inline-block;
-  padding:5px 8px;
-  margin:2px;
-  border-radius:999px;
-  background:#eee;
-  font-size:13px;
-  font-weight:800;
-}
-
-.review{
-  display:inline-block;
-  color:#b00020;
-  font-weight:900;
-  font-size:13px;
-}
-
-.photoButton{
-  display:block;
-  text-align:center;
-  cursor:pointer;
-}
-
-#preview,#correctedPreview{
-  display:block;
-  width:100%;
-  max-height:360px;
-  object-fit:contain;
-  margin-top:12px;
-  border-radius:11px;
-  background:#ddd;
-}
-
-.progress{
-  height:10px;
-  margin-top:12px;
-  background:#ddd;
-  border-radius:999px;
-  overflow:hidden;
-}
-
-.progress div{
-  height:100%;
-  width:0%;
-  background:#111;
-}
-
-footer{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:30;
-  padding:10px 12px calc(10px + env(safe-area-inset-bottom));
-  border-top:1px solid #ddd;
-  background:#fff;
-}
-
-footer button{
-  width:100%;
-  max-width:720px;
-  display:block;
-  margin:auto;
-}
+.hidden{display:none!important}
+.note{border:3px solid #d00000;background:#fff1f1;border-radius:12px;padding:12px;font-weight:900;font-size:20px}
+.stat{background:#f0f0f0;padding:12px;border-radius:12px;text-align:center}
+.stat strong{display:block;font-size:28px}
+.roomRow{display:grid;grid-template-columns:85px 1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #eee}
+.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#eee;font-size:13px;font-weight:700;margin:2px}
+.warn{color:#b00020;font-weight:800}
+#ocrProgress{height:8px;background:#eee;border-radius:999px;overflow:hidden;margin-top:8px}
+#ocrProgress>div{height:100%;width:0;background:#111}
+footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:10px calc(10px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));display:flex;gap:8px;justify-content:center}
+footer button{flex:1;max-width:360px}
+small{line-height:1.5}
 </style>
 </head>
 
@@ -214,302 +49,245 @@ footer button{
 
 <section id="home">
 
-<div class="card">
+  <div class="card">
+    <h2>今日のアサイン表</h2>
 
-<h2>今日のアサイン表</h2>
+    <div class="grid2">
+      <label class="btn" for="cameraPhoto" style="display:block;text-align:center;cursor:pointer">
+        カメラで撮影
+      </label>
 
-<div class="grid2">
+      <label class="btn secondary" for="libraryPhoto"
+        style="display:block;text-align:center;cursor:pointer;background:#e7e7e7;color:#111">
+        写真ライブラリ
+      </label>
+    </div>
 
-<label class="btn photoButton" for="cameraPhoto">
-カメラで撮影
-</label>
+    <input id="cameraPhoto" type="file" accept="image/*" capture="environment" class="hidden">
+    <input id="libraryPhoto" type="file" accept="image/*" class="hidden">
 
-<label class="btn secondary photoButton" for="libraryPhoto">
-写真ライブラリ
-</label>
+    <div id="selectedPhotoName" class="muted" style="margin-top:8px">
+      写真未選択
+    </div>
 
-</div>
+    <div style="height:10px"></div>
 
-<input
-  id="cameraPhoto"
-  type="file"
-  accept="image/*"
-  capture="environment"
-  class="hidden"
->
+    <button id="readBtn">写真を読み取る</button>
 
-<input
-  id="libraryPhoto"
-  type="file"
-  accept="image/*"
-  class="hidden"
->
+    <div id="ocrBox" class="hidden">
+      <div id="ocrProgress"><div></div></div>
+      <div id="ocrStatus" class="muted" style="margin-top:8px"></div>
+    </div>
 
-<img id="preview" class="hidden">
-
-<div id="selectedName" class="muted" style="margin-top:8px">
-写真未選択
-</div>
-
-<div style="height:10px"></div>
-
-<button id="readBtn">
-表を自動補正して読み取る
-</button>
-
-<div id="ocrArea" class="hidden">
-
-<div class="progress">
-<div id="progressBar"></div>
-</div>
-
-<div id="ocrStatus" class="muted" style="margin-top:8px"></div>
-
-</div>
-
-</div>
+    <small class="muted">
+      端末上でOCRします。初回は日本語OCRデータの読み込みに時間がかかる場合があります。
+    </small>
+  </div>
 
 
-<div id="correctedCard" class="card hidden">
+  <div class="card">
+    <h2>部屋をすぐ確認</h2>
 
-<h2>自動補正結果</h2>
-
-<img id="correctedPreview">
-
-<div class="muted" style="margin-top:8px">
-この画像から罫線を検出して読み取ります。
-</div>
-
-</div>
+    <div class="grid2">
+      <input id="quickRoom" inputmode="numeric" placeholder="例 1">
+      <button id="quickBtn">表示</button>
+    </div>
+  </div>
 
 
-<div class="card">
+  <div class="card">
+    <h2>本日の集計</h2>
 
-<h2>部屋をすぐ確認</h2>
+    <div class="grid3">
+      <div class="stat">
+        部屋
+        <strong id="roomCount">0</strong>
+      </div>
 
-<div class="grid2">
+      <div class="stat">
+        BOX
+        <strong id="boxCount">0</strong>
+      </div>
 
-<input
-  id="quickRoom"
-  inputmode="numeric"
-  placeholder="例 7"
->
-
-<button id="quickBtn">
-表示
-</button>
-
-</div>
-
-</div>
-
-
-<div class="card">
-
-<h2>本日の集計</h2>
-
-<div class="grid3">
-
-<div class="stat">
-部屋
-<strong id="roomCount">0</strong>
-</div>
-
-<div class="stat">
-BOX
-<strong id="boxCount">0</strong>
-</div>
-
-<div class="stat">
-氷補充
-<strong id="iceCount">0</strong>
-</div>
-
-</div>
-
-</div>
+      <div class="stat">
+        氷補充
+        <strong id="iceCount">0</strong>
+      </div>
+    </div>
+  </div>
 
 
-<div class="card">
+  <div class="card">
+    <h2>読み取り結果</h2>
 
-<h2>読み取り結果</h2>
+    <div id="roomList" class="muted">
+      まだデータがありません。
+    </div>
 
-<div id="roomList" class="muted">
-まだ読み取っていません。
-</div>
+    <div style="height:10px"></div>
 
-</div>
+    <button class="secondary" id="addRoomBtn">
+      部屋を手動追加
+    </button>
+  </div>
 
 </section>
 
 
 <section id="roomView" class="hidden">
 
-<div class="card">
+  <div class="card">
 
-<button class="secondary" id="backBtn">
-← 一覧
-</button>
+    <button class="secondary" id="backBtn">
+      ← 一覧へ
+    </button>
 
-<div style="height:12px"></div>
+    <div style="height:12px"></div>
 
-<h1>
-<span id="vRoom"></span>号室
-</h1>
+    <h1>
+      <span id="vRoom"></span>号室
+    </h1>
 
-<div class="grid3">
+    <div class="grid3">
 
-<div class="stat">
-大人
-<strong id="vAdult">0</strong>
-</div>
+      <div class="stat">
+        大人
+        <strong id="vAdult">0</strong>
+      </div>
 
-<div class="stat">
-子供
-<strong id="vChild">0</strong>
-</div>
+      <div class="stat">
+        子供
+        <strong id="vChild">0</strong>
+      </div>
 
-<div class="stat">
-合計
-<strong id="vTotal">0</strong>
-</div>
+      <div class="stat">
+        合計
+        <strong id="vTotal">0</strong>
+      </div>
 
-</div>
+    </div>
 
-</div>
-
-
-<div class="card">
-
-<div class="muted">
-シーツ
-</div>
-
-<div class="big">
-<span id="vSheets">0</span>セット
-</div>
-
-</div>
+  </div>
 
 
-<div class="card">
+  <div class="card">
+    <div class="muted">シーツ</div>
 
-<div class="muted">
-バッシングBOX
-</div>
-
-<div id="vBox" class="mid">
-不要
-</div>
-
-<div id="vMeal" class="muted" style="margin-top:6px"></div>
-
-</div>
+    <div class="big">
+      <span id="vSheets">0</span>セット
+    </div>
+  </div>
 
 
-<div class="card">
-
-<h2>氷確認</h2>
-
-<div class="grid2">
-
-<button class="ok" id="iceYes">
-氷あり
-</button>
-
-<button class="danger" id="iceNo">
-氷なし
-</button>
-
-</div>
-
-<div id="iceState" class="muted" style="margin-top:10px"></div>
-
-</div>
+  <div class="card">
+    <div class="muted">バッシングBOX</div>
+    <div id="vBox" class="mid">不要</div>
+  </div>
 
 
-<div class="card">
+  <div class="card">
 
-<h2>⚠ 特記事項</h2>
+    <h2>氷確認</h2>
 
-<div id="vNote" class="note">
-特記事項なし
-</div>
+    <div class="grid2">
 
-</div>
+      <button class="ok" id="iceYes">
+        氷あり
+      </button>
+
+      <button class="danger" id="iceNo">
+        氷なし
+      </button>
+
+    </div>
+
+    <div id="iceState" class="muted" style="margin-top:10px"></div>
+
+  </div>
 
 
-<div class="card">
+  <div class="card">
 
-<button class="secondary" id="editBtn">
-この部屋を修正
-</button>
+    <h2>特記事項</h2>
 
-</div>
+    <div id="vNote" class="note">
+      特記事項なし
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <button class="secondary" id="editBtn">
+      この部屋を修正
+    </button>
+
+  </div>
 
 </section>
 
 
 <section id="editView" class="hidden">
 
-<div class="card">
+  <div class="card">
 
-<h2>部屋データ修正</h2>
+    <h2 id="editTitle">
+      部屋データ編集
+    </h2>
 
-<label>客室番号</label>
-<input id="eRoom" readonly>
+    <label>部屋番号</label>
 
-<div style="height:8px"></div>
+    <input id="eRoom" inputmode="numeric">
 
-<div class="grid2">
+    <div style="height:8px"></div>
 
-<div>
-<label>大人</label>
-<input id="eAdult" type="number" min="0">
-</div>
+    <div class="grid2">
 
-<div>
-<label>子供</label>
-<input id="eChild" type="number" min="0">
-</div>
+      <div>
+        <label>大人</label>
+        <input id="eAdult" inputmode="numeric" type="number" min="0">
+      </div>
 
-</div>
+      <div>
+        <label>子供</label>
+        <input id="eChild" inputmode="numeric" type="number" min="0">
+      </div>
 
-<div style="height:8px"></div>
+    </div>
 
-<label>食事</label>
+    <div style="height:8px"></div>
 
-<select id="eMeal">
+    <label>食事区分</label>
 
-<option value="regular">レギュラー</option>
-<option value="premium">プレミアム</option>
-<option value="breakfast">朝食のみ</option>
-<option value="none">素泊まり</option>
-<option value="unknown">不明</option>
+    <select id="eMeal">
+      <option value="dinner">夕食あり</option>
+      <option value="breakfast">朝食のみ</option>
+      <option value="none">素泊まり</option>
+      <option value="unknown">不明</option>
+    </select>
 
-</select>
+    <div style="height:8px"></div>
 
-<div style="height:8px"></div>
+    <label>備考・特記事項</label>
 
-<label>備考・特記事項</label>
+    <textarea id="eNote" rows="4"></textarea>
 
-<textarea id="eNote" rows="5"></textarea>
+    <div style="height:12px"></div>
 
-<div style="height:12px"></div>
+    <div class="grid2">
 
-<div class="grid2">
+      <button class="secondary" id="cancelEdit">
+        キャンセル
+      </button>
 
-<button class="secondary" id="cancelEdit">
-キャンセル
-</button>
+      <button id="saveEdit">
+        保存
+      </button>
 
-<button id="saveEdit">
-保存
-</button>
+    </div>
 
-</div>
-
-</div>
+  </div>
 
 </section>
 
@@ -517,11 +295,9 @@ BOX
 
 
 <footer>
-
-<button id="iceListBtn" class="secondary">
-氷補充リスト
-</button>
-
+  <button id="iceListBtn" class="secondary">
+    氷補充リスト
+  </button>
 </footer>
 
 
@@ -531,1565 +307,676 @@ BOX
 
 const $ = id => document.getElementById(id);
 
-let rooms =
-JSON.parse(
-  localStorage.getItem("roomHelperV4") || "[]"
-);
+let rooms = JSON.parse(localStorage.getItem('rooms') || '[]');
 
-let selectedFile = null;
 let current = null;
+let editingNew = false;
+let selectedPhotoFile = null;
 
 
-/* ==================================================
-基本ルール
-================================================== */
+function setSelectedPhoto(file){
 
-function sheetsFor(total){
+  selectedPhotoFile = file || null;
 
-  total = Number(total) || 0;
-
-  if(total <= 0) return 0;
-
-  return Math.min(total,4);
+  $('selectedPhotoName').textContent =
+    selectedPhotoFile
+      ? '選択中：' + selectedPhotoFile.name
+      : '写真未選択';
 }
 
 
-function boxNeeded(meal){
-
-  return (
-    meal === "regular" ||
-    meal === "premium"
-  );
-}
+$('cameraPhoto').addEventListener('change', e => {
+  setSelectedPhoto(e.target.files?.[0] || null);
+});
 
 
-function mealLabel(meal){
-
-  switch(meal){
-
-    case "regular":
-      return "レギュラー";
-
-    case "premium":
-      return "プレミアム";
-
-    case "breakfast":
-      return "朝食のみ";
-
-    case "none":
-      return "素泊まり";
-
-    default:
-      return "食事不明";
-  }
-}
-
-
-function escapeHtml(text){
-
-  return String(text || "")
-  .replace(/[&<>"]/g,m=>({
-
-    "&":"&amp;",
-    "<":"&lt;",
-    ">":"&gt;",
-    '"':"&quot;"
-
-  }[m]));
-}
+$('libraryPhoto').addEventListener('change', e => {
+  setSelectedPhoto(e.target.files?.[0] || null);
+});
 
 
 function save(){
 
-  localStorage.setItem(
-    "roomHelperV4",
-    JSON.stringify(rooms)
-  );
+  localStorage.setItem('rooms', JSON.stringify(rooms));
 
   renderList();
   updateStats();
 }
 
 
-/* ==================================================
-写真選択
-================================================== */
+function updateStats(){
 
-function selectPhoto(file){
+  $('roomCount').textContent = rooms.length;
 
-  if(!file) return;
+  $('boxCount').textContent =
+    rooms.filter(r => r.meal === 'dinner').length;
 
-  selectedFile = file;
-
-  $("selectedName").textContent =
-    "選択中：" + file.name;
-
-  $("preview").src =
-    URL.createObjectURL(file);
-
-  $("preview").classList.remove("hidden");
+  $('iceCount').textContent =
+    rooms.filter(r => r.ice === 'no').length;
 }
 
 
-$("cameraPhoto").onchange =
-e => selectPhoto(e.target.files[0]);
+function sheetsFor(n){
 
-
-$("libraryPhoto").onchange =
-e => selectPhoto(e.target.files[0]);
-
-
-/* ==================================================
-画像ロード
-================================================== */
-
-function loadImage(file){
-
-  return new Promise((resolve,reject)=>{
-
-    const img =
-      new Image();
-
-    img.onload =
-      ()=>resolve(img);
-
-    img.onerror =
-      reject;
-
-    img.src =
-      URL.createObjectURL(file);
-
-  });
-}
-
-
-/* ==================================================
-用紙の自動トリミング
-
-OpenCVは使わない。
-白い用紙と暗い背景の差を利用する。
-================================================== */
-
-function autoCropPaper(img){
-
-  const maxSide = 1400;
-
-  const scale =
-    Math.min(
-      1,
-      maxSide /
-      Math.max(img.width,img.height)
-    );
-
-  const canvas =
-    document.createElement("canvas");
-
-  canvas.width =
-    Math.round(img.width*scale);
-
-  canvas.height =
-    Math.round(img.height*scale);
-
-  const ctx =
-    canvas.getContext("2d",{
-      willReadFrequently:true
-    });
-
-  ctx.drawImage(
-    img,
-    0,0,
-    canvas.width,
-    canvas.height
+  return Math.min(
+    Math.max(Number(n) || 0, 0),
+    4
   );
+}
 
-  const imageData =
-    ctx.getImageData(
-      0,0,
-      canvas.width,
-      canvas.height
-    );
 
-  const d =
-    imageData.data;
+function esc(s){
 
-  let minX = canvas.width;
-  let maxX = 0;
+  return String(s ?? '').replace(
+    /[&<>"]/g,
+    m => ({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;'
+    }[m])
+  );
+}
 
-  let minY = canvas.height;
-  let maxY = 0;
 
-  /*
-  用紙は背景より明るい前提。
-  画面中央近辺から明るい領域を探す。
-  */
+function renderList(){
 
-  for(
-    let y=0;
-    y<canvas.height;
-    y+=3
-  ){
+  const box = $('roomList');
 
-    for(
-      let x=0;
-      x<canvas.width;
-      x+=3
-    ){
+  if(!rooms.length){
 
-      const i =
-        (y*canvas.width+x)*4;
-
-      const gray =
-        (
-          d[i] +
-          d[i+1] +
-          d[i+2]
-        ) / 3;
-
-      if(gray > 125){
-
-        minX =
-          Math.min(minX,x);
-
-        maxX =
-          Math.max(maxX,x);
-
-        minY =
-          Math.min(minY,y);
-
-        maxY =
-          Math.max(maxY,y);
-      }
-    }
+    box.innerHTML = 'まだデータがありません。';
+    return;
   }
 
-
-  /*
-  検出不能なら元画像
-  */
-
-  if(
-    maxX <= minX ||
-    maxY <= minY
-  ){
-
-    return canvas;
-  }
-
-
-  const padX =
-    Math.round(
-      (maxX-minX)*0.015
-    );
-
-  const padY =
-    Math.round(
-      (maxY-minY)*0.015
-    );
-
-
-  minX =
-    Math.max(
-      0,
-      minX-padX
-    );
-
-  maxX =
-    Math.min(
-      canvas.width,
-      maxX+padX
-    );
-
-  minY =
-    Math.max(
-      0,
-      minY-padY
-    );
-
-  maxY =
-    Math.min(
-      canvas.height,
-      maxY+padY
-    );
-
-
-  const out =
-    document.createElement("canvas");
-
-  out.width =
-    maxX-minX;
-
-  out.height =
-    maxY-minY;
-
-
-  out.getContext("2d")
-  .drawImage(
-
-    canvas,
-
-    minX,
-    minY,
-    out.width,
-    out.height,
-
-    0,
-    0,
-    out.width,
-    out.height
-
-  );
-
-  return out;
-}
-
-
-/* ==================================================
-暗さ
-================================================== */
-
-function darkness(
-  data,
-  width,
-  x,
-  y
-){
-
-  const i =
-    (y*width+x)*4;
-
-  const gray =
-    (
-      data[i] +
-      data[i+1] +
-      data[i+2]
-    ) / 3;
-
-  return 255-gray;
-}
-
-
-/* ==================================================
-ピーク検出
-================================================== */
-
-function findPeaks(
-  values,
-  minimumDistance,
-  thresholdRatio
-){
-
-  const max =
-    Math.max(...values);
-
-  const threshold =
-    max * thresholdRatio;
-
-  let candidates = [];
-
-  for(
-    let i=1;
-    i<values.length-1;
-    i++
-  ){
-
-    if(
-      values[i] >= threshold &&
-      values[i] >= values[i-1] &&
-      values[i] >= values[i+1]
-    ){
-
-      candidates.push({
-        pos:i,
-        value:values[i]
-      });
-    }
-  }
-
-
-  candidates.sort(
-    (a,b)=>b.value-a.value
-  );
-
-
-  let selected = [];
-
-  for(const c of candidates){
-
-    if(
-      selected.every(
-        s =>
-        Math.abs(
-          s.pos-c.pos
-        ) >= minimumDistance
+  rooms.sort(
+    (a,b) =>
+      String(a.room).localeCompare(
+        String(b.room),
+        'ja',
+        {numeric:true}
       )
-    ){
-
-      selected.push(c);
-    }
-  }
-
-
-  selected.sort(
-    (a,b)=>a.pos-b.pos
   );
 
 
-  return selected.map(
-    x=>x.pos
+  box.innerHTML = rooms.map(r => {
+
+    const total =
+      (Number(r.adult) || 0) +
+      (Number(r.child) || 0);
+
+    const warn =
+      r.meal === 'unknown'
+        ? '<span class="warn">食事不明</span>'
+        : '';
+
+    return `
+      <div class="roomRow">
+
+        <strong>
+          ${esc(r.room)}号室
+        </strong>
+
+        <div>
+
+          <span class="pill">
+            ${total}名
+          </span>
+
+          <span class="pill">
+            シーツ${sheetsFor(total)}
+          </span>
+
+          <span class="pill">
+            BOX:${r.meal === 'dinner' ? '1' : '0'}
+          </span>
+
+          ${warn}
+
+          ${
+            r.note
+              ? '<div class="warn">⚠ ' + esc(r.note) + '</div>'
+              : ''
+          }
+
+        </div>
+
+        <button
+          class="secondary"
+          onclick="showRoom('${esc(r.room)}')">
+          表示
+        </button>
+
+      </div>
+    `;
+
+  }).join('');
+}
+
+
+function showSection(id){
+
+  ['home','roomView','editView'].forEach(
+    x => $(x).classList.toggle('hidden', x !== id)
   );
 }
 
 
-/* ==================================================
-罫線検出
+window.showRoom = function(room){
 
-表は14列なので縦線15本。
-ヘッダー下＋32室なので横線33本程度。
-================================================== */
+  current = rooms.find(
+    r => String(r.room) === String(room)
+  );
 
-function detectGrid(canvas){
+  if(!current){
 
-  const ctx =
-    canvas.getContext(
-      "2d",
-      {willReadFrequently:true}
-    );
-
-  const img =
-    ctx.getImageData(
-      0,0,
-      canvas.width,
-      canvas.height
-    );
-
-  const d =
-    img.data;
-
-
-  /*
-  表は用紙の上部約10%〜90%
-  */
-
-  const xStart =
-    Math.round(
-      canvas.width*0.02
-    );
-
-  const xEnd =
-    Math.round(
-      canvas.width*0.97
-    );
-
-  const yStart =
-    Math.round(
-      canvas.height*0.08
-    );
-
-  const yEnd =
-    Math.round(
-      canvas.height*0.91
-    );
-
-
-  /*
-  横線スコア
-  */
-
-  let horizontal =
-    new Array(
-      canvas.height
-    ).fill(0);
-
-
-  for(
-    let y=yStart;
-    y<yEnd;
-    y++
-  ){
-
-    let sum = 0;
-
-    for(
-      let x=xStart;
-      x<xEnd;
-      x+=2
-    ){
-
-      sum +=
-        darkness(
-          d,
-          canvas.width,
-          x,
-          y
-        );
-    }
-
-    horizontal[y] =
-      sum;
+    alert('部屋が見つかりません');
+    return;
   }
 
 
-  /*
-  縦線スコア
-  */
+  const adult =
+    Number(current.adult) || 0;
 
-  let vertical =
-    new Array(
-      canvas.width
-    ).fill(0);
+  const child =
+    Number(current.child) || 0;
 
-
-  for(
-    let x=xStart;
-    x<xEnd;
-    x++
-  ){
-
-    let sum = 0;
-
-    for(
-      let y=yStart;
-      y<yEnd;
-      y+=2
-    ){
-
-      sum +=
-        darkness(
-          d,
-          canvas.width,
-          x,
-          y
-        );
-    }
-
-    vertical[x] =
-      sum;
-  }
+  const total =
+    adult + child;
 
 
-  let hPeaks =
-    findPeaks(
-      horizontal,
-      Math.max(
-        4,
-        canvas.height/100
-      ),
-      0.38
-    );
+  $('vRoom').textContent =
+    current.room;
+
+  $('vAdult').textContent =
+    adult;
+
+  $('vChild').textContent =
+    child;
+
+  $('vTotal').textContent =
+    total;
+
+  $('vSheets').textContent =
+    sheetsFor(total);
 
 
-  let vPeaks =
-    findPeaks(
-      vertical,
-      Math.max(
-        4,
-        canvas.width/80
-      ),
-      0.40
-    );
+  $('vBox').textContent =
+    current.meal === 'dinner'
+      ? '1個 必要'
+      : '不要';
 
 
-  /*
-  横線は表部分だけに絞る。
-  最も33本に近い連続区間を使う。
-  */
-
-  if(hPeaks.length > 40){
-
-    hPeaks =
-      hPeaks.slice(
-        0,
-        40
-      );
-  }
+  $('vBox').className =
+    current.meal === 'dinner'
+      ? 'mid warn'
+      : 'mid';
 
 
-  /*
-  縦線は15本必要。
-  強すぎる余分な線があるため
-  表幅の大きなまとまりを使用。
-  */
+  $('vNote').textContent =
+    current.note?.trim() ||
+    '特記事項なし';
 
-  return {
-    hPeaks,
-    vPeaks
+
+  $('iceState').textContent =
+    current.ice === 'yes'
+      ? '確認済み：氷あり'
+      :
+    current.ice === 'no'
+      ? '要補充：氷なし'
+      :
+      '未確認';
+
+
+  showSection('roomView');
+}
+
+
+function openEdit(r = null){
+
+  editingNew = !r;
+
+  $('editTitle').textContent =
+    r
+      ? '部屋データ編集'
+      : '部屋を追加';
+
+
+  $('eRoom').value =
+    r?.room || '';
+
+
+  $('eAdult').value =
+    r?.adult ?? 0;
+
+
+  $('eChild').value =
+    r?.child ?? 0;
+
+
+  $('eMeal').value =
+    r?.meal || 'unknown';
+
+
+  $('eNote').value =
+    r?.note || '';
+
+
+  showSection('editView');
+}
+
+
+$('backBtn').onclick = () => {
+  showSection('home');
+};
+
+
+$('addRoomBtn').onclick = () => {
+  openEdit();
+};
+
+
+$('editBtn').onclick = () => {
+  openEdit(current);
+};
+
+
+$('cancelEdit').onclick = () => {
+
+  current
+    ? showRoom(current.room)
+    : showSection('home');
+};
+
+
+$('saveEdit').onclick = () => {
+
+  const obj = {
+
+    room:
+      $('eRoom').value.trim(),
+
+    adult:
+      Number($('eAdult').value) || 0,
+
+    child:
+      Number($('eChild').value) || 0,
+
+    meal:
+      $('eMeal').value,
+
+    note:
+      $('eNote').value.trim(),
+
+    ice:
+      current?.ice || null
   };
-}
 
 
-/* ==================================================
-横線を32室用に補正
+  if(!obj.room){
 
-検出が多少足りなくても、
-一番上・下から等間隔で補完する。
-================================================== */
-
-function normalizeRows(
-  peaks,
-  canvasHeight
-){
-
-  peaks =
-    peaks.filter(
-      y =>
-      y >
-      canvasHeight*0.08 &&
-      y <
-      canvasHeight*0.93
-    );
-
-
-  /*
-  近すぎる線を統合
-  */
-
-  let merged = [];
-
-  for(const p of peaks){
-
-    const last =
-      merged[
-        merged.length-1
-      ];
-
-    if(
-      last !== undefined &&
-      Math.abs(
-        p-last
-      ) < 5
-    ){
-
-      merged[
-        merged.length-1
-      ] =
-      Math.round(
-        (last+p)/2
-      );
-
-    }else{
-
-      merged.push(p);
-    }
+    alert('部屋番号を入力してください');
+    return;
   }
 
 
-  /*
-  33本以上ある場合
-  連続間隔が最も安定する33本を探す
-  */
+  if(editingNew){
 
-  if(merged.length >= 33){
+    rooms.push(obj);
 
-    let best = null;
-    let bestScore = Infinity;
+  }else{
 
-    for(
-      let start=0;
-      start<=merged.length-33;
-      start++
-    ){
+    const i =
+      rooms.indexOf(current);
 
-      const group =
-        merged.slice(
-          start,
-          start+33
-        );
-
-      const gaps = [];
-
-      for(
-        let i=1;
-        i<group.length;
-        i++
-      ){
-
-        gaps.push(
-          group[i]-group[i-1]
-        );
-      }
-
-      const avg =
-        gaps.reduce(
-          (a,b)=>a+b,
-          0
-        ) /
-        gaps.length;
-
-      const variance =
-        gaps.reduce(
-          (a,b)=>
-          a +
-          Math.pow(
-            b-avg,
-            2
-          ),
-          0
-        );
-
-      if(
-        variance <
-        bestScore
-      ){
-
-        bestScore =
-          variance;
-
-        best =
-          group;
-      }
+    if(i >= 0){
+      rooms[i] = obj;
     }
 
-    if(best)
-      return best;
+    current = obj;
   }
 
 
-  /*
-  フォールバック。
-  今回の帳票位置を利用。
-  */
-
-  const top =
-    canvasHeight*0.105;
-
-  const bottom =
-    canvasHeight*0.895;
-
-  const rows = [];
-
-  for(
-    let i=0;
-    i<=32;
-    i++
-  ){
-
-    rows.push(
-      Math.round(
-        top +
-        (
-          bottom-top
-        ) *
-        i/32
-      )
-    );
-  }
-
-  return rows;
-}
+  save();
+  showRoom(obj.room);
+};
 
 
-/* ==================================================
-縦線補正
+$('quickBtn').onclick = () => {
 
-15本見つからない場合は
-サンプル比率を使用。
-================================================== */
-
-function normalizeColumns(
-  peaks,
-  width
-){
-
-  peaks =
-    peaks.filter(
-      x =>
-      x >
-      width*0.02 &&
-      x <
-      width*0.98
-    );
+  showRoom(
+    $('quickRoom').value.trim()
+  );
+};
 
 
-  if(peaks.length >= 15){
+$('quickRoom').addEventListener(
+  'keydown',
+  e => {
 
-    /*
-    端から15本選ぶのではなく
-    表幅が最大になる15本を利用
-    */
-
-    let best = null;
-    let bestWidth = 0;
-
-    for(
-      let i=0;
-      i<=peaks.length-15;
-      i++
-    ){
-
-      const group =
-        peaks.slice(
-          i,
-          i+15
-        );
-
-      const w =
-        group[14]-
-        group[0];
-
-      if(w > bestWidth){
-
-        bestWidth = w;
-        best = group;
-      }
+    if(e.key === 'Enter'){
+      $('quickBtn').click();
     }
 
-    if(best)
-      return best;
   }
+);
 
 
-  /*
-  今回の帳票の列比率
-  */
+$('iceYes').onclick = () => {
 
-  const ratios = [
-    0.024,
-    0.104,
-    0.151,
-    0.195,
-    0.319,
-    0.359,
-    0.417,
-    0.461,
-    0.505,
-    0.548,
-    0.590,
-    0.633,
-    0.676,
-    0.930,
-    0.975
-  ];
+  current.ice = 'yes';
 
-  return ratios.map(
-    r =>
-    Math.round(
-      width*r
-    )
-  );
-}
+  save();
+
+  showRoom(current.room);
+};
 
 
-/* ==================================================
-セル切り出し
-================================================== */
+$('iceNo').onclick = () => {
 
-function cropCell(
-  source,
-  x1,
-  y1,
-  x2,
-  y2,
-  scale=4
-){
+  current.ice = 'no';
 
-  /*
-  罫線を避ける
-  */
+  save();
 
-  const marginX =
-    Math.max(
-      1,
-      (x2-x1)*0.10
-    );
+  showRoom(current.room);
+};
 
-  const marginY =
-    Math.max(
-      1,
-      (y2-y1)*0.10
+
+$('iceListBtn').onclick = () => {
+
+  const list =
+    rooms.filter(
+      r => r.ice === 'no'
     );
 
 
-  x1 += marginX;
-  x2 -= marginX;
-
-  y1 += marginY;
-  y2 -= marginY;
-
-
-  const w =
-    Math.max(
-      1,
-      x2-x1
-    );
-
-  const h =
-    Math.max(
-      1,
-      y2-y1
-    );
-
-
-  const canvas =
-    document.createElement(
-      "canvas"
-    );
-
-  canvas.width =
-    Math.round(
-      w*scale
-    );
-
-  canvas.height =
-    Math.round(
-      h*scale
-    );
-
-
-  const ctx =
-    canvas.getContext(
-      "2d",
-      {willReadFrequently:true}
-    );
-
-
-  ctx.drawImage(
-    source,
-
-    x1,
-    y1,
-    w,
-    h,
-
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
-
-
-  /*
-  OCR向け処理
-  */
-
-  const img =
-    ctx.getImageData(
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-
-  const d =
-    img.data;
-
-
-  for(
-    let i=0;
-    i<d.length;
-    i+=4
-  ){
-
-    const gray =
-      0.299*d[i] +
-      0.587*d[i+1] +
-      0.114*d[i+2];
-
-
-    /*
-    白背景・黒文字へ
-    */
-
-    const v =
-      gray > 175
-      ? 255
-      :
-      gray < 110
-      ? 0
-      :
-      gray;
-
-
-    d[i] =
-      d[i+1] =
-      d[i+2] =
-      v;
-  }
-
-
-  ctx.putImageData(
-    img,
-    0,
-    0
-  );
-
-
-  return canvas;
-}
-
-
-/* ==================================================
-数字セル
-================================================== */
-
-async function readDigit(
-  worker,
-  canvas
-){
-
-  const result =
-    await worker.recognize(
-      canvas
-    );
-
-  const text =
-    result.data.text
-    .replace(
-      /[^0-9]/g,
-      ""
-    );
-
-
-  if(!text)
-    return null;
-
-
-  const n =
-    Number(
-      text.charAt(0)
-    );
-
-
-  if(
-    !Number.isInteger(n) ||
-    n<0 ||
-    n>9
-  ){
-
-    return null;
-  }
-
-
-  return n;
-}
-
-
-/* ==================================================
-食事
-================================================== */
-
-async function readMeal(
-  worker,
-  canvas
-){
-
-  const result =
-    await worker.recognize(
-      canvas
-    );
-
-
-  const text =
-    result.data.text
-    .replace(
-      /\s+/g,
-      ""
-    );
-
-
-  if(
-    /朝食/.test(text)
-  ){
-
-    return "breakfast";
-  }
-
-
-  if(
-    /素泊|食事なし/.test(text)
-  ){
-
-    return "none";
-  }
-
-
-  if(
-    /プレミアム/.test(text)
-  ){
-
-    return "premium";
-  }
-
-
-  if(
-    /レギュラー/.test(text)
-  ){
-
-    return "regular";
-  }
-
-
-  return "unknown";
-}
-
-
-/* ==================================================
-備考
-================================================== */
-
-async function readNote(
-  worker,
-  canvas
-){
-
-  const result =
-    await worker.recognize(
-      canvas
-    );
-
-
-  let text =
-    result.data.text
-    .replace(
-      /\n+/g,
-      " "
-    )
-    .replace(
-      /\s+/g,
-      " "
-    )
-    .trim();
-
-
-  if(
-    text.length < 3
-  ){
-
-    return "";
-  }
-
-
-  return text;
-}
-
-
-/* ==================================================
-メインOCR
-================================================== */
-
-async function readAssignment(){
-
-  if(!selectedFile){
+  if(!list.length){
 
     alert(
-      "先に写真を選択してください"
+      '氷補充が必要な部屋はありません'
     );
 
     return;
   }
 
 
-  $("ocrArea")
-  .classList
-  .remove(
-    "hidden"
+  alert(
+    '氷補充：' +
+    list.length +
+    '室\n\n' +
+    list
+      .map(r => r.room + '号室')
+      .join('\n')
   );
+};
 
 
-  $("progressBar")
-  .style.width =
-    "0%";
+
+/*
+==================================================
+OCR解析
+==================================================
+
+表の列
+
+番号
+前日
+当日
+名前
+泊数
+食事
+男
+女
+子A
+子B
+子C
+子D
+
+大人 ＝ 男 ＋ 女
+子供 ＝ 子A ＋ 子B ＋ 子C ＋ 子D
+
+泊数は人数に含めない
+==================================================
+*/
 
 
-  $("ocrStatus")
-  .textContent =
-    "写真を補正しています…";
+function parseOCR(text){
+
+  const lines =
+    text
+      .split(/\n+/)
+      .map(
+        s =>
+          s
+            .replace(/[|｜]/g,' ')
+            .replace(/\s+/g,' ')
+            .trim()
+      )
+      .filter(Boolean);
 
 
-  let digitWorker;
-  let jpWorker;
+  const out = [];
 
 
-  try{
+  const mealRules = [
 
-    const img =
-      await loadImage(
-        selectedFile
+    {
+      re:/朝食のみ|朝のみ|朝食/,
+      value:'breakfast'
+    },
+
+    {
+      re:/素泊まり|素泊り|素泊|食事なし/,
+      value:'none'
+    },
+
+    {
+      re:/レギュラー|レギユラー|レギュラ一|プレミアム|夕食|2食|二食/,
+      value:'dinner'
+    }
+
+  ];
+
+
+  for(const line of lines){
+
+
+    /*
+    1号室〜32号室
+    */
+
+    const roomMatch =
+      line.match(
+        /(?:^|\s)([1-9]|[12]\d|3[0-2])(?:\s|$)/
+      );
+
+
+    if(!roomMatch){
+      continue;
+    }
+
+
+    const room =
+      roomMatch[1];
+
+
+    /*
+    食事欄を探す
+    */
+
+    let meal =
+      'unknown';
+
+    let mealEnd =
+      -1;
+
+
+    for(const rule of mealRules){
+
+      const m =
+        line.match(rule.re);
+
+      if(m){
+
+        meal =
+          rule.value;
+
+        mealEnd =
+          (m.index || 0) +
+          m[0].length;
+
+        break;
+      }
+    }
+
+
+    /*
+    食事欄より後ろだけを見る。
+
+    これによって
+    「泊数 1」を
+    人数として数えない。
+    */
+
+    let source;
+
+
+    if(mealEnd >= 0){
+
+      source =
+        line.slice(mealEnd);
+
+    }else{
+
+      source =
+        line.slice(
+          (roomMatch.index || 0) +
+          roomMatch[0].length
+        );
+    }
+
+
+    /*
+    人数6列
+
+    男
+    女
+    子A
+    子B
+    子C
+    子D
+    */
+
+    let nums =
+      [
+        ...source.matchAll(
+          /(?:^|\s)([0-9])(?=\s|$)/g
+        )
+      ].map(
+        x => Number(x[1])
       );
 
 
     /*
-    Canvasだけで用紙を補正
+    食事欄が認識できなかった場合は
+    行の後ろ側6個を人数候補にする。
+
+    泊数が前側にあるため、
+    誤認しにくくする。
     */
 
-    const corrected =
-      autoCropPaper(
-        img
-      );
+    if(mealEnd < 0 && nums.length >= 6){
+
+      nums =
+        nums.slice(-6);
+
+    }else{
+
+      nums =
+        nums.slice(0,6);
+    }
 
 
-    $("correctedPreview")
-    .src =
-      corrected.toDataURL(
-        "image/jpeg",
-        0.92
-      );
+    while(nums.length < 6){
+
+      nums.push(0);
+    }
 
 
-    $("correctedCard")
-    .classList
-    .remove(
-      "hidden"
-    );
+    const male =
+      nums[0] || 0;
+
+    const female =
+      nums[1] || 0;
+
+
+    const childA =
+      nums[2] || 0;
+
+    const childB =
+      nums[3] || 0;
+
+    const childC =
+      nums[4] || 0;
+
+    const childD =
+      nums[5] || 0;
+
+
+    const adult =
+      male +
+      female;
+
+
+    const child =
+      childA +
+      childB +
+      childC +
+      childD;
 
 
     /*
-    罫線自動検出
+    備考
     */
 
-    $("ocrStatus")
-    .textContent =
-      "表の罫線を検出しています…";
+    const noteTokens = [
+
+      'アレルギー',
+      '記念',
+      '誕生日',
+      '連泊',
+      '車椅子',
+      'ベッド',
+      '幼児',
+      '離乳',
+      '前ホテル',
+      '翌日ホテル',
+      '肉鍋希望'
+
+    ];
 
 
-    const grid =
-      detectGrid(
-        corrected
-      );
-
-
-    const rows =
-      normalizeRows(
-        grid.hPeaks,
-        corrected.height
-      );
-
-
-    const cols =
-      normalizeColumns(
-        grid.vPeaks,
-        corrected.width
-      );
+    const note =
+      noteTokens.some(
+        k => line.includes(k)
+      )
+        ? line
+        : '';
 
 
     /*
-    列番号
-
-    0 番号
-    1 前日
-    2 当日
-    3 名前
-    4 泊数
-    5 食事
-    6 男
-    7 女
-    8 子A
-    9 子B
-    10 子C
-    11 子D
-    12 備考
-    13 リピ
+    同じ部屋番号は1回だけ登録
     */
 
-
-    digitWorker =
-      await Tesseract
-      .createWorker(
-        "eng",
-        1
-      );
-
-
-    await digitWorker
-    .setParameters({
-
-      tessedit_char_whitelist:
-        "0123456789",
-
-      tessedit_pageseg_mode:
-        "10"
-
-    });
-
-
-    jpWorker =
-      await Tesseract
-      .createWorker(
-        "jpn+eng",
-        1
-      );
-
-
-    const newRooms = [];
-
-
-    for(
-      let room=1;
-      room<=32;
-      room++
+    if(
+      !out.some(
+        r => r.room === room
+      )
     ){
 
-      const pct =
-        Math.round(
-          (
-            room-1
-          ) /
-          32 *
-          100
-        );
+      out.push({
 
-
-      $("progressBar")
-      .style.width =
-        pct + "%";
-
-
-      $("ocrStatus")
-      .textContent =
-        room +
-        "号室を読み取り中…";
-
-
-      const y1 =
-        rows[
-          room-1
-        ];
-
-
-      const y2 =
-        rows[
-          room
-        ];
-
-
-      /*
-      男
-      */
-
-      const male =
-        await readDigit(
-
-          digitWorker,
-
-          cropCell(
-            corrected,
-            cols[6],
-            y1,
-            cols[7],
-            y2,
-            5
-          )
-
-        );
-
-
-      /*
-      女
-      */
-
-      const female =
-        await readDigit(
-
-          digitWorker,
-
-          cropCell(
-            corrected,
-            cols[7],
-            y1,
-            cols[8],
-            y2,
-            5
-          )
-
-        );
-
-
-      /*
-      子A
-      */
-
-      const childA =
-        await readDigit(
-
-          digitWorker,
-
-          cropCell(
-            corrected,
-            cols[8],
-            y1,
-            cols[9],
-            y2,
-            5
-          )
-
-        );
-
-
-      /*
-      子B
-      */
-
-      const childB =
-        await readDigit(
-
-          digitWorker,
-
-          cropCell(
-            corrected,
-            cols[9],
-            y1,
-            cols[10],
-            y2,
-            5
-          )
-
-        );
-
-
-      /*
-      子C
-      */
-
-      const childC =
-        await readDigit(
-
-          digitWorker,
-
-          cropCell(
-            corrected,
-            cols[10],
-            y1,
-            cols[11],
-            y2,
-            5
-          )
-
-        );
-
-
-      /*
-      子D
-      */
-
-      const childD =
-        await readDigit(
-
-          digitWorker,
-
-          cropCell(
-            corrected,
-            cols[11],
-            y1,
-            cols[12],
-            y2,
-            5
-          )
-
-        );
-
-
-      /*
-      nullは0として計算するが
-      要確認扱いにする
-      */
-
-      const values = [
-        male,
-        female,
-        childA,
-        childB,
-        childC,
-        childD
-      ];
-
-
-      const reviewCounts =
-        values.some(
-          v =>
-          v === null
-        );
-
-
-      const safe =
-        values.map(
-          v =>
-          v === null
-          ? 0
-          : v
-        );
-
-
-      const adult =
-        safe[0] +
-        safe[1];
-
-
-      const child =
-        safe[2] +
-        safe[3] +
-        safe[4] +
-        safe[5];
-
-
-      /*
-      食事
-      */
-
-      const meal =
-        await readMeal(
-
-          jpWorker,
-
-          cropCell(
-            corrected,
-            cols[5],
-            y1,
-            cols[6],
-            y2,
-            3
-          )
-
-        );
-
-
-      /*
-      備考
-      */
-
-      const note =
-        await readNote(
-
-          jpWorker,
-
-          cropCell(
-            corrected,
-            cols[12],
-            y1,
-            cols[13],
-            y2,
-            2
-          )
-
-        );
-
-
-      const review =
-        reviewCounts ||
-        meal ===
-        "unknown";
-
-
-      newRooms.push({
-
-        room:
-          String(room),
-
-        male:
-          safe[0],
-
-        female:
-          safe[1],
-
-        childA:
-          safe[2],
-
-        childB:
-          safe[3],
-
-        childC:
-          safe[4],
-
-        childD:
-          safe[5],
+        room,
 
         adult,
 
@@ -2099,618 +986,196 @@ async function readAssignment(){
 
         note,
 
-        ice:null,
-
-        review
+        ice:null
 
       });
 
     }
 
-
-    await digitWorker
-    .terminate();
+  }
 
 
-    await jpWorker
-    .terminate();
+  return out;
+}
+
+
+
+$('readBtn').onclick = async () => {
+
+
+  const f =
+    selectedPhotoFile;
+
+
+  if(!f){
+
+    alert(
+      '先に「カメラで撮影」または「写真ライブラリ」から写真を選んでください'
+    );
+
+    return;
+  }
+
+
+  $('ocrBox').classList.remove(
+    'hidden'
+  );
+
+
+  $('ocrStatus').textContent =
+    'OCRを開始しています…';
+
+
+  try{
+
+
+    const worker =
+      await Tesseract.createWorker(
+        'jpn+eng',
+        1,
+        {
+
+          logger:m => {
+
+
+            if(
+              m.status ===
+              'recognizing text'
+            ){
+
+              const percent =
+                Math.round(
+                  (m.progress || 0) * 100
+                );
+
+
+              $('ocrProgress')
+                .firstElementChild
+                .style.width =
+                  percent + '%';
+
+
+              $('ocrStatus')
+                .textContent =
+                  '読み取り中 ' +
+                  percent +
+                  '%';
+
+
+            }else{
+
+
+              $('ocrStatus')
+                .textContent =
+                  m.status ||
+                  '処理中…';
+
+            }
+
+          }
+
+        }
+      );
+
+
+    const ret =
+      await worker.recognize(f);
+
+
+    await worker.terminate();
+
+
+    const parsed =
+      parseOCR(
+        ret.data.text
+      );
+
+
+    if(!parsed.length){
+
+      $('ocrStatus')
+        .textContent =
+          '自動抽出できませんでした。部屋を手動追加してください。';
+
+
+      alert(
+        '表の文字は読み取りましたが、部屋データを自動抽出できませんでした。写真を明るく正面から撮り直すか、手動追加してください。'
+      );
+
+
+      return;
+    }
+
+
+    if(
+      rooms.length &&
+      !confirm(
+        '現在のデータを、新しく読み取った表で置き換えますか？'
+      )
+    ){
+
+      return;
+    }
 
 
     rooms =
-      newRooms;
+      parsed;
 
 
     save();
 
 
-    $("progressBar")
-    .style.width =
-      "100%";
-
-
-    const reviews =
-      rooms.filter(
-        r =>
-        r.review
-      ).length;
-
-
-    $("ocrStatus")
-    .textContent =
-      "32室読み取り完了／要確認 "
-      +
-      reviews
-      +
-      "室";
+    $('ocrStatus')
+      .textContent =
+        parsed.length +
+        '室を抽出しました。';
 
 
     alert(
-
-      "読み取り完了\n\n"
-      +
-      "32室\n"
-      +
-      "要確認："
-      +
-      reviews
-      +
-      "室"
-
+      parsed.length +
+      '室を読み取りました。\n\n' +
+      '大人＝男＋女\n' +
+      '子供＝子A＋子B＋子C＋子D\n\n' +
+      'として自動計算しました。'
     );
 
 
-  }catch(err){
-
-    console.error(err);
+  }catch(e){
 
 
-    if(
-      digitWorker
-    ){
-
-      try{
-        await digitWorker
-        .terminate();
-      }catch(e){}
-    }
+    console.error(e);
 
 
-    if(
-      jpWorker
-    ){
-
-      try{
-        await jpWorker
-        .terminate();
-      }catch(e){}
-    }
-
-
-    $("ocrStatus")
-    .textContent =
-      "読み取りに失敗しました";
+    $('ocrStatus')
+      .textContent =
+        'OCRに失敗しました';
 
 
     alert(
-
-      "読み取りに失敗しました。\n"
-      +
-      "写真に用紙全体が入っているか確認してください。"
-
+      'OCRに失敗しました。通信状態を確認するか、手動入力を利用してください。'
     );
-  }
-}
 
-
-$("readBtn")
-.onclick =
-readAssignment;
-
-
-/* ==================================================
-一覧
-================================================== */
-
-function renderList(){
-
-  const box =
-    $("roomList");
-
-
-  if(
-    !rooms.length
-  ){
-
-    box.innerHTML =
-      "まだ読み取っていません。";
-
-    return;
   }
 
-
-  rooms.sort(
-    (a,b)=>
-    Number(a.room) -
-    Number(b.room)
-  );
-
-
-  box.innerHTML =
-    rooms.map(r=>{
-
-
-      const total =
-        Number(
-          r.adult || 0
-        )
-        +
-        Number(
-          r.child || 0
-        );
-
-
-      return `
-
-      <div class="roomRow">
-
-        <strong>
-        ${r.room}号室
-        </strong>
-
-        <div>
-
-          <span class="pill">
-          大人${r.adult}名
-          </span>
-
-          <span class="pill">
-          子供${r.child}名
-          </span>
-
-          <span class="pill">
-          シーツ${sheetsFor(total)}
-          </span>
-
-          <span class="pill">
-          BOX:${boxNeeded(r.meal)?1:0}
-          </span>
-
-          ${
-            r.review
-            ?
-            '<span class="review">⚠ 要確認</span>'
-            :
-            ''
-          }
-
-          ${
-            r.note
-            ?
-            '<div class="warn">⚠ '
-            +
-            escapeHtml(r.note)
-            +
-            '</div>'
-            :
-            ''
-          }
-
-        </div>
-
-        <button
-        class="secondary"
-        onclick="showRoom('${r.room}')">
-        表示
-        </button>
-
-      </div>
-
-      `;
-
-    }).join("");
-}
-
-
-/* ==================================================
-集計
-================================================== */
-
-function updateStats(){
-
-  $("roomCount")
-  .textContent =
-    rooms.length;
-
-
-  $("boxCount")
-  .textContent =
-    rooms.filter(
-      r =>
-      boxNeeded(
-        r.meal
-      )
-    ).length;
-
-
-  $("iceCount")
-  .textContent =
-    rooms.filter(
-      r =>
-      r.ice === "no"
-    ).length;
-}
-
-
-/* ==================================================
-画面切替
-================================================== */
-
-function showSection(id){
-
-  [
-    "home",
-    "roomView",
-    "editView"
-  ]
-  .forEach(
-    name => {
-
-      $(name)
-      .classList
-      .toggle(
-        "hidden",
-        name !== id
-      );
-
-    }
-  );
-}
-
-
-/* ==================================================
-部屋表示
-================================================== */
-
-window.showRoom =
-function(room){
-
-  current =
-    rooms.find(
-      r =>
-      String(r.room)
-      ===
-      String(room)
-    );
-
-
-  if(!current){
-
-    alert(
-      "部屋が見つかりません"
-    );
-
-    return;
-  }
-
-
-  const total =
-    Number(
-      current.adult || 0
-    )
-    +
-    Number(
-      current.child || 0
-    );
-
-
-  $("vRoom")
-  .textContent =
-    current.room;
-
-
-  $("vAdult")
-  .textContent =
-    current.adult;
-
-
-  $("vChild")
-  .textContent =
-    current.child;
-
-
-  $("vTotal")
-  .textContent =
-    total;
-
-
-  $("vSheets")
-  .textContent =
-    sheetsFor(
-      total
-    );
-
-
-  $("vBox")
-  .textContent =
-    boxNeeded(
-      current.meal
-    )
-    ?
-    "1個 必要"
-    :
-    current.meal ===
-    "unknown"
-    ?
-    "要確認"
-    :
-    "不要";
-
-
-  $("vMeal")
-  .textContent =
-    "食事："
-    +
-    mealLabel(
-      current.meal
-    );
-
-
-  $("vNote")
-  .textContent =
-    current.note
-    ||
-    "特記事項なし";
-
-
-  $("iceState")
-  .textContent =
-    current.ice ===
-    "yes"
-    ?
-    "確認済み：氷あり"
-    :
-    current.ice ===
-    "no"
-    ?
-    "要補充：氷なし"
-    :
-    "未確認";
-
-
-  showSection(
-    "roomView"
-  );
 };
 
-
-/* ==================================================
-部屋検索
-================================================== */
-
-$("quickBtn")
-.onclick =
-()=>{
-
-  showRoom(
-    $("quickRoom")
-    .value
-    .trim()
-  );
-
-};
-
-
-$("quickRoom")
-.addEventListener(
-  "keydown",
-  e => {
-
-    if(
-      e.key === "Enter"
-    ){
-
-      $("quickBtn")
-      .click();
-    }
-
-  }
-);
-
-
-/* ==================================================
-戻る
-================================================== */
-
-$("backBtn")
-.onclick =
-()=>showSection(
-  "home"
-);
-
-
-/* ==================================================
-氷
-================================================== */
-
-$("iceYes")
-.onclick =
-()=>{
-
-  if(!current)
-    return;
-
-  current.ice =
-    "yes";
-
-  save();
-
-  showRoom(
-    current.room
-  );
-};
-
-
-$("iceNo")
-.onclick =
-()=>{
-
-  if(!current)
-    return;
-
-  current.ice =
-    "no";
-
-  save();
-
-  showRoom(
-    current.room
-  );
-};
-
-
-/* ==================================================
-氷補充リスト
-================================================== */
-
-$("iceListBtn")
-.onclick =
-()=>{
-
-  const list =
-    rooms.filter(
-      r =>
-      r.ice === "no"
-    );
-
-
-  if(
-    !list.length
-  ){
-
-    alert(
-      "氷補充が必要な部屋はありません"
-    );
-
-    return;
-  }
-
-
-  alert(
-
-    "氷補充："
-    +
-    list.length
-    +
-    "室\n\n"
-    +
-    list.map(
-      r =>
-      r.room +
-      "号室"
-    ).join("\n")
-
-  );
-};
-
-
-/* ==================================================
-手動修正
-================================================== */
-
-$("editBtn")
-.onclick =
-()=>{
-
-  if(!current)
-    return;
-
-
-  $("eRoom")
-  .value =
-    current.room;
-
-
-  $("eAdult")
-  .value =
-    current.adult;
-
-
-  $("eChild")
-  .value =
-    current.child;
-
-
-  $("eMeal")
-  .value =
-    current.meal;
-
-
-  $("eNote")
-  .value =
-    current.note || "";
-
-
-  showSection(
-    "editView"
-  );
-};
-
-
-$("cancelEdit")
-.onclick =
-()=>showRoom(
-  current.room
-);
-
-
-$("saveEdit")
-.onclick =
-()=>{
-
-  current.adult =
-    Number(
-      $("eAdult")
-      .value
-    ) || 0;
-
-
-  current.child =
-    Number(
-      $("eChild")
-      .value
-    ) || 0;
-
-
-  current.meal =
-    $("eMeal")
-    .value;
-
-
-  current.note =
-    $("eNote")
-    .value
-    .trim();
-
-
-  current.review =
-    false;
-
-
-  save();
-
-
-  showRoom(
-    current.room
-  );
-};
-
-
-/* ==================================================
-起動
-================================================== */
 
 renderList();
+
 updateStats();
+
+
+if(
+  'serviceWorker' in navigator &&
+  location.protocol.startsWith('http')
+){
+
+  navigator
+    .serviceWorker
+    .register('./sw.js')
+    .catch(()=>{});
+
+}
 
 </script>
 
