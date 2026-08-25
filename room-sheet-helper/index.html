@@ -36,7 +36,13 @@ small{line-height:1.5}
 <section id="home">
   <div class="card">
     <h2>今日のアサイン表</h2>
-    <input id="photo" type="file" accept="image/*" capture="environment">
+    <div class="grid2">
+      <label class="btn" for="cameraPhoto" style="display:block;text-align:center;cursor:pointer">カメラで撮影</label>
+      <label class="btn secondary" for="libraryPhoto" style="display:block;text-align:center;cursor:pointer;background:#e7e7e7;color:#111">写真ライブラリ</label>
+    </div>
+    <input id="cameraPhoto" type="file" accept="image/*" capture="environment" class="hidden">
+    <input id="libraryPhoto" type="file" accept="image/*" class="hidden">
+    <div id="selectedPhotoName" class="muted" style="margin-top:8px">写真未選択</div>
     <div style="height:10px"></div>
     <button id="readBtn">写真を読み取る</button>
     <div id="ocrBox" class="hidden">
@@ -146,6 +152,14 @@ small{line-height:1.5}
 const $=id=>document.getElementById(id);
 let rooms=JSON.parse(localStorage.getItem('rooms')||'[]');
 let current=null, editingNew=false;
+let selectedPhotoFile=null;
+
+function setSelectedPhoto(file){
+  selectedPhotoFile=file||null;
+  $('selectedPhotoName').textContent=selectedPhotoFile ? '選択中：'+selectedPhotoFile.name : '写真未選択';
+}
+$('cameraPhoto').addEventListener('change',e=>setSelectedPhoto(e.target.files?.[0]||null));
+$('libraryPhoto').addEventListener('change',e=>setSelectedPhoto(e.target.files?.[0]||null));
 
 function save(){ localStorage.setItem('rooms',JSON.stringify(rooms)); renderList(); updateStats(); }
 function updateStats(){
@@ -236,7 +250,7 @@ function parseOCR(text){
 }
 
 $('readBtn').onclick=async()=>{
- const f=$('photo').files[0]; if(!f){alert('先に写真を選んでください');return}
+ const f=selectedPhotoFile; if(!f){alert('先に「カメラで撮影」または「写真ライブラリ」から写真を選んでください');return}
  $('ocrBox').classList.remove('hidden');$('ocrStatus').textContent='OCRを開始しています…';
  try{
   const worker=await Tesseract.createWorker('jpn+eng',1,{logger:m=>{
