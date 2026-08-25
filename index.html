@@ -4,237 +4,244 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111111">
-<link rel="manifest" href="manifest.webmanifest">
-<title>客室仕込みヘルパー</title>
+<title>客室仕込みヘルパー 8/26</title>
+
 <style>
-:root{--bg:#f4f4f4;--card:#fff;--text:#111;--muted:#666;--danger:#b00020;--ok:#126a2f;--border:#ddd}
-*{box-sizing:border-box}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic",sans-serif;background:var(--bg);color:var(--text)}
-header{position:sticky;top:0;z-index:5;background:#111;color:#fff;padding:14px 16px;font-size:18px;font-weight:800}
-main{max-width:760px;margin:auto;padding:14px 14px 100px}.card{background:var(--card);border-radius:16px;padding:16px;margin:0 0 12px;box-shadow:0 1px 8px #0001}
-h1,h2,h3{margin:0 0 12px}h1{font-size:30px}h2{font-size:21px}button,.btn{appearance:none;border:0;border-radius:12px;padding:14px 16px;font-size:17px;font-weight:800;background:#111;color:#fff}
-button.secondary{background:#e7e7e7;color:#111}.danger{background:var(--danger)!important}.ok{background:var(--ok)!important}input,select,textarea{width:100%;font-size:18px;padding:13px;border:1px solid var(--border);border-radius:11px;background:#fff}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.big{font-size:38px;font-weight:900}.mid{font-size:25px;font-weight:900}.muted{color:var(--muted)}.hidden{display:none!important}
-.note{border:3px solid #d00000;background:#fff1f1;border-radius:12px;padding:12px;font-weight:900;font-size:20px}.stat{background:#f0f0f0;padding:12px;border-radius:12px;text-align:center}.stat strong{display:block;font-size:28px}
-.roomRow{display:grid;grid-template-columns:85px 1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #eee}.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#eee;font-size:13px;font-weight:700;margin:2px}.warn{color:#b00020;font-weight:800}
-#ocrProgress{height:8px;background:#eee;border-radius:999px;overflow:hidden;margin-top:8px}#ocrProgress>div{height:100%;width:0;background:#111}footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:10px calc(10px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));display:flex;gap:8px;justify-content:center}footer button{flex:1;max-width:360px}small{line-height:1.5}
+:root{
+  --bg:#f4f4f4;
+  --card:#fff;
+  --text:#111;
+  --muted:#666;
+  --danger:#b00020;
+  --ok:#126a2f;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+header{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:#111;
+  color:#fff;
+  padding:16px;
+  font-size:20px;
+  font-weight:900;
+}
+main{
+  max-width:760px;
+  margin:auto;
+  padding:14px 14px 120px;
+}
+.card{
+  background:#fff;
+  border-radius:18px;
+  padding:16px;
+  margin-bottom:12px;
+  box-shadow:0 1px 8px #0001;
+}
+h1,h2{margin:0 0 14px}
+h1{font-size:34px}
+h2{font-size:22px}
+
+button{
+  appearance:none;
+  border:0;
+  border-radius:13px;
+  padding:15px 16px;
+  font-size:17px;
+  font-weight:900;
+  background:#111;
+  color:#fff;
+}
+button.secondary{
+  background:#e7e7e7;
+  color:#111;
+}
+button.ok{background:var(--ok)}
+button.danger{background:var(--danger)}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+.stat{
+  background:#f0f0f0;
+  border-radius:14px;
+  padding:13px 5px;
+  text-align:center;
+  font-size:17px;
+}
+.stat strong{
+  display:block;
+  font-size:32px;
+}
+.big{
+  font-size:42px;
+  font-weight:900;
+}
+.mid{
+  font-size:28px;
+  font-weight:900;
+}
+.muted{color:#666}
+.warn{color:#b00020;font-weight:900}
+.hidden{display:none!important}
+
+.roomRow{
+  display:grid;
+  grid-template-columns:75px 1fr 85px;
+  gap:8px;
+  align-items:center;
+  padding:13px 0;
+  border-bottom:1px solid #eee;
+}
+.roomRow strong{
+  font-size:18px;
+}
+.pill{
+  display:inline-block;
+  background:#eee;
+  border-radius:999px;
+  padding:5px 9px;
+  margin:2px;
+  font-size:13px;
+  font-weight:800;
+}
+.note{
+  border:3px solid #d00000;
+  background:#fff1f1;
+  border-radius:12px;
+  padding:12px;
+  font-size:18px;
+  font-weight:800;
+  white-space:pre-wrap;
+}
+input{
+  width:100%;
+  padding:14px;
+  font-size:19px;
+  border:1px solid #ddd;
+  border-radius:12px;
+}
+footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  border-top:1px solid #ddd;
+  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
+  z-index:10;
+}
+footer button{
+  width:100%;
+}
 </style>
 </head>
+
 <body>
 
-<header>客室仕込みヘルパー</header>
+<header>客室仕込みヘルパー｜8/26</header>
 
 <main>
 
 <section id="home">
 
-<div class="card">
-<h2>今日のアサイン表</h2>
+  <div class="card">
+    <h2>部屋をすぐ確認</h2>
+    <div class="grid2">
+      <input id="quickRoom" inputmode="numeric" placeholder="部屋番号">
+      <button id="quickBtn">表示</button>
+    </div>
+  </div>
 
-<div class="grid2">
-<label class="btn" for="cameraPhoto" style="display:block;text-align:center;cursor:pointer">カメラで撮影</label>
-<label class="btn secondary" for="libraryPhoto" style="display:block;text-align:center;cursor:pointer;background:#e7e7e7;color:#111">写真ライブラリ</label>
-</div>
+  <div class="card">
+    <h2>本日の集計</h2>
+    <div class="grid3">
+      <div class="stat">使用室<strong id="roomCount">0</strong></div>
+      <div class="stat">宿泊者<strong id="guestCount">0</strong></div>
+      <div class="stat">氷補充<strong id="iceCount">0</strong></div>
+    </div>
+  </div>
 
-<input id="cameraPhoto" type="file" accept="image/*" capture="environment" class="hidden">
-<input id="libraryPhoto" type="file" accept="image/*" class="hidden">
-
-<div id="selectedPhotoName" class="muted" style="margin-top:8px">写真未選択</div>
-
-<div style="height:10px"></div>
-
-<button id="readBtn">写真を読み取る</button>
-
-<div id="ocrBox" class="hidden">
-<div id="ocrProgress"><div></div></div>
-<div id="ocrStatus" class="muted" style="margin-top:8px"></div>
-</div>
-
-<small class="muted">端末上でOCRします。人数は表の列位置から判定します。</small>
-</div>
-
-
-<div class="card">
-<h2>部屋をすぐ確認</h2>
-<div class="grid2">
-<input id="quickRoom" inputmode="numeric" placeholder="例 1">
-<button id="quickBtn">表示</button>
-</div>
-</div>
-
-
-<div class="card">
-<h2>本日の集計</h2>
-
-<div class="grid3">
-<div class="stat">部屋<strong id="roomCount">0</strong></div>
-<div class="stat">BOX<strong id="boxCount">0</strong></div>
-<div class="stat">氷補充<strong id="iceCount">0</strong></div>
-</div>
-</div>
-
-
-<div class="card">
-<h2>読み取り結果</h2>
-<div id="roomList" class="muted">まだデータがありません。</div>
-<div style="height:10px"></div>
-<button class="secondary" id="addRoomBtn">部屋を手動追加</button>
-</div>
+  <div class="card">
+    <h2>読み取り結果</h2>
+    <div id="roomList"></div>
+  </div>
 
 </section>
 
 
 <section id="roomView" class="hidden">
 
-<div class="card">
+  <div class="card">
+    <button class="secondary" id="backBtn">← 一覧</button>
 
-<button class="secondary" id="backBtn">← 一覧へ</button>
+    <div style="height:18px"></div>
 
-<div style="height:12px"></div>
+    <h1><span id="vRoom"></span>号室</h1>
 
-<h1><span id="vRoom"></span>号室</h1>
+    <div class="grid3">
+      <div class="stat">
+        大人
+        <strong id="vAdult">0</strong>
+      </div>
 
-<div class="grid3">
+      <div class="stat">
+        子供
+        <strong id="vChild">0</strong>
+      </div>
 
-<div class="stat">
-大人
-<strong id="vAdult">0</strong>
-</div>
-
-<div class="stat">
-子供
-<strong id="vChild">0</strong>
-</div>
-
-<div class="stat">
-合計
-<strong id="vTotal">0</strong>
-</div>
-
-</div>
-</div>
+      <div class="stat">
+        合計
+        <strong id="vTotal">0</strong>
+      </div>
+    </div>
+  </div>
 
 
-<div class="card">
-<div class="muted">シーツ</div>
-<div class="big"><span id="vSheets">0</span>セット</div>
-</div>
+  <div class="card">
+    <div class="muted">シーツ</div>
+    <div class="big"><span id="vSheets">0</span>セット</div>
+  </div>
 
 
-<div class="card">
-
-<div class="muted">バッシングBOX</div>
-
-<div id="vBox" class="mid">
-不要
-</div>
-
-<div id="vMeal" class="muted" style="margin-top:8px"></div>
-
-</div>
+  <div class="card">
+    <div class="muted">バッシングBOX</div>
+    <div id="vBox" class="mid">確認</div>
+    <div id="vMeal" class="muted" style="margin-top:8px"></div>
+  </div>
 
 
-<div class="card">
+  <div class="card">
+    <h2>氷確認</h2>
 
-<h2>氷確認</h2>
+    <div class="grid2">
+      <button class="ok" id="iceYes">氷あり</button>
+      <button class="danger" id="iceNo">氷なし</button>
+    </div>
 
-<div class="grid2">
-
-<button class="ok" id="iceYes">
-氷あり
-</button>
-
-<button class="danger" id="iceNo">
-氷なし
-</button>
-
-</div>
-
-<div id="iceState" class="muted" style="margin-top:10px"></div>
-
-</div>
+    <div id="iceState" class="muted" style="margin-top:12px">
+      未確認
+    </div>
+  </div>
 
 
-<div class="card">
-
-<h2>特記事項</h2>
-
-<div id="vNote" class="note">
-特記事項なし
-</div>
-
-</div>
-
-
-<div class="card">
-<button class="secondary" id="editBtn">
-この部屋を修正
-</button>
-</div>
-
-</section>
-
-
-<section id="editView" class="hidden">
-
-<div class="card">
-
-<h2 id="editTitle">
-部屋データ編集
-</h2>
-
-<label>部屋番号</label>
-
-<input id="eRoom" inputmode="numeric">
-
-<div style="height:8px"></div>
-
-<div class="grid2">
-
-<div>
-<label>大人</label>
-<input id="eAdult" inputmode="numeric" type="number" min="0">
-</div>
-
-<div>
-<label>子供</label>
-<input id="eChild" inputmode="numeric" type="number" min="0">
-</div>
-
-</div>
-
-
-<div style="height:8px"></div>
-
-<label>食事区分</label>
-
-<select id="eMeal">
-<option value="dinner">夕食あり</option>
-<option value="breakfast">朝食のみ</option>
-<option value="none">素泊まり</option>
-<option value="unknown">不明</option>
-</select>
-
-<div style="height:8px"></div>
-
-<label>備考・特記事項</label>
-
-<textarea id="eNote" rows="4"></textarea>
-
-<div style="height:12px"></div>
-
-<div class="grid2">
-
-<button class="secondary" id="cancelEdit">
-キャンセル
-</button>
-
-<button id="saveEdit">
-保存
-</button>
-
-</div>
-
-</div>
+  <div class="card">
+    <h2>特記事項</h2>
+    <div id="vNote" class="note">特記事項なし</div>
+  </div>
 
 </section>
 
@@ -242,1629 +249,472 @@ button.secondary{background:#e7e7e7;color:#111}.danger{background:var(--danger)!
 
 
 <footer>
-<button id="iceListBtn" class="secondary">
-氷補充リスト
-</button>
+  <button class="secondary" id="iceListBtn">氷補充リスト</button>
 </footer>
 
 
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-
 <script>
 
-const $ = id => document.getElementById(id);
-
-let rooms =
-JSON.parse(
-localStorage.getItem('rooms') || '[]'
-);
-
-let current = null;
-
-let editingNew = false;
-
-let selectedPhotoFile = null;
-
-
-
-function setSelectedPhoto(file){
-
-selectedPhotoFile =
-file || null;
-
-$('selectedPhotoName').textContent =
-selectedPhotoFile
-? '選択中：' + selectedPhotoFile.name
-: '写真未選択';
-
-}
-
-
-$('cameraPhoto').addEventListener(
-'change',
-e => setSelectedPhoto(
-e.target.files?.[0] || null
-)
-);
-
-
-$('libraryPhoto').addEventListener(
-'change',
-e => setSelectedPhoto(
-e.target.files?.[0] || null
-)
-);
-
-
-
-function save(){
-
-localStorage.setItem(
-'rooms',
-JSON.stringify(rooms)
-);
-
-renderList();
-
-updateStats();
-
-}
-
-
-
-function updateStats(){
-
-$('roomCount').textContent =
-rooms.length;
-
-$('boxCount').textContent =
-rooms.filter(
-r => r.meal === 'dinner'
-).length;
-
-$('iceCount').textContent =
-rooms.filter(
-r => r.ice === 'no'
-).length;
-
-}
-
-
-
-function sheetsFor(n){
-
-return Math.min(
-Math.max(
-Number(n) || 0,
-0
-),
-4
-);
-
-}
-
-
-
-function esc(s){
-
-return String(s ?? '').replace(
-
-/[&<>"]/g,
-
-m => ({
-'&':'&amp;',
-'<':'&lt;',
-'>':'&gt;',
-'"':'&quot;'
-}[m])
-
-);
-
-}
-
-
-
-function mealLabel(meal){
-
-return meal === 'dinner'
-? '夕食あり'
-: meal === 'breakfast'
-? '朝食のみ'
-: meal === 'none'
-? '素泊まり'
-: '食事不明';
-
-}
-
-
-
-function renderList(){
-
-const box =
-$('roomList');
-
-
-if(!rooms.length){
-
-box.innerHTML =
-'まだデータがありません。';
-
-return;
-
-}
-
-
-rooms.sort(
-
-(a,b) =>
-String(a.room).localeCompare(
-String(b.room),
-'ja',
-{numeric:true}
-)
-
-);
-
-
-box.innerHTML =
-rooms.map(r => {
-
-
-const t =
-(+r.adult || 0) +
-(+r.child || 0);
-
-
-const warn =
-r.meal === 'unknown'
-? '<span class="warn">食事不明</span>'
-: '';
-
-
-return `
-
-<div class="roomRow">
-
-<strong>
-${esc(r.room)}号室
-</strong>
-
-<div>
-
-<span class="pill">
-${t}名
-</span>
-
-<span class="pill">
-シーツ${sheetsFor(t)}
-</span>
-
-<span class="pill">
-BOX:${r.meal === 'dinner' ? '1' : '0'}
-</span>
-
-${warn}
-
-${r.note
-? '<div class="warn">⚠ ' +
-esc(r.note) +
-'</div>'
-: ''}
-
-</div>
-
-<button
-class="secondary"
-onclick="showRoom('${esc(r.room)}')">
-
-表示
-
-</button>
-
-</div>
-
-`;
-
-}).join('');
-
-}
-
-
-
-function showSection(id){
-
-[
-'home',
-'roomView',
-'editView'
-].forEach(
-
-x =>
-$(x).classList.toggle(
-'hidden',
-x !== id
-)
-
-);
-
-}
-
-
-
-window.showRoom = function(room){
-
-current =
-rooms.find(
-
-r =>
-String(r.room) ===
-String(room)
-
-);
-
-
-if(!current){
-
-alert(
-'部屋が見つかりません'
-);
-
-return;
-
-}
-
-
-const adult =
-+current.adult || 0;
-
-
-const child =
-+current.child || 0;
-
-
-const total =
-adult + child;
-
-
-$('vRoom').textContent =
-current.room;
-
-
-$('vAdult').textContent =
-adult;
-
-
-$('vChild').textContent =
-child;
-
-
-$('vTotal').textContent =
-total;
-
-
-$('vSheets').textContent =
-sheetsFor(total);
-
-
-$('vBox').textContent =
-current.meal === 'dinner'
-? '1個 必要'
-: current.meal === 'unknown'
-? '要確認'
-: '不要';
-
-
-$('vBox').className =
-current.meal === 'dinner' ||
-current.meal === 'unknown'
-? 'mid warn'
-: 'mid';
-
-
-$('vMeal').textContent =
-'食事：' +
-mealLabel(current.meal);
-
-
-$('vNote').textContent =
-current.note?.trim() ||
-'特記事項なし';
-
-
-$('iceState').textContent =
-current.ice === 'yes'
-? '確認済み：氷あり'
-: current.ice === 'no'
-? '要補充：氷なし'
-: '未確認';
-
-
-showSection(
-'roomView'
-);
-
-};
-
-
-
-function openEdit(r = null){
-
-editingNew =
-!r;
-
-
-$('editTitle').textContent =
-r
-? '部屋データ編集'
-: '部屋を追加';
-
-
-$('eRoom').value =
-r?.room || '';
-
-
-$('eAdult').value =
-r?.adult ?? 0;
-
-
-$('eChild').value =
-r?.child ?? 0;
-
-
-$('eMeal').value =
-r?.meal ||
-'unknown';
-
-
-$('eNote').value =
-r?.note || '';
-
-
-showSection(
-'editView'
-);
-
-}
-
-
-
-$('backBtn').onclick =
-() => showSection('home');
-
-
-$('addRoomBtn').onclick =
-() => openEdit();
-
-
-$('editBtn').onclick =
-() => openEdit(current);
-
-
-$('cancelEdit').onclick =
-() =>
-current
-? showRoom(current.room)
-: showSection('home');
-
-
-$('saveEdit').onclick =
-() => {
-
-
-const obj = {
-
-room:
-$('eRoom').value.trim(),
-
-adult:
-+$('eAdult').value || 0,
-
-child:
-+$('eChild').value || 0,
-
-meal:
-$('eMeal').value,
-
-note:
-$('eNote').value.trim(),
-
-ice:
-current?.ice || null
-
-};
-
-
-if(!obj.room){
-
-alert(
-'部屋番号を入力してください'
-);
-
-return;
-
-}
-
-
-if(editingNew){
-
-rooms.push(obj);
-
-}else{
-
-const i =
-rooms.indexOf(current);
-
-if(i >= 0){
-
-rooms[i] =
-obj;
-
-}
-
-current =
-obj;
-
-}
-
-
-save();
-
-showRoom(
-obj.room
-);
-
-};
-
-
-
-$('quickBtn').onclick =
-() => showRoom(
-$('quickRoom').value.trim()
-);
-
-
-$('quickRoom').addEventListener(
-
-'keydown',
-
-e => {
-
-if(e.key === 'Enter'){
-
-$('quickBtn').click();
-
-}
-
-}
-
-);
-
-
-
-$('iceYes').onclick =
-() => {
-
-current.ice =
-'yes';
-
-save();
-
-showRoom(
-current.room
-);
-
-};
-
-
-
-$('iceNo').onclick =
-() => {
-
-current.ice =
-'no';
-
-save();
-
-showRoom(
-current.room
-);
-
-};
-
-
-
-$('iceListBtn').onclick =
-() => {
-
-
-const list =
-rooms.filter(
-r => r.ice === 'no'
-);
-
-
-if(!list.length){
-
-alert(
-'氷補充が必要な部屋はありません'
-);
-
-return;
-
-}
-
-
-alert(
-
-'氷補充：' +
-list.length +
-'室\n\n' +
-
-list
-.map(
-r => r.room + '号室'
-)
-.join('\n')
-
-);
-
-};
-
-
-
 /*
-==========================================
-OCR 座標解析
-==========================================
-
-表の列
-
-男
-女
-子A
-子B
-子C
-子D
-
-大人 = 男 + 女
-
-子供 =
-子A + 子B + 子C + 子D
-
-泊数・部屋番号・備考内の数字は
-人数として数えない
-==========================================
+=================================================
+2026/8/26 緊急運用データ
+adult = 男 + 女
+child = 子A + 子B + 子C + 子D
+=================================================
 */
 
+const TODAY_DATA = [
 
-function normText(s){
+{room:1, adult:3, child:0, meal:"dinner", note:"カラオケ18時半〜"},
+{room:2, adult:2, child:1, meal:"dinner", note:""},
+{room:3, adult:1, child:1, meal:"breakfast", note:""},
 
-return String(
-s || ''
-)
+// 4号室 空室
 
-.replace(
-/\s+/g,
-''
-)
+{room:5, adult:3, child:1, meal:"dinner", note:""},
 
-.replace(
-/[OoＯ○]/g,
-'0'
-)
+{room:6, adult:2, child:2, meal:"none",
+ note:"前日もGRAX有り／夕食・朝食はホテルで利用（料金同額）"},
 
-.replace(
-/[Il｜]/g,
-'1'
-);
+{room:7, adult:2, child:1, meal:"dinner", note:""},
 
-}
+{room:8, adult:2, child:2, meal:"breakfast", note:""},
 
+{room:9, adult:2, child:4, meal:"premium", note:""},
 
+{room:10, adult:2, child:2, meal:"dinner", note:""},
 
-function centerX(w){
+{room:11, adult:3, child:1, meal:"dinner", note:""},
 
-return (
-w.bbox.x0 +
-w.bbox.x1
-) / 2;
+{room:12, adult:2, child:1, meal:"none", note:"前ホテル"},
 
-}
+{room:13, adult:2, child:0, meal:"none", note:""},
 
+{room:14, adult:1, child:0, meal:"none",
+ note:"REDに空きがないのでGRAXで押さえています"},
 
+{room:15, adult:2, child:2, meal:"dinner", note:""},
 
-function centerY(w){
+{room:16, adult:2, child:1, meal:"dinner",
+ note:"オオサカ チョウタ様同グループ"},
 
-return (
-w.bbox.y0 +
-w.bbox.y1
-) / 2;
+{room:17, adult:4, child:0, meal:"dinner",
+ note:"支払い方法：現払い"},
 
-}
+{room:18, adult:2, child:2, meal:"dinner", note:""},
 
+{room:19, adult:3, child:1, meal:"dinner",
+ note:"カラオケ 8/26 20:00〜21:00 1H"},
 
+{room:20, adult:3, child:1, meal:"dinner", note:""},
 
-function wordNum(w){
+{room:21, adult:2, child:2, meal:"breakfast", note:""},
 
-const t =
-normText(w.text);
+{room:22, adult:2, child:3, meal:"dinner",
+ note:"GRAX 2/2・繋ぎなし・人数どっちでもOK"},
 
+{room:23, adult:2, child:2, meal:"premium", note:"翌日ホテル"},
 
-return /^[0-9]$/.test(t)
-? Number(t)
-: null;
+{room:24, adult:2, child:1, meal:"none",
+ note:"朝食ホテルで利用"},
 
-}
+{room:25, adult:2, child:3, meal:"none", note:""},
 
+{room:26, adult:2, child:2, meal:"dinner", note:""},
 
+{room:27, adult:2, child:2, meal:"dinner", note:""},
 
-function validRoomNum(n){
+{room:28, adult:2, child:1, meal:"dinner", note:""},
 
-return Number.isInteger(n) &&
-n >= 1 &&
-n <= 32;
+{room:29, adult:3, child:1, meal:"dinner", note:""},
 
-}
+{room:30, adult:3, child:2, meal:"dinner",
+ note:"2グループ、ホンダカズヤ"},
 
+{room:31, adult:3, child:1, meal:"dinner", note:""},
 
-
-function detectHeader(
-words,
-imgW,
-imgH
-){
-
-const aliases = {
-
-male:[
-'男'
-],
-
-female:[
-'女'
-],
-
-a:[
-'子A',
-'子Ａ',
-'予A'
-],
-
-b:[
-'子B',
-'子Ｂ',
-'予B'
-],
-
-c:[
-'子C',
-'子Ｃ',
-'予C'
-],
-
-d:[
-'子D',
-'子Ｄ',
-'予D'
-]
-
-};
-
-
-const found = {};
-
-
-for(const w of words){
-
-const t =
-normText(w.text);
-
-
-if(
-centerY(w) >
-imgH * 0.35
-){
-
-continue;
-
-}
-
-
-for(
-const [k,arr]
-of Object.entries(aliases)
-){
-
-if(
-arr.some(
-a => t.includes(a)
-)
-){
-
-found[k] =
-centerX(w);
-
-}
-
-}
-
-}
-
-
-/*
-ヘッダの
-男・女を認識できた場合
-*/
-
-if(
-found.male &&
-found.female
-){
-
-const gap =
-Math.abs(
-found.female -
-found.male
-) ||
-imgW * 0.035;
-
-
-return {
-
-male:
-found.male,
-
-female:
-found.female,
-
-a:
-found.a ||
-found.female + gap,
-
-b:
-found.b ||
-found.female + gap * 2,
-
-c:
-found.c ||
-found.female + gap * 3,
-
-d:
-found.d ||
-found.female + gap * 4,
-
-tolerance:
-Math.max(
-gap * 0.48,
-imgW * 0.012
-)
-
-};
-
-}
-
-
-/*
-ヘッダを認識できなかった場合。
-
-今回のGRAXアサイン表の
-列位置比率を使用。
-*/
-
-return {
-
-male:
-imgW * 0.516,
-
-female:
-imgW * 0.551,
-
-a:
-imgW * 0.586,
-
-b:
-imgW * 0.620,
-
-c:
-imgW * 0.654,
-
-d:
-imgW * 0.687,
-
-tolerance:
-imgW * 0.019
-
-};
-
-}
-
-
-
-function detectRoomRows(
-words,
-imgW,
-imgH
-){
-
-const candidates =
-[];
-
-
-for(const w of words){
-
-const t =
-normText(
-w.text
-);
-
-
-if(
-!/^\d{1,2}$/.test(t)
-){
-
-continue;
-
-}
-
-
-const n =
-Number(t);
-
-
-if(
-!validRoomNum(n)
-){
-
-continue;
-
-}
-
-
-const x =
-centerX(w);
-
-
-const y =
-centerY(w);
-
-
-/*
-部屋番号は
-用紙左側にある。
-
-男・女・泊数などの数字は
-ここでは除外。
-*/
-
-if(
-x < imgW * 0.10 ||
-x > imgW * 0.27 ||
-y < imgH * 0.06 ||
-y > imgH * 0.94
-){
-
-continue;
-
-}
-
-
-candidates.push({
-
-room:n,
-
-y,
-
-x,
-
-word:w
-
-});
-
-}
-
-
-candidates.sort(
-(a,b) => a.y - b.y
-);
-
-
-const rows =
-[];
-
-
-for(
-const c of candidates
-){
-
-if(
-rows.some(
-r =>
-Math.abs(
-r.y - c.y
-) <
-imgH * 0.009
-)
-){
-
-continue;
-
-}
-
-
-rows.push(c);
-
-}
-
-
-return rows;
-
-}
-
-
-
-function rowBand(
-rows,
-i,
-imgH
-){
-
-const y =
-rows[i].y;
-
-
-const prev =
-i
-? rows[i-1].y
-: null;
-
-
-const next =
-i < rows.length - 1
-? rows[i+1].y
-: null;
-
-
-const top =
-prev
-? (prev + y) / 2
-: y - imgH * 0.012;
-
-
-const bottom =
-next
-? (y + next) / 2
-: y + imgH * 0.012;
-
-
-return {
-top,
-bottom
-};
-
-}
-
-
-
-function nearestDigit(
-words,
-band,
-targetX,
-tol
-){
-
-let best =
-null;
-
-
-for(const w of words){
-
-const y =
-centerY(w);
-
-
-if(
-y < band.top ||
-y > band.bottom
-){
-
-continue;
-
-}
-
-
-const n =
-wordNum(w);
-
-
-if(
-n === null
-){
-
-continue;
-
-}
-
-
-const dx =
-Math.abs(
-centerX(w) -
-targetX
-);
-
-
-if(
-dx > tol
-){
-
-continue;
-
-}
-
-
-if(
-!best ||
-dx < best.dx
-){
-
-best = {
-n,
-dx
-};
-
-}
-
-}
-
-
-return best
-? best.n
-: 0;
-
-}
-
-
-
-function rowText(
-words,
-band
-){
-
-return words
-
-.filter(
-w => {
-
-const y =
-centerY(w);
-
-return y >= band.top &&
-y <= band.bottom;
-
-}
-)
-
-.sort(
-(a,b) =>
-a.bbox.x0 -
-b.bbox.x0
-)
-
-.map(
-w => w.text
-)
-
-.join(' ');
-
-}
-
-
-
-function detectMeal(text){
-
-const t =
-normText(text);
-
-
-if(
-/朝食のみ|朝のみ|朝食/.test(t)
-){
-
-return 'breakfast';
-
-}
-
-
-if(
-/素泊まり|素泊り|素泊|食事なし/.test(t)
-){
-
-return 'none';
-
-}
-
-
-if(
-/レギュラー|レギユラー|プレミアム|夕食|2食|二食/.test(t)
-){
-
-return 'dinner';
-
-}
-
-
-return 'unknown';
-
-}
-
-
-
-function detectNote(text){
-
-const keys = [
-
-'アレルギー',
-
-'記念',
-
-'誕生日',
-
-'連泊',
-
-'車椅子',
-
-'ベッド',
-
-'幼児',
-
-'離乳',
-
-'前ホテル',
-
-'翌日ホテル',
-
-'肉鍋希望',
-
-'GRAX',
-
-'カラオケ',
-
-'支払い'
+{room:32, adult:2, child:2, meal:"premium",
+ note:"肉鍋希望"}
 
 ];
 
 
-return keys.some(
-k => text.includes(k)
-)
+/*
+氷チェックだけ端末に保存
+*/
 
-? text
+const ICE_KEY = "ice_20260826";
 
-: '';
+let iceData =
+JSON.parse(
+  localStorage.getItem(ICE_KEY) || "{}"
+);
 
+let current = null;
+
+
+function $(id){
+  return document.getElementById(id);
 }
 
 
-
-function parseOCRByCoordinates(data){
-
-const words =
-(data.words || [])
-
-.filter(
-w =>
-w?.bbox &&
-String(
-w.text || ''
-).trim()
-);
-
-
-if(!words.length){
-
-return [];
-
+function total(r){
+  return r.adult + r.child;
 }
-
-
-const imgW =
-data.imageSize?.width ||
-data.width ||
-Math.max(
-1,
-...words.map(
-w => w.bbox.x1
-)
-);
-
-
-const imgH =
-data.imageSize?.height ||
-data.height ||
-Math.max(
-1,
-...words.map(
-w => w.bbox.y1
-)
-);
-
-
-const cols =
-detectHeader(
-words,
-imgW,
-imgH
-);
-
-
-const rows =
-detectRoomRows(
-words,
-imgW,
-imgH
-);
-
-
-const out =
-[];
-
-
-rows.forEach(
-(r,i) => {
-
-
-const band =
-rowBand(
-rows,
-i,
-imgH
-);
-
-
-const male =
-nearestDigit(
-words,
-band,
-cols.male,
-cols.tolerance
-);
-
-
-const female =
-nearestDigit(
-words,
-band,
-cols.female,
-cols.tolerance
-);
-
-
-const childA =
-nearestDigit(
-words,
-band,
-cols.a,
-cols.tolerance
-);
-
-
-const childB =
-nearestDigit(
-words,
-band,
-cols.b,
-cols.tolerance
-);
-
-
-const childC =
-nearestDigit(
-words,
-band,
-cols.c,
-cols.tolerance
-);
-
-
-const childD =
-nearestDigit(
-words,
-band,
-cols.d,
-cols.tolerance
-);
 
 
 /*
-ここで人数計算
+シーツは最大4セット
 */
 
-const adult =
-male +
-female;
-
-
-const child =
-childA +
-childB +
-childC +
-childD;
-
-
-const text =
-rowText(
-words,
-band
-);
-
-
-const meal =
-detectMeal(
-text
-);
-
-
-const note =
-detectNote(
-text
-);
-
-
-if(
-!out.some(
-x =>
-x.room ===
-String(r.room)
-)
-){
-
-out.push({
-
-room:
-String(r.room),
-
-adult,
-
-child,
-
-meal,
-
-note,
-
-ice:null
-
-});
-
-}
-
-}
-);
-
-
-return out.sort(
-(a,b) =>
-Number(a.room) -
-Number(b.room)
-);
-
+function sheets(r){
+  return Math.min(total(r),4);
 }
 
 
+function mealName(meal){
 
-$('readBtn').onclick =
-async () => {
+  switch(meal){
 
+    case "dinner":
+      return "レギュラー";
 
-const f =
-selectedPhotoFile;
+    case "breakfast":
+      return "朝食のみ";
 
+    case "none":
+      return "素泊まり";
 
-if(!f){
+    case "premium":
+      return "プレミアム";
 
-alert(
-'先に「カメラで撮影」または「写真ライブラリ」から写真を選んでください'
-);
-
-return;
-
+    default:
+      return "要確認";
+  }
 }
 
 
-$('ocrBox').classList.remove(
-'hidden'
-);
+/*
+夕食付き → バッシングBOX必要
+朝食のみ・素泊まり → 不要
+*/
 
+function needsBox(r){
 
-$('ocrStatus').textContent =
-'OCRを開始しています…';
-
-
-$('ocrProgress')
-.firstElementChild
-.style.width =
-'0%';
-
-
-try{
-
-
-const worker =
-await Tesseract.createWorker(
-
-'jpn+eng',
-
-1,
-
-{
-
-logger:m => {
-
-
-if(
-m.status ===
-'recognizing text'
-){
-
-const p =
-Math.round(
-(m.progress || 0) *
-100
-);
-
-
-$('ocrProgress')
-.firstElementChild
-.style.width =
-p + '%';
-
-
-$('ocrStatus')
-.textContent =
-'読み取り中 ' +
-p +
-'%';
-
-
-}else{
-
-
-$('ocrStatus')
-.textContent =
-m.status ||
-'処理中…';
-
+  return (
+    r.meal === "dinner" ||
+    r.meal === "premium"
+  );
 }
 
-}
 
-}
+function renderList(){
 
-);
+  const box = $("roomList");
 
+  box.innerHTML =
+    TODAY_DATA.map(r=>{
 
-const ret =
-await worker.recognize(
+      const ice =
+        iceData[r.room];
 
-f,
+      const iceMark =
+        ice === "no"
+        ? '<span class="warn">氷補充</span>'
+        : "";
 
-{},
+      return `
 
-{
+      <div class="roomRow">
 
-blocks:true,
+        <strong>${r.room}号室</strong>
 
-text:true,
+        <div>
 
-tsv:true
+          <span class="pill">
+            ${total(r)}名
+          </span>
 
-}
+          <span class="pill">
+            大${r.adult}
+          </span>
 
-);
+          <span class="pill">
+            子${r.child}
+          </span>
 
+          <span class="pill">
+            シーツ${sheets(r)}
+          </span>
 
-await worker.terminate();
+          <span class="pill">
+            BOX:${needsBox(r) ? "1" : "0"}
+          </span>
 
+          ${iceMark}
 
-const parsed =
-parseOCRByCoordinates(
-ret.data
-);
+        </div>
 
+        <button
+          class="secondary"
+          onclick="showRoom(${r.room})">
+          表示
+        </button>
 
-if(
-!parsed.length
-){
+      </div>
 
-$('ocrStatus')
-.textContent =
-'部屋データを抽出できませんでした。';
+      `;
 
-
-alert(
-'自動抽出できませんでした。写真をなるべく真正面から撮影してください。'
-);
-
-
-return;
+    }).join("");
 
 }
 
 
-if(
-rooms.length &&
-!confirm(
-'現在のデータを、新しく読み取った表で置き換えますか？'
-)
-){
+function updateStats(){
 
-return;
+  $("roomCount").textContent =
+    TODAY_DATA.length;
+
+  $("guestCount").textContent =
+    TODAY_DATA.reduce(
+      (sum,r)=>sum+total(r),
+      0
+    );
+
+  $("iceCount").textContent =
+    TODAY_DATA.filter(
+      r=>iceData[r.room]==="no"
+    ).length;
+}
+
+
+function showRoom(room){
+
+  const r =
+    TODAY_DATA.find(
+      x=>x.room===Number(room)
+    );
+
+  if(!r){
+
+    alert(
+      room + "号室は本日の使用部屋ではありません"
+    );
+
+    return;
+  }
+
+  current = r;
+
+  $("vRoom").textContent =
+    r.room;
+
+  $("vAdult").textContent =
+    r.adult;
+
+  $("vChild").textContent =
+    r.child;
+
+  $("vTotal").textContent =
+    total(r);
+
+  $("vSheets").textContent =
+    sheets(r);
+
+  $("vMeal").textContent =
+    "食事：" + mealName(r.meal);
+
+
+  if(needsBox(r)){
+
+    $("vBox").textContent =
+      "1個 必要";
+
+    $("vBox").className =
+      "mid warn";
+
+  }else{
+
+    $("vBox").textContent =
+      "不要";
+
+    $("vBox").className =
+      "mid";
+
+  }
+
+
+  $("vNote").textContent =
+    r.note ||
+    "特記事項なし";
+
+
+  updateIceState();
+
+  $("home").classList.add(
+    "hidden"
+  );
+
+  $("roomView").classList.remove(
+    "hidden"
+  );
+
+  window.scrollTo(
+    0,
+    0
+  );
 
 }
 
 
-rooms =
-parsed;
+function updateIceState(){
 
+  if(!current){
+    return;
+  }
 
-save();
+  const state =
+    iceData[current.room];
 
+  if(state==="yes"){
 
-$('ocrStatus')
-.textContent =
-parsed.length +
-'室を抽出しました。';
+    $("iceState").textContent =
+      "確認済み：氷あり";
 
+  }else if(state==="no"){
 
-alert(
+    $("iceState").textContent =
+      "要補充：氷なし";
 
-parsed.length +
-'室を読み取りました。\n\n' +
+  }else{
 
-'人数は列位置から判定しています。\n' +
+    $("iceState").textContent =
+      "未確認";
 
-'必ず最初の数室を確認してください。'
-
-);
-
-
-}catch(e){
-
-
-console.error(e);
-
-
-$('ocrStatus')
-.textContent =
-'OCRに失敗しました';
-
-
-alert(
-'OCRに失敗しました。通信状態を確認してください。'
-);
+  }
 
 }
+
+
+function saveIce(){
+
+  localStorage.setItem(
+    ICE_KEY,
+    JSON.stringify(iceData)
+  );
+
+  updateStats();
+  renderList();
+  updateIceState();
+}
+
+
+$("backBtn").onclick =
+function(){
+
+  $("roomView").classList.add(
+    "hidden"
+  );
+
+  $("home").classList.remove(
+    "hidden"
+  );
 
 };
 
 
+$("quickBtn").onclick =
+function(){
 
-renderList();
+  const room =
+    $("quickRoom").value.trim();
 
-updateStats();
+  if(!room){
+    return;
+  }
+
+  showRoom(room);
+
+};
 
 
-if(
-'serviceWorker' in navigator &&
-location.protocol.startsWith('http')
-){
+$("quickRoom").addEventListener(
+  "keydown",
+  function(e){
 
-navigator
-.serviceWorker
-.register('./sw.js')
-.catch(
-() => {}
+    if(e.key==="Enter"){
+      $("quickBtn").click();
+    }
+
+  }
 );
 
-}
+
+$("iceYes").onclick =
+function(){
+
+  if(!current){
+    return;
+  }
+
+  iceData[current.room] =
+    "yes";
+
+  saveIce();
+
+};
+
+
+$("iceNo").onclick =
+function(){
+
+  if(!current){
+    return;
+  }
+
+  iceData[current.room] =
+    "no";
+
+  saveIce();
+
+};
+
+
+$("iceListBtn").onclick =
+function(){
+
+  const list =
+    TODAY_DATA.filter(
+      r=>iceData[r.room]==="no"
+    );
+
+  if(!list.length){
+
+    alert(
+      "氷補充が必要な部屋はありません"
+    );
+
+    return;
+  }
+
+  alert(
+    "氷補充：" +
+    list.length +
+    "室\n\n" +
+    list
+      .map(r=>r.room+"号室")
+      .join("\n")
+  );
+
+};
+
+
+window.showRoom =
+showRoom;
+
+
+renderList();
+updateStats();
 
 </script>
 
