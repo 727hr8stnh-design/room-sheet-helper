@@ -6,264 +6,1588 @@
 <meta name="theme-color" content="#111111">
 <link rel="manifest" href="manifest.webmanifest">
 <title>客室仕込みヘルパー</title>
+
 <style>
-:root{--bg:#f4f4f4;--card:#fff;--text:#111;--muted:#666;--danger:#b00020;--ok:#126a2f;--border:#ddd}
-*{box-sizing:border-box} body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic",sans-serif;background:var(--bg);color:var(--text)}
-header{position:sticky;top:0;z-index:5;background:#111;color:#fff;padding:14px 16px;font-size:18px;font-weight:800}
-main{max-width:760px;margin:auto;padding:14px 14px 100px}
-.card{background:var(--card);border-radius:16px;padding:16px;margin:0 0 12px;box-shadow:0 1px 8px #0001}
-h1,h2,h3{margin:0 0 12px} h1{font-size:30px} h2{font-size:21px}
-button,.btn{appearance:none;border:0;border-radius:12px;padding:14px 16px;font-size:17px;font-weight:800;background:#111;color:#fff}
-button.secondary{background:#e7e7e7;color:#111}.danger{background:var(--danger)!important}.ok{background:var(--ok)!important}
-input,select,textarea{width:100%;font-size:18px;padding:13px;border:1px solid var(--border);border-radius:11px;background:#fff}
-.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
-.big{font-size:38px;font-weight:900}.mid{font-size:25px;font-weight:900}
-.muted{color:var(--muted)} .hidden{display:none!important}
-.note{border:3px solid #d00000;background:#fff1f1;border-radius:12px;padding:12px;font-weight:900;font-size:20px}
-.stat{background:#f0f0f0;padding:12px;border-radius:12px;text-align:center}.stat strong{display:block;font-size:28px}
-.roomRow{display:grid;grid-template-columns:85px 1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #eee}
-.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#eee;font-size:13px;font-weight:700;margin:2px}
-.warn{color:#b00020;font-weight:800}
-#ocrProgress{height:8px;background:#eee;border-radius:999px;overflow:hidden;margin-top:8px}#ocrProgress>div{height:100%;width:0;background:#111}
-footer{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;padding:10px calc(10px + env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left));display:flex;gap:8px;justify-content:center}
-footer button{flex:1;max-width:360px}
+:root{
+  --bg:#f4f4f4;
+  --card:#fff;
+  --text:#111;
+  --muted:#666;
+  --danger:#b00020;
+  --ok:#126a2f;
+  --border:#ddd;
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic",sans-serif;
+  background:var(--bg);
+  color:var(--text);
+}
+
+header{
+  position:sticky;
+  top:0;
+  z-index:5;
+  background:#111;
+  color:#fff;
+  padding:14px 16px;
+  font-size:18px;
+  font-weight:800;
+}
+
+main{
+  max-width:760px;
+  margin:auto;
+  padding:14px 14px 100px;
+}
+
+.card{
+  background:var(--card);
+  border-radius:16px;
+  padding:16px;
+  margin:0 0 12px;
+  box-shadow:0 1px 8px #0001;
+}
+
+h1,h2,h3{margin:0 0 12px}
+h1{font-size:30px}
+h2{font-size:21px}
+
+button,.btn{
+  appearance:none;
+  border:0;
+  border-radius:12px;
+  padding:14px 16px;
+  font-size:17px;
+  font-weight:800;
+  background:#111;
+  color:#fff;
+}
+
+button.secondary{
+  background:#e7e7e7;
+  color:#111;
+}
+
+.danger{background:var(--danger)!important}
+.ok{background:var(--ok)!important}
+
+input,select,textarea{
+  width:100%;
+  font-size:18px;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#fff;
+}
+
+.grid2{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+}
+
+.grid3{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;
+}
+
+.big{font-size:38px;font-weight:900}
+.mid{font-size:25px;font-weight:900}
+
+.muted{color:var(--muted)}
+.hidden{display:none!important}
+
+.note{
+  border:3px solid #d00000;
+  background:#fff1f1;
+  border-radius:12px;
+  padding:12px;
+  font-weight:900;
+  font-size:20px;
+}
+
+.stat{
+  background:#f0f0f0;
+  padding:12px;
+  border-radius:12px;
+  text-align:center;
+}
+
+.stat strong{
+  display:block;
+  font-size:28px;
+}
+
+.roomRow{
+  display:grid;
+  grid-template-columns:85px 1fr auto;
+  gap:8px;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid #eee;
+}
+
+.pill{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:999px;
+  background:#eee;
+  font-size:13px;
+  font-weight:700;
+  margin:2px;
+}
+
+.warn{
+  color:#b00020;
+  font-weight:800;
+}
+
+#ocrProgress{
+  height:8px;
+  background:#eee;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:8px;
+}
+
+#ocrProgress>div{
+  height:100%;
+  width:0;
+  background:#111;
+}
+
+.photoBtn{
+  display:block;
+  text-align:center;
+  cursor:pointer;
+}
+
+.photoBtn.secondary{
+  background:#e7e7e7;
+  color:#111;
+}
+
+footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#fff;
+  border-top:1px solid #ddd;
+  padding:10px;
+  display:flex;
+  gap:8px;
+  justify-content:center;
+}
+
+footer button{
+  flex:1;
+  max-width:360px;
+}
+
 small{line-height:1.5}
 </style>
 </head>
+
 <body>
+
 <header>客室仕込みヘルパー</header>
+
 <main>
+
 <section id="home">
-  <div class="card">
-    <h2>今日のアサイン表</h2>
-    <input id="photo" type="file" accept="image/*" capture="environment">
-    <div style="height:10px"></div>
-    <button id="readBtn">写真を読み取る</button>
-    <div id="ocrBox" class="hidden">
-      <div id="ocrProgress"><div></div></div>
-      <div id="ocrStatus" class="muted" style="margin-top:8px"></div>
-    </div>
-    <small class="muted">端末上でOCRします。初回は日本語OCRデータの読み込みに時間がかかる場合があります。</small>
-  </div>
 
-  <div class="card">
-    <h2>部屋をすぐ確認</h2>
-    <div class="grid2">
-      <input id="quickRoom" inputmode="numeric" placeholder="例 101">
-      <button id="quickBtn">表示</button>
-    </div>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <h2>本日の集計</h2>
-    <div class="grid3">
-      <div class="stat">部屋<strong id="roomCount">0</strong></div>
-      <div class="stat">BOX<strong id="boxCount">0</strong></div>
-      <div class="stat">氷補充<strong id="iceCount">0</strong></div>
-    </div>
-  </div>
+<h2>今日のアサイン表</h2>
 
-  <div class="card">
-    <h2>読み取り結果</h2>
-    <div id="roomList" class="muted">まだデータがありません。</div>
-    <div style="height:10px"></div>
-    <button class="secondary" id="addRoomBtn">部屋を手動追加</button>
-  </div>
+<div class="grid2">
+
+<label class="btn photoBtn" for="cameraPhoto">
+カメラで撮影
+</label>
+
+<label class="btn photoBtn secondary" for="libraryPhoto">
+写真ライブラリ
+</label>
+
+</div>
+
+<input
+id="cameraPhoto"
+type="file"
+accept="image/*"
+capture="environment"
+class="hidden"
+>
+
+<input
+id="libraryPhoto"
+type="file"
+accept="image/*"
+class="hidden"
+>
+
+<div
+id="selectedPhotoName"
+class="muted"
+style="margin-top:10px"
+>
+写真未選択
+</div>
+
+<div style="height:10px"></div>
+
+<button id="readBtn">
+写真を読み取る
+</button>
+
+<div id="ocrBox" class="hidden">
+
+<div id="ocrProgress">
+<div></div>
+</div>
+
+<div
+id="ocrStatus"
+class="muted"
+style="margin-top:8px"
+></div>
+
+</div>
+
+<small class="muted">
+端末上でOCRします。初回は日本語OCRデータの読み込みに時間がかかる場合があります。
+</small>
+
+</div>
+
+
+<div class="card">
+
+<h2>部屋をすぐ確認</h2>
+
+<div class="grid2">
+
+<input
+id="quickRoom"
+inputmode="numeric"
+placeholder="例 101"
+>
+
+<button id="quickBtn">
+表示
+</button>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>本日の集計</h2>
+
+<div class="grid3">
+
+<div class="stat">
+部屋
+<strong id="roomCount">0</strong>
+</div>
+
+<div class="stat">
+BOX
+<strong id="boxCount">0</strong>
+</div>
+
+<div class="stat">
+氷補充
+<strong id="iceCount">0</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>読み取り結果</h2>
+
+<div id="roomList" class="muted">
+まだデータがありません。
+</div>
+
+<div style="height:10px"></div>
+
+<button
+class="secondary"
+id="addRoomBtn"
+>
+部屋を手動追加
+</button>
+
+</div>
+
 </section>
 
-<section id="roomView" class="hidden">
-  <div class="card">
-    <button class="secondary" id="backBtn">← 一覧へ</button>
-    <div style="height:12px"></div>
-    <h1><span id="vRoom"></span>号室</h1>
-    <div class="grid3">
-      <div class="stat">大人<strong id="vAdult">0</strong></div>
-      <div class="stat">子供<strong id="vChild">0</strong></div>
-      <div class="stat">合計<strong id="vTotal">0</strong></div>
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="muted">シーツ</div>
-    <div class="big"><span id="vSheets">0</span>セット</div>
-  </div>
+<section
+id="roomView"
+class="hidden"
+>
 
-  <div class="card">
-    <div class="muted">バッシングBOX</div>
-    <div id="vBox" class="mid">不要</div>
-  </div>
+<div class="card">
 
-  <div class="card">
-    <h2>氷確認</h2>
-    <div class="grid2">
-      <button class="ok" id="iceYes">氷あり</button>
-      <button class="danger" id="iceNo">氷なし</button>
-    </div>
-    <div id="iceState" class="muted" style="margin-top:10px"></div>
-  </div>
+<button
+class="secondary"
+id="backBtn"
+>
+← 一覧へ
+</button>
 
-  <div class="card">
-    <h2>特記事項</h2>
-    <div id="vNote" class="note">特記事項なし</div>
-  </div>
+<div style="height:12px"></div>
 
-  <div class="card">
-    <button class="secondary" id="editBtn">この部屋を修正</button>
-  </div>
+<h1>
+<span id="vRoom"></span>号室
+</h1>
+
+<div class="grid3">
+
+<div class="stat">
+大人
+<strong id="vAdult">0</strong>
+</div>
+
+<div class="stat">
+子供
+<strong id="vChild">0</strong>
+</div>
+
+<div class="stat">
+合計
+<strong id="vTotal">0</strong>
+</div>
+
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+シーツ
+</div>
+
+<div class="big">
+<span id="vSheets">0</span>セット
+</div>
+
+</div>
+
+
+<div class="card">
+
+<div class="muted">
+バッシングBOX
+</div>
+
+<div id="vBox" class="mid">
+不要
+</div>
+
+</div>
+
+
+<div class="card">
+
+<h2>氷確認</h2>
+
+<div class="grid2">
+
+<button
+class="ok"
+id="iceYes"
+>
+氷あり
+</button>
+
+<button
+class="danger"
+id="iceNo"
+>
+氷なし
+</button>
+
+</div>
+
+<div
+id="iceState"
+class="muted"
+style="margin-top:10px"
+></div>
+
+</div>
+
+
+<div class="card">
+
+<h2>特記事項</h2>
+
+<div id="vNote" class="note">
+特記事項なし
+</div>
+
+</div>
+
+
+<div class="card">
+
+<button
+class="secondary"
+id="editBtn"
+>
+この部屋を修正
+</button>
+
+</div>
+
 </section>
 
-<section id="editView" class="hidden">
- <div class="card">
-  <h2 id="editTitle">部屋データ編集</h2>
-  <label>部屋番号</label><input id="eRoom" inputmode="numeric">
-  <div style="height:8px"></div>
-  <div class="grid2">
-    <div><label>大人</label><input id="eAdult" inputmode="numeric" type="number" min="0"></div>
-    <div><label>子供</label><input id="eChild" inputmode="numeric" type="number" min="0"></div>
-  </div>
-  <div style="height:8px"></div>
-  <label>食事区分</label>
-  <select id="eMeal">
-    <option value="dinner">夕食あり</option>
-    <option value="breakfast">朝食のみ</option>
-    <option value="none">素泊まり</option>
-    <option value="unknown">不明</option>
-  </select>
-  <div style="height:8px"></div>
-  <label>備考・特記事項</label><textarea id="eNote" rows="4"></textarea>
-  <div style="height:12px"></div>
-  <div class="grid2"><button class="secondary" id="cancelEdit">キャンセル</button><button id="saveEdit">保存</button></div>
- </div>
+
+<section
+id="editView"
+class="hidden"
+>
+
+<div class="card">
+
+<h2 id="editTitle">
+部屋データ編集
+</h2>
+
+<label>
+部屋番号
+</label>
+
+<input
+id="eRoom"
+inputmode="numeric"
+>
+
+<div style="height:8px"></div>
+
+<div class="grid2">
+
+<div>
+
+<label>
+大人
+</label>
+
+<input
+id="eAdult"
+inputmode="numeric"
+type="number"
+min="0"
+>
+
+</div>
+
+<div>
+
+<label>
+子供
+</label>
+
+<input
+id="eChild"
+inputmode="numeric"
+type="number"
+min="0"
+>
+
+</div>
+
+</div>
+
+<div style="height:8px"></div>
+
+<label>
+食事区分
+</label>
+
+<select id="eMeal">
+
+<option value="dinner">
+夕食あり
+</option>
+
+<option value="breakfast">
+朝食のみ
+</option>
+
+<option value="none">
+素泊まり
+</option>
+
+<option value="unknown">
+不明
+</option>
+
+</select>
+
+<div style="height:8px"></div>
+
+<label>
+備考・特記事項
+</label>
+
+<textarea
+id="eNote"
+rows="4"
+></textarea>
+
+<div style="height:12px"></div>
+
+<div class="grid2">
+
+<button
+class="secondary"
+id="cancelEdit"
+>
+キャンセル
+</button>
+
+<button id="saveEdit">
+保存
+</button>
+
+</div>
+
+</div>
+
 </section>
+
 </main>
 
+
 <footer>
-  <button id="iceListBtn" class="secondary">氷補充リスト</button>
+
+<button
+id="iceListBtn"
+class="secondary"
+>
+氷補充リスト
+</button>
+
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
-<script>
-const $=id=>document.getElementById(id);
-let rooms=JSON.parse(localStorage.getItem('rooms')||'[]');
-let current=null, editingNew=false;
 
-function save(){ localStorage.setItem('rooms',JSON.stringify(rooms)); renderList(); updateStats(); }
+<script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+
+<script>
+
+const $ = id =>
+document.getElementById(id);
+
+
+let rooms =
+JSON.parse(
+localStorage.getItem('rooms') || '[]'
+);
+
+
+let current = null;
+
+let editingNew = false;
+
+let selectedPhotoFile = null;
+
+
+/* ========================
+写真選択
+======================== */
+
+function setSelectedPhoto(file){
+
+selectedPhotoFile = file || null;
+
+$('selectedPhotoName').textContent =
+selectedPhotoFile
+? '選択中：' + selectedPhotoFile.name
+: '写真未選択';
+
+}
+
+
+$('cameraPhoto')
+.addEventListener(
+'change',
+e => {
+
+setSelectedPhoto(
+e.target.files?.[0] || null
+);
+
+}
+);
+
+
+$('libraryPhoto')
+.addEventListener(
+'change',
+e => {
+
+setSelectedPhoto(
+e.target.files?.[0] || null
+);
+
+}
+);
+
+
+/* ========================
+保存
+======================== */
+
+function save(){
+
+localStorage.setItem(
+'rooms',
+JSON.stringify(rooms)
+);
+
+renderList();
+
+updateStats();
+
+}
+
+
+/* ========================
+集計
+======================== */
+
 function updateStats(){
- $('roomCount').textContent=rooms.length;
- $('boxCount').textContent=rooms.filter(r=>r.meal==='dinner').length;
- $('iceCount').textContent=rooms.filter(r=>r.ice==='no').length;
+
+$('roomCount').textContent =
+rooms.length;
+
+$('boxCount').textContent =
+rooms.filter(
+r => r.meal === 'dinner'
+).length;
+
+$('iceCount').textContent =
+rooms.filter(
+r => r.ice === 'no'
+).length;
+
 }
-function sheetsFor(n){ return Math.min(Math.max(Number(n)||0,0),4); }
-function esc(s){return String(s??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+
+
+/* ========================
+シーツ数
+======================== */
+
+function sheetsFor(n){
+
+return Math.min(
+Math.max(
+Number(n) || 0,
+0
+),
+4
+);
+
+}
+
+
+/* ========================
+HTMLエスケープ
+======================== */
+
+function esc(s){
+
+return String(s ?? '')
+.replace(
+/[&<>"]/g,
+m => ({
+'&':'&amp;',
+'<':'&lt;',
+'>':'&gt;',
+'"':'&quot;'
+}[m])
+);
+
+}
+
+
+/* ========================
+部屋一覧
+======================== */
+
 function renderList(){
- const box=$('roomList');
- if(!rooms.length){box.innerHTML='まだデータがありません。';return}
- rooms.sort((a,b)=>String(a.room).localeCompare(String(b.room),'ja',{numeric:true}));
- box.innerHTML=rooms.map(r=>{
-  const t=(r.adult||0)+(r.child||0);
-  const warn=r.meal==='unknown'?'<span class="warn">食事不明</span>':'';
-  return `<div class="roomRow"><strong>${esc(r.room)}号室</strong><div>
-    <span class="pill">${t}名</span><span class="pill">シーツ${sheetsFor(t)}</span>
-    <span class="pill">BOX:${r.meal==='dinner'?'1':'0'}</span>${warn}
-    ${r.note?'<div class="warn">⚠ '+esc(r.note)+'</div>':''}
-  </div><button class="secondary" onclick="showRoom('${esc(r.room)}')">表示</button></div>`
- }).join('');
+
+const box =
+$('roomList');
+
+
+if(!rooms.length){
+
+box.innerHTML =
+'まだデータがありません。';
+
+return;
+
 }
-function showSection(id){ ['home','roomView','editView'].forEach(x=>$(x).classList.toggle('hidden',x!==id)); }
-window.showRoom=function(room){
- current=rooms.find(r=>String(r.room)===String(room));
- if(!current){alert('部屋が見つかりません');return}
- const total=(+current.adult||0)+(+current.child||0);
- $('vRoom').textContent=current.room;$('vAdult').textContent=current.adult||0;$('vChild').textContent=current.child||0;
- $('vTotal').textContent=total;$('vSheets').textContent=sheetsFor(total);
- $('vBox').textContent=current.meal==='dinner'?'1個 必要':'不要';
- $('vBox').className=current.meal==='dinner'?'mid warn':'mid';
- $('vNote').textContent=current.note?.trim()||'特記事項なし';
- $('iceState').textContent=current.ice==='yes'?'確認済み：氷あり':current.ice==='no'?'要補充：氷なし':'未確認';
- showSection('roomView');
+
+
+rooms.sort(
+(a,b) =>
+String(a.room)
+.localeCompare(
+String(b.room),
+'ja',
+{numeric:true}
+)
+);
+
+
+box.innerHTML =
+rooms.map(r=>{
+
+const total =
+(r.adult || 0)
++
+(r.child || 0);
+
+
+const warn =
+r.meal === 'unknown'
+?
+'<span class="warn">食事不明</span>'
+:
+'';
+
+
+return `
+
+<div class="roomRow">
+
+<strong>
+${esc(r.room)}号室
+</strong>
+
+<div>
+
+<span class="pill">
+${total}名
+</span>
+
+<span class="pill">
+シーツ${sheetsFor(total)}
+</span>
+
+<span class="pill">
+BOX:${r.meal === 'dinner' ? '1' : '0'}
+</span>
+
+${warn}
+
+${
+r.note
+?
+'<div class="warn">⚠ '
++
+esc(r.note)
++
+'</div>'
+:
+''
 }
+
+</div>
+
+<button
+class="secondary"
+onclick="showRoom('${esc(r.room)}')"
+>
+表示
+</button>
+
+</div>
+
+`;
+
+}).join('');
+
+}
+
+
+/* ========================
+画面切替
+======================== */
+
+function showSection(id){
+
+[
+'home',
+'roomView',
+'editView'
+]
+.forEach(
+x =>
+$(x)
+.classList
+.toggle(
+'hidden',
+x !== id
+)
+);
+
+}
+
+
+/* ========================
+部屋表示
+======================== */
+
+window.showRoom =
+function(room){
+
+current =
+rooms.find(
+r =>
+String(r.room)
+===
+String(room)
+);
+
+
+if(!current){
+
+alert(
+'部屋が見つかりません'
+);
+
+return;
+
+}
+
+
+const total =
+(+current.adult || 0)
++
+(+current.child || 0);
+
+
+$('vRoom').textContent =
+current.room;
+
+
+$('vAdult').textContent =
+current.adult || 0;
+
+
+$('vChild').textContent =
+current.child || 0;
+
+
+$('vTotal').textContent =
+total;
+
+
+$('vSheets').textContent =
+sheetsFor(total);
+
+
+$('vBox').textContent =
+current.meal === 'dinner'
+?
+'1個 必要'
+:
+'不要';
+
+
+$('vBox').className =
+current.meal === 'dinner'
+?
+'mid warn'
+:
+'mid';
+
+
+$('vNote').textContent =
+current.note?.trim()
+||
+'特記事項なし';
+
+
+$('iceState').textContent =
+current.ice === 'yes'
+?
+'確認済み：氷あり'
+:
+current.ice === 'no'
+?
+'要補充：氷なし'
+:
+'未確認';
+
+
+showSection(
+'roomView'
+);
+
+}
+
+
+/* ========================
+編集
+======================== */
+
 function openEdit(r=null){
- editingNew=!r;
- $('editTitle').textContent=r?'部屋データ編集':'部屋を追加';
- $('eRoom').value=r?.room||'';$('eAdult').value=r?.adult??0;$('eChild').value=r?.child??0;
- $('eMeal').value=r?.meal||'unknown';$('eNote').value=r?.note||'';
- showSection('editView');
+
+editingNew =
+!r;
+
+
+$('editTitle').textContent =
+r
+?
+'部屋データ編集'
+:
+'部屋を追加';
+
+
+$('eRoom').value =
+r?.room || '';
+
+
+$('eAdult').value =
+r?.adult ?? 0;
+
+
+$('eChild').value =
+r?.child ?? 0;
+
+
+$('eMeal').value =
+r?.meal || 'unknown';
+
+
+$('eNote').value =
+r?.note || '';
+
+
+showSection(
+'editView'
+);
+
 }
-$('backBtn').onclick=()=>showSection('home');
-$('addRoomBtn').onclick=()=>openEdit();
-$('editBtn').onclick=()=>openEdit(current);
-$('cancelEdit').onclick=()=> current?showRoom(current.room):showSection('home');
-$('saveEdit').onclick=()=>{
- const obj={room:$('eRoom').value.trim(),adult:+$('eAdult').value||0,child:+$('eChild').value||0,meal:$('eMeal').value,note:$('eNote').value.trim(),ice:current?.ice||null};
- if(!obj.room){alert('部屋番号を入力してください');return}
- if(editingNew){rooms.push(obj)}else{
-   const i=rooms.indexOf(current); if(i>=0) rooms[i]=obj; current=obj;
- }
- save(); showRoom(obj.room);
+
+
+$('backBtn').onclick =
+() =>
+showSection('home');
+
+
+$('addRoomBtn').onclick =
+() =>
+openEdit();
+
+
+$('editBtn').onclick =
+() =>
+openEdit(current);
+
+
+$('cancelEdit').onclick =
+() => {
+
+if(current){
+
+showRoom(
+current.room
+);
+
+}else{
+
+showSection(
+'home'
+);
+
 }
-$('quickBtn').onclick=()=>showRoom($('quickRoom').value.trim());
-$('quickRoom').addEventListener('keydown',e=>{if(e.key==='Enter')$('quickBtn').click()});
-$('iceYes').onclick=()=>{current.ice='yes';save();showRoom(current.room)};
-$('iceNo').onclick=()=>{current.ice='no';save();showRoom(current.room)};
-$('iceListBtn').onclick=()=>{
- const list=rooms.filter(r=>r.ice==='no');
- if(!list.length){alert('氷補充が必要な部屋はありません');return}
- alert('氷補充：'+list.length+'室\n\n'+list.map(r=>r.room+'号室').join('\n'));
+
 };
 
-// OCR text heuristics.
-// Best effort: recognizes lines containing room number + counts + meal keywords.
-// Because hotel forms vary, questionable data remains editable.
-function parseOCR(text){
- const lines=text.split(/\n+/).map(s=>s.replace(/[|｜]/g,' ').replace(/\s+/g,' ').trim()).filter(Boolean);
- const out=[];
- for(const line of lines){
-   const m=line.match(/(?:^|\s)(\d{2,4})(?:\s|$)/);
-   if(!m) continue;
-   const room=m[1];
-   // numbers after room; use first six small integers as sex/child columns if available
-   const rest=line.slice(line.indexOf(room)+room.length);
-   const nums=[...rest.matchAll(/(?:^|\s)(\d)(?=\s|$)/g)].map(x=>+x[1]).slice(0,6);
-   let adult=0, child=0;
-   if(nums.length>=2){adult=(nums[0]||0)+(nums[1]||0);child=nums.slice(2,6).reduce((a,b)=>a+b,0)}
-   const meal=/朝食のみ|朝のみ/.test(line)?'breakfast':/素泊|食事なし/.test(line)?'none':/夕食|レギュラー|2食|二食/.test(line)?'dinner':'unknown';
-   // note: keep text after known columns; user can correct
-   const noteTokens=['アレルギー','記念','誕生日','連泊','車椅子','ベッド','幼児','離乳'];
-   const note=noteTokens.some(k=>line.includes(k))?line:'';
-   if(!out.some(r=>r.room===room)) out.push({room,adult,child,meal,note,ice:null});
- }
- return out;
+
+/* ========================
+保存
+======================== */
+
+$('saveEdit').onclick =
+()=>{
+
+const obj = {
+
+room:
+$('eRoom')
+.value
+.trim(),
+
+adult:
++$('eAdult').value || 0,
+
+child:
++$('eChild').value || 0,
+
+meal:
+$('eMeal').value,
+
+note:
+$('eNote')
+.value
+.trim(),
+
+ice:
+current?.ice || null
+
+};
+
+
+if(!obj.room){
+
+alert(
+'部屋番号を入力してください'
+);
+
+return;
+
 }
 
-$('readBtn').onclick=async()=>{
- const f=$('photo').files[0]; if(!f){alert('先に写真を選んでください');return}
- $('ocrBox').classList.remove('hidden');$('ocrStatus').textContent='OCRを開始しています…';
- try{
-  const worker=await Tesseract.createWorker('jpn+eng',1,{logger:m=>{
-    if(m.status==='recognizing text'){
-      $('ocrProgress').firstElementChild.style.width=Math.round((m.progress||0)*100)+'%';
-      $('ocrStatus').textContent='読み取り中 '+Math.round((m.progress||0)*100)+'%';
-    }else{$('ocrStatus').textContent=m.status||'処理中…'}
-  }});
-  const ret=await worker.recognize(f);
-  await worker.terminate();
-  const parsed=parseOCR(ret.data.text);
-  if(!parsed.length){
-    $('ocrStatus').textContent='自動抽出できませんでした。部屋を手動追加してください。';
-    alert('表の文字は読み取りましたが、部屋データを自動抽出できませんでした。写真を明るく正面から撮り直すか、手動追加してください。');
-    return;
-  }
-  // Replace today's dataset after confirmation
-  if(rooms.length && !confirm('現在のデータを、新しく読み取った表で置き換えますか？')) return;
-  rooms=parsed; save();
-  $('ocrStatus').textContent=parsed.length+'室を抽出しました。赤い警告・備考を確認してください。';
-  alert(parsed.length+'室を読み取りました。必ず人数・食事区分・備考を確認してください。');
- }catch(e){
-  console.error(e); $('ocrStatus').textContent='OCRに失敗しました';
-  alert('OCRに失敗しました。通信状態を確認するか、手動入力を利用してください。');
- }
+
+if(editingNew){
+
+rooms.push(obj);
+
+}else{
+
+const i =
+rooms.indexOf(current);
+
+if(i >= 0){
+
+rooms[i] = obj;
+
 }
-renderList();updateStats();
-if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+
+current = obj;
+
+}
+
+
+save();
+
+showRoom(
+obj.room
+);
+
+}
+
+
+/* ========================
+検索
+======================== */
+
+$('quickBtn').onclick =
+() =>
+showRoom(
+$('quickRoom')
+.value
+.trim()
+);
+
+
+$('quickRoom')
+.addEventListener(
+'keydown',
+e => {
+
+if(e.key === 'Enter'){
+
+$('quickBtn')
+.click();
+
+}
+
+}
+);
+
+
+/* ========================
+氷
+======================== */
+
+$('iceYes').onclick =
+()=>{
+
+current.ice =
+'yes';
+
+save();
+
+showRoom(
+current.room
+);
+
+};
+
+
+$('iceNo').onclick =
+()=>{
+
+current.ice =
+'no';
+
+save();
+
+showRoom(
+current.room
+);
+
+};
+
+
+/* ========================
+氷補充一覧
+======================== */
+
+$('iceListBtn').onclick =
+()=>{
+
+const list =
+rooms.filter(
+r =>
+r.ice === 'no'
+);
+
+
+if(!list.length){
+
+alert(
+'氷補充が必要な部屋はありません'
+);
+
+return;
+
+}
+
+
+alert(
+
+'氷補充：'
++
+list.length
++
+'室\n\n'
++
+list
+.map(
+r =>
+r.room
++
+'号室'
+)
+.join('\n')
+
+);
+
+};
+
+
+/* ========================
+OCR解析
+======================== */
+
+function parseOCR(text){
+
+const lines =
+text
+.split(/\n+/)
+.map(
+s =>
+s
+.replace(
+/[|｜]/g,
+' '
+)
+.replace(
+/\s+/g,
+' '
+)
+.trim()
+)
+.filter(Boolean);
+
+
+const out = [];
+
+
+for(
+const line of lines
+){
+
+const m =
+line.match(
+/(?:^|\s)(\d{2,4})(?:\s|$)/
+);
+
+
+if(!m)
+continue;
+
+
+const room =
+m[1];
+
+
+const rest =
+line.slice(
+line.indexOf(room)
++
+room.length
+);
+
+
+const nums =
+[
+...rest.matchAll(
+/(?:^|\s)(\d)(?=\s|$)/g
+)
+]
+.map(
+x => +x[1]
+)
+.slice(
+0,
+6
+);
+
+
+let adult = 0;
+
+let child = 0;
+
+
+if(
+nums.length >= 2
+){
+
+adult =
+(nums[0] || 0)
++
+(nums[1] || 0);
+
+
+child =
+nums
+.slice(
+2,
+6
+)
+.reduce(
+(a,b) =>
+a+b,
+0
+);
+
+}
+
+
+const meal =
+/朝食のみ|朝のみ/.test(line)
+?
+'breakfast'
+:
+ /素泊|食事なし/.test(line)
+?
+'none'
+:
+ /夕食|レギュラー|2食|二食/.test(line)
+?
+'dinner'
+:
+'unknown';
+
+
+const noteTokens = [
+
+'アレルギー',
+'記念',
+'誕生日',
+'連泊',
+'車椅子',
+'ベッド',
+'幼児',
+'離乳'
+
+];
+
+
+const note =
+noteTokens.some(
+k =>
+line.includes(k)
+)
+?
+line
+:
+'';
+
+
+if(
+!out.some(
+r =>
+r.room === room
+)
+){
+
+out.push({
+
+room,
+adult,
+child,
+meal,
+note,
+ice:null
+
+});
+
+}
+
+}
+
+
+return out;
+
+}
+
+
+/* ========================
+写真OCR
+======================== */
+
+$('readBtn').onclick =
+async()=>{
+
+const f =
+selectedPhotoFile;
+
+
+if(!f){
+
+alert(
+'先に「カメラで撮影」または「写真ライブラリ」から写真を選んでください'
+);
+
+return;
+
+}
+
+
+$('ocrBox')
+.classList
+.remove(
+'hidden'
+);
+
+
+$('ocrStatus').textContent =
+'OCRを開始しています…';
+
+
+try{
+
+
+const worker =
+await Tesseract.createWorker(
+
+'jpn+eng',
+
+1,
+
+{
+
+logger:m=>{
+
+if(
+m.status ===
+'recognizing text'
+){
+
+$('ocrProgress')
+.firstElementChild
+.style.width =
+Math.round(
+(m.progress || 0)
+*
+100
+)
++
+'%';
+
+
+$('ocrStatus').textContent =
+
+'読み取り中 '
+
++
+Math.round(
+(m.progress || 0)
+*
+100
+)
+
++
+'%';
+
+}else{
+
+$('ocrStatus').textContent =
+m.status
+||
+'処理中…';
+
+}
+
+}
+
+}
+);
+
+
+const ret =
+await worker.recognize(
+f
+);
+
+
+await worker.terminate();
+
+
+const parsed =
+parseOCR(
+ret.data.text
+);
+
+
+if(
+!parsed.length
+){
+
+$('ocrStatus').textContent =
+'自動抽出できませんでした。部屋を手動追加してください。';
+
+
+alert(
+'表の文字は読み取りましたが、部屋データを自動抽出できませんでした。写真を明るく正面から撮り直すか、手動追加してください。'
+);
+
+return;
+
+}
+
+
+if(
+rooms.length
+&&
+!confirm(
+'現在のデータを、新しく読み取った表で置き換えますか？'
+)
+){
+
+return;
+
+}
+
+
+rooms =
+parsed;
+
+
+save();
+
+
+$('ocrStatus').textContent =
+
+parsed.length
+
++
+'室を抽出しました。赤い警告・備考を確認してください。';
+
+
+alert(
+
+parsed.length
+
++
+'室を読み取りました。必ず人数・食事区分・備考を確認してください。'
+
+);
+
+
+}catch(e){
+
+
+console.error(e);
+
+
+$('ocrStatus').textContent =
+'OCRに失敗しました';
+
+
+alert(
+'OCRに失敗しました。通信状態を確認するか、手動入力を利用してください。'
+);
+
+}
+
+};
+
+
+/* ========================
+初期表示
+======================== */
+
+renderList();
+
+updateStats();
+
+
+if(
+'serviceWorker'
+in navigator
+&&
+location.protocol.startsWith('http')
+){
+
+navigator
+.serviceWorker
+.register('./sw.js')
+.catch(()=>{});
+
+}
+
 </script>
-</body></html>
+
+</body>
+</html>
