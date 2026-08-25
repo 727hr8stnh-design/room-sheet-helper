@@ -1,0 +1,9 @@
+{
+  "name": "客室仕込みヘルパー",
+  "short_name": "仕込み",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f4f4",
+  "theme_color": "#111111",
+  "icons": []
+}
