@@ -4,23 +4,36 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#111111">
-<title>客室仕込みヘルパー 8/26</title>
+
+<title>客室仕込みヘルパー</title>
 
 <style>
+
 :root{
   --bg:#f4f4f4;
-  --card:#fff;
-  --text:#111;
-  --muted:#666;
+  --card:#ffffff;
+  --text:#111111;
+  --muted:#666666;
+  --border:#dddddd;
   --danger:#b00020;
+  --danger-bg:#fff0f2;
   --ok:#126a2f;
+  --ok-bg:#eaf6ee;
+  --blue:#175cd3;
 }
 
-*{box-sizing:border-box}
+*{
+  box-sizing:border-box;
+}
 
 body{
   margin:0;
-  font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Yu Gothic",sans-serif;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Helvetica Neue",
+    "Yu Gothic",
+    sans-serif;
   background:var(--bg);
   color:var(--text);
 }
@@ -28,40 +41,51 @@ body{
 header{
   position:sticky;
   top:0;
-  z-index:5;
+  z-index:20;
   background:#111;
   color:#fff;
-  padding:16px;
-  font-size:20px;
+  padding:
+    calc(14px + env(safe-area-inset-top))
+    16px
+    14px;
+  font-size:19px;
   font-weight:900;
 }
 
 main{
+  width:100%;
   max-width:760px;
   margin:auto;
   padding:14px 14px 120px;
 }
 
 .card{
-  background:#fff;
+  background:var(--card);
   border-radius:18px;
   padding:16px;
   margin-bottom:12px;
-  box-shadow:0 1px 8px #0001;
+  box-shadow:0 1px 8px #00000012;
 }
 
-h1,h2{
+h1,
+h2,
+h3{
   margin:0 0 14px;
 }
 
-h1{font-size:34px}
-h2{font-size:22px}
+h1{
+  font-size:34px;
+}
+
+h2{
+  font-size:21px;
+}
 
 button{
   appearance:none;
   border:0;
   border-radius:13px;
-  padding:15px 16px;
+  padding:15px 14px;
   font-size:17px;
   font-weight:900;
   background:#111;
@@ -82,9 +106,30 @@ button.danger{
   background:var(--danger);
 }
 
+button.blue{
+  background:var(--blue);
+}
+
 button:disabled{
   opacity:.35;
-  cursor:default;
+}
+
+input,
+textarea,
+select{
+  width:100%;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+  padding:13px;
+  font-size:18px;
+  font-family:inherit;
+}
+
+textarea{
+  min-height:230px;
+  resize:vertical;
+  line-height:1.45;
 }
 
 .grid2{
@@ -102,14 +147,14 @@ button:disabled{
 .stat{
   background:#f0f0f0;
   border-radius:14px;
-  padding:13px 5px;
+  padding:12px 5px;
   text-align:center;
-  font-size:17px;
 }
 
 .stat strong{
   display:block;
-  font-size:32px;
+  margin-top:3px;
+  font-size:30px;
 }
 
 .big{
@@ -118,30 +163,51 @@ button:disabled{
 }
 
 .mid{
-  font-size:28px;
+  font-size:27px;
   font-weight:900;
 }
 
 .muted{
-  color:#666;
+  color:var(--muted);
 }
 
 .warn{
-  color:#b00020;
+  color:var(--danger);
   font-weight:900;
 }
 
 .hidden{
-  display:none!important;
+  display:none !important;
+}
+
+.status{
+  border-radius:12px;
+  padding:12px;
+  margin-top:12px;
+  font-weight:800;
+}
+
+.status.ok{
+  background:var(--ok-bg);
+  color:var(--ok);
+}
+
+.status.error{
+  background:var(--danger-bg);
+  color:var(--danger);
 }
 
 .roomRow{
   display:grid;
-  grid-template-columns:75px 1fr 85px;
-  gap:8px;
+  grid-template-columns:68px 1fr 72px;
   align-items:center;
-  padding:13px 0;
+  gap:7px;
+  padding:12px 0;
   border-bottom:1px solid #eee;
+}
+
+.roomRow:last-child{
+  border-bottom:0;
 }
 
 .roomRow strong{
@@ -150,22 +216,22 @@ button:disabled{
 
 .pill{
   display:inline-block;
-  background:#eee;
   border-radius:999px;
-  padding:5px 9px;
-  margin:2px;
-  font-size:13px;
+  padding:5px 8px;
+  margin:2px 1px;
+  background:#eee;
+  font-size:12px;
   font-weight:800;
 }
 
-.ice-ok{
-  background:#e4f5e9;
-  color:#126a2f;
+.pill.iceYes{
+  color:var(--ok);
+  background:var(--ok-bg);
 }
 
-.ice-no{
-  background:#ffe4e8;
-  color:#b00020;
+.pill.iceNo{
+  color:var(--danger);
+  background:var(--danger-bg);
 }
 
 .note{
@@ -178,88 +244,142 @@ button:disabled{
   white-space:pre-wrap;
 }
 
-input{
-  width:100%;
-  padding:14px;
+.dateBox{
   font-size:19px;
-  border:1px solid #ddd;
-  border-radius:12px;
+  font-weight:900;
 }
 
-.iceReset{
-  width:100%;
+.importHelp{
+  font-size:14px;
+  line-height:1.55;
   margin-top:10px;
 }
 
 .roomNav{
-  margin-top:4px;
+  position:sticky;
+  bottom:74px;
+  z-index:5;
 }
 
 footer{
   position:fixed;
-  bottom:0;
   left:0;
   right:0;
+  bottom:0;
+  z-index:30;
   background:#fff;
   border-top:1px solid #ddd;
-  padding:10px 14px calc(10px + env(safe-area-inset-bottom));
-  z-index:10;
+  padding:
+    10px
+    14px
+    calc(10px + env(safe-area-inset-bottom));
 }
 
 footer button{
   width:100%;
 }
+
+@media(max-width:420px){
+
+  main{
+    padding-left:10px;
+    padding-right:10px;
+  }
+
+  .roomRow{
+    grid-template-columns:62px 1fr 66px;
+  }
+
+  .roomRow button{
+    padding:12px 6px;
+    font-size:15px;
+  }
+
+}
+
 </style>
 </head>
 
 <body>
 
-<header>客室仕込みヘルパー｜8/26</header>
+<header>
+  客室仕込みヘルパー
+</header>
 
 <main>
 
-<!-- =========================
-     一覧画面
-========================= -->
+<!-- ==================================================
+     HOME
+================================================== -->
 
-<section id="home">
+<section id="homeView">
 
   <div class="card">
-    <h2>部屋をすぐ確認</h2>
+
+    <div class="muted">
+      現在のアサイン
+    </div>
+
+    <div
+      id="currentDate"
+      class="dateBox"
+    >
+      データ未登録
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>
+      部屋をすぐ確認
+    </h2>
 
     <div class="grid2">
+
       <input
         id="quickRoom"
         inputmode="numeric"
-        placeholder="部屋番号"
+        placeholder="例：12"
       >
 
       <button id="quickBtn">
         表示
       </button>
+
     </div>
+
   </div>
 
 
   <div class="card">
 
-    <h2>本日の集計</h2>
+    <h2>
+      本日の集計
+    </h2>
 
     <div class="grid3">
 
       <div class="stat">
         使用室
-        <strong id="roomCount">0</strong>
+        <strong id="roomCount">
+          0
+        </strong>
       </div>
 
       <div class="stat">
         宿泊者
-        <strong id="guestCount">0</strong>
+        <strong id="guestCount">
+          0
+        </strong>
       </div>
 
       <div class="stat">
         氷補充
-        <strong id="iceCount">0</strong>
+        <strong id="iceCount">
+          0
+        </strong>
       </div>
 
     </div>
@@ -269,56 +389,183 @@ footer button{
 
   <div class="card">
 
-    <h2>読み取り結果</h2>
+    <button
+      id="openImportBtn"
+      class="blue"
+      style="width:100%"
+    >
+      本日のアサインを更新
+    </button>
 
-    <div id="roomList"></div>
+  </div>
+
+
+  <div class="card">
+
+    <h2>
+      部屋一覧
+    </h2>
+
+    <div id="roomList">
+
+      <div class="muted">
+        本日のデータを登録してください。
+      </div>
+
+    </div>
 
   </div>
 
 </section>
 
 
-<!-- =========================
-     部屋詳細
-========================= -->
 
-<section id="roomView" class="hidden">
+<!-- ==================================================
+     IMPORT
+================================================== -->
+
+<section
+  id="importView"
+  class="hidden"
+>
 
   <div class="card">
 
     <button
+      id="importBackBtn"
       class="secondary"
-      id="backBtn"
+    >
+      ← 戻る
+    </button>
+
+    <div style="height:16px"></div>
+
+    <h2>
+      本日のアサインを更新
+    </h2>
+
+    <div class="importHelp muted">
+
+      ChatGPTで今日の用紙を読み取ったあと、
+      出力されたJSONを下に貼り付けてください。
+
+    </div>
+
+    <div style="height:12px"></div>
+
+    <textarea
+      id="importText"
+      placeholder='{
+  "date":"2026-08-27",
+  "rooms":[
+    {
+      "room":1,
+      "adult":2,
+      "child":1,
+      "meal":"dinner",
+      "note":""
+    }
+  ]
+}'
+    ></textarea>
+
+
+    <div style="height:12px"></div>
+
+
+    <button
+      id="importBtn"
+      class="blue"
+      style="width:100%"
+    >
+      このデータを反映
+    </button>
+
+
+    <div
+      id="importStatus"
+      class="hidden"
+    ></div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2>
+      食事区分
+    </h2>
+
+    <div class="muted importHelp">
+
+      dinner ＝ 夕食あり<br>
+      premium ＝ プレミアム<br>
+      breakfast ＝ 朝食のみ<br>
+      none ＝ 素泊まり<br>
+      unknown ＝ 不明
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ==================================================
+     ROOM DETAIL
+================================================== -->
+
+<section
+  id="roomView"
+  class="hidden"
+>
+
+  <div class="card">
+
+    <button
+      id="roomBackBtn"
+      class="secondary"
     >
       ← 一覧
     </button>
 
+
     <div style="height:18px"></div>
+
 
     <h1>
       <span id="vRoom"></span>号室
     </h1>
 
+
     <div class="grid3">
 
       <div class="stat">
         大人
-        <strong id="vAdult">0</strong>
+        <strong id="vAdult">
+          0
+        </strong>
       </div>
 
       <div class="stat">
         子供
-        <strong id="vChild">0</strong>
+        <strong id="vChild">
+          0
+        </strong>
       </div>
 
       <div class="stat">
         合計
-        <strong id="vTotal">0</strong>
+        <strong id="vTotal">
+          0
+        </strong>
       </div>
 
     </div>
 
   </div>
+
 
 
   <div class="card">
@@ -328,10 +575,14 @@ footer button{
     </div>
 
     <div class="big">
-      <span id="vSheets">0</span>セット
+      <span id="vSheets">
+        0
+      </span>
+      セット
     </div>
 
   </div>
+
 
 
   <div class="card">
@@ -344,7 +595,7 @@ footer button{
       id="vBox"
       class="mid"
     >
-      確認
+      不要
     </div>
 
     <div
@@ -356,24 +607,25 @@ footer button{
   </div>
 
 
-  <!-- 氷確認 -->
 
   <div class="card">
 
-    <h2>氷確認</h2>
+    <h2>
+      氷確認
+    </h2>
 
     <div class="grid2">
 
       <button
+        id="iceYesBtn"
         class="ok"
-        id="iceYes"
       >
         氷あり
       </button>
 
       <button
+        id="iceNoBtn"
         class="danger"
-        id="iceNo"
       >
         氷なし
       </button>
@@ -381,9 +633,13 @@ footer button{
     </div>
 
 
+    <div style="height:10px"></div>
+
+
     <button
-      class="secondary iceReset"
-      id="iceReset"
+      id="iceResetBtn"
+      class="secondary"
+      style="width:100%"
     >
       氷確認をリセット
     </button>
@@ -400,11 +656,12 @@ footer button{
   </div>
 
 
-  <!-- 特記事項 -->
 
   <div class="card">
 
-    <h2>特記事項</h2>
+    <h2>
+      特記事項
+    </h2>
 
     <div
       id="vNote"
@@ -416,22 +673,21 @@ footer button{
   </div>
 
 
-  <!-- 前後の部屋 -->
 
   <div class="card roomNav">
 
     <div class="grid2">
 
       <button
-        class="secondary"
         id="prevRoomBtn"
+        class="secondary"
       >
         ← 前の部屋
       </button>
 
       <button
-        class="secondary"
         id="nextRoomBtn"
+        class="secondary"
       >
         次の部屋 →
       </button>
@@ -445,11 +701,12 @@ footer button{
 </main>
 
 
+
 <footer>
 
   <button
-    class="secondary"
     id="iceListBtn"
+    class="secondary"
   >
     氷補充リスト
   </button>
@@ -457,288 +714,31 @@ footer button{
 </footer>
 
 
+
 <script>
 
-/*
-==================================================
-2026/8/26
-ルームアサインデータ
-==================================================
-*/
+/* ==================================================
+   STORAGE
+================================================== */
 
-const TODAY_DATA = [
+const DATA_KEY =
+  "room_helper_daily_data";
 
-  {
-    room:1,
-    adult:3,
-    child:0,
-    meal:"dinner",
-    note:"カラオケ18時半〜"
-  },
-
-  {
-    room:2,
-    adult:2,
-    child:1,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:3,
-    adult:1,
-    child:1,
-    meal:"breakfast",
-    note:""
-  },
-
-  // 4号室は空室
-
-  {
-    room:5,
-    adult:3,
-    child:1,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:6,
-    adult:2,
-    child:2,
-    meal:"none",
-    note:"前日もGRAX有り／夕食・朝食はホテルで利用（料金同額）"
-  },
-
-  {
-    room:7,
-    adult:2,
-    child:1,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:8,
-    adult:2,
-    child:2,
-    meal:"breakfast",
-    note:""
-  },
-
-  {
-    room:9,
-    adult:2,
-    child:4,
-    meal:"premium",
-    note:""
-  },
-
-  {
-    room:10,
-    adult:2,
-    child:2,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:11,
-    adult:3,
-    child:1,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:12,
-    adult:2,
-    child:1,
-    meal:"none",
-    note:"前ホテル"
-  },
-
-  {
-    room:13,
-    adult:2,
-    child:0,
-    meal:"none",
-    note:""
-  },
-
-  {
-    room:14,
-    adult:1,
-    child:0,
-    meal:"none",
-    note:"REDに空きがないのでGRAXで押さえています"
-  },
-
-  {
-    room:15,
-    adult:2,
-    child:2,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:16,
-    adult:2,
-    child:1,
-    meal:"dinner",
-    note:"オオサカ チョウタ様同グループ"
-  },
-
-  {
-    room:17,
-    adult:4,
-    child:0,
-    meal:"dinner",
-    note:"支払い方法：現払い"
-  },
-
-  {
-    room:18,
-    adult:2,
-    child:2,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:19,
-    adult:3,
-    child:1,
-    meal:"dinner",
-    note:"カラオケ 8/26 20:00〜21:00 1H"
-  },
-
-  {
-    room:20,
-    adult:3,
-    child:1,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:21,
-    adult:2,
-    child:2,
-    meal:"breakfast",
-    note:""
-  },
-
-  {
-    room:22,
-    adult:2,
-    child:3,
-    meal:"dinner",
-    note:"GRAX 2/2・繋ぎなし・人数どっちでもOK"
-  },
-
-  {
-    room:23,
-    adult:2,
-    child:2,
-    meal:"premium",
-    note:"翌日ホテル"
-  },
-
-  {
-    room:24,
-    adult:2,
-    child:1,
-    meal:"none",
-    note:"朝食ホテルで利用"
-  },
-
-  {
-    room:25,
-    adult:2,
-    child:3,
-    meal:"none",
-    note:""
-  },
-
-  {
-    room:26,
-    adult:2,
-    child:2,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:27,
-    adult:2,
-    child:2,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:28,
-    adult:2,
-    child:1,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:29,
-    adult:3,
-    child:1,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:30,
-    adult:3,
-    child:2,
-    meal:"dinner",
-    note:"2グループ、ホンダカズヤ"
-  },
-
-  {
-    room:31,
-    adult:3,
-    child:1,
-    meal:"dinner",
-    note:""
-  },
-
-  {
-    room:32,
-    adult:2,
-    child:2,
-    meal:"premium",
-    note:"肉鍋希望"
-  }
-
-];
+const ICE_PREFIX =
+  "room_helper_ice_";
 
 
-/*
-==================================================
-基本設定
-==================================================
-*/
+let appData =
+  loadData();
 
-const ICE_KEY =
-  "ice_20260826";
+let currentRoom =
+  null;
 
 
-let iceData =
-  JSON.parse(
-    localStorage.getItem(ICE_KEY) || "{}"
-  );
 
-
-let current = null;
-
+/* ==================================================
+   BASIC
+================================================== */
 
 function $(id){
 
@@ -747,45 +747,117 @@ function $(id){
 }
 
 
-/*
-==================================================
-人数
-==================================================
-*/
+function loadData(){
 
-function total(r){
+  try{
 
-  return r.adult + r.child;
+    return JSON.parse(
+      localStorage.getItem(DATA_KEY)
+    ) || {
+      date:"",
+      rooms:[]
+    };
+
+  }catch(e){
+
+    return {
+      date:"",
+      rooms:[]
+    };
+
+  }
 
 }
 
 
-/*
-シーツは最大4セット
-*/
+function saveData(){
+
+  localStorage.setItem(
+    DATA_KEY,
+    JSON.stringify(appData)
+  );
+
+}
+
+
+function getIceKey(){
+
+  return ICE_PREFIX +
+    (
+      appData.date ||
+      "unknown"
+    );
+
+}
+
+
+function loadIce(){
+
+  try{
+
+    return JSON.parse(
+      localStorage.getItem(
+        getIceKey()
+      )
+    ) || {};
+
+  }catch(e){
+
+    return {};
+
+  }
+
+}
+
+
+function saveIce(data){
+
+  localStorage.setItem(
+    getIceKey(),
+    JSON.stringify(data)
+  );
+
+}
+
+
+
+/* ==================================================
+   ROOM HELPERS
+================================================== */
+
+function total(r){
+
+  return (
+    Number(r.adult) || 0
+  ) + (
+    Number(r.child) || 0
+  );
+
+}
+
 
 function sheets(r){
 
   return Math.min(
-    total(r),
+    Math.max(
+      total(r),
+      0
+    ),
     4
   );
 
 }
 
 
-/*
-==================================================
-食事
-==================================================
-*/
-
 function mealName(meal){
 
   switch(meal){
 
     case "dinner":
-      return "レギュラー";
+      return "夕食あり";
+
+    case "premium":
+      return "プレミアム";
 
     case "breakfast":
       return "朝食のみ";
@@ -793,20 +865,16 @@ function mealName(meal){
     case "none":
       return "素泊まり";
 
-    case "premium":
-      return "プレミアム";
+    case "unknown":
+      return "不明";
 
     default:
-      return "要確認";
+      return "不明";
 
   }
 
 }
 
-
-/*
-夕食付きの場合BOX必要
-*/
 
 function needsBox(r){
 
@@ -818,41 +886,159 @@ function needsBox(r){
 }
 
 
-/*
-==================================================
-一覧
-==================================================
-*/
+function sortedRooms(){
 
-function renderList(){
+  return [...appData.rooms]
+    .sort(
+      (a,b) =>
+        Number(a.room) -
+        Number(b.room)
+    );
 
-  const box =
+}
+
+
+
+/* ==================================================
+   VIEW
+================================================== */
+
+function showOnly(viewId){
+
+  [
+    "homeView",
+    "importView",
+    "roomView"
+  ].forEach(id=>{
+
+    $(id).classList.toggle(
+      "hidden",
+      id !== viewId
+    );
+
+  });
+
+}
+
+
+function showHome(){
+
+  showOnly(
+    "homeView"
+  );
+
+  currentRoom =
+    null;
+
+  renderAll();
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+}
+
+
+
+/* ==================================================
+   HOME RENDER
+================================================== */
+
+function renderAll(){
+
+  renderDate();
+
+  renderStats();
+
+  renderRooms();
+
+}
+
+
+function renderDate(){
+
+  $("currentDate").textContent =
+    appData.date
+      ? appData.date
+      : "データ未登録";
+
+}
+
+
+function renderStats(){
+
+  const ice =
+    loadIce();
+
+
+  $("roomCount").textContent =
+    appData.rooms.length;
+
+
+  $("guestCount").textContent =
+    appData.rooms.reduce(
+      (sum,r) =>
+        sum + total(r),
+      0
+    );
+
+
+  $("iceCount").textContent =
+    appData.rooms.filter(
+      r =>
+        ice[r.room] === "no"
+    ).length;
+
+}
+
+
+function renderRooms(){
+
+  const container =
     $("roomList");
 
 
-  box.innerHTML =
-    TODAY_DATA.map(r=>{
+  if(
+    !appData.rooms.length
+  ){
+
+    container.innerHTML =
+      '<div class="muted">本日のデータを登録してください。</div>';
+
+    return;
+
+  }
 
 
-      const ice =
-        iceData[r.room];
+  const ice =
+    loadIce();
+
+
+  container.innerHTML =
+    sortedRooms()
+    .map(r=>{
 
 
       let iceMark = "";
 
 
-      if(ice === "yes"){
+      if(
+        ice[r.room] === "yes"
+      ){
 
         iceMark =
-          '<span class="pill ice-ok">氷あり</span>';
+          '<span class="pill iceYes">氷あり</span>';
 
       }
 
 
-      if(ice === "no"){
+      if(
+        ice[r.room] === "no"
+      ){
 
         iceMark =
-          '<span class="pill ice-no">氷補充</span>';
+          '<span class="pill iceNo">氷補充</span>';
 
       }
 
@@ -865,6 +1051,7 @@ function renderList(){
           ${r.room}号室
         </strong>
 
+
         <div>
 
           <span class="pill">
@@ -872,11 +1059,11 @@ function renderList(){
           </span>
 
           <span class="pill">
-            大${r.adult}
+            大${Number(r.adult)||0}
           </span>
 
           <span class="pill">
-            子${r.child}
+            子${Number(r.child)||0}
           </span>
 
           <span class="pill">
@@ -894,7 +1081,7 @@ function renderList(){
 
         <button
           class="secondary"
-          onclick="showRoom(${r.room})"
+          onclick="showRoom(${Number(r.room)})"
         >
           表示
         </button>
@@ -903,167 +1090,31 @@ function renderList(){
 
       `;
 
-    }).join("");
+    })
+    .join("");
 
 }
 
 
-/*
-==================================================
-集計
-==================================================
-*/
 
-function updateStats(){
+/* ==================================================
+   ROOM VIEW
+================================================== */
 
+function showRoom(roomNumber){
 
-  $("roomCount").textContent =
-    TODAY_DATA.length;
-
-
-  $("guestCount").textContent =
-    TODAY_DATA.reduce(
-      (sum,r) => sum + total(r),
-      0
+  const room =
+    appData.rooms.find(
+      r =>
+        Number(r.room) ===
+        Number(roomNumber)
     );
 
 
-  $("iceCount").textContent =
-    TODAY_DATA.filter(
-      r => iceData[r.room] === "no"
-    ).length;
-
-}
-
-
-/*
-==================================================
-前後の部屋
-==================================================
-*/
-
-function updateRoomNav(){
-
-  if(!current){
-    return;
-  }
-
-
-  const sorted =
-    [...TODAY_DATA].sort(
-      (a,b) => a.room - b.room
-    );
-
-
-  const index =
-    sorted.findIndex(
-      r => r.room === current.room
-    );
-
-
-  const prev =
-    index > 0
-      ? sorted[index - 1]
-      : null;
-
-
-  const next =
-    index >= 0 &&
-    index < sorted.length - 1
-      ? sorted[index + 1]
-      : null;
-
-
-  /*
-  前の部屋
-  */
-
-  if(prev){
-
-    $("prevRoomBtn").disabled =
-      false;
-
-
-    $("prevRoomBtn").textContent =
-      "← " +
-      prev.room +
-      "号室";
-
-
-    $("prevRoomBtn").onclick =
-      () => showRoom(prev.room);
-
-  }else{
-
-    $("prevRoomBtn").disabled =
-      true;
-
-
-    $("prevRoomBtn").textContent =
-      "← 前の部屋";
-
-
-    $("prevRoomBtn").onclick =
-      null;
-
-  }
-
-
-  /*
-  次の部屋
-  */
-
-  if(next){
-
-    $("nextRoomBtn").disabled =
-      false;
-
-
-    $("nextRoomBtn").textContent =
-      next.room +
-      "号室 →";
-
-
-    $("nextRoomBtn").onclick =
-      () => showRoom(next.room);
-
-  }else{
-
-    $("nextRoomBtn").disabled =
-      true;
-
-
-    $("nextRoomBtn").textContent =
-      "次の部屋 →";
-
-
-    $("nextRoomBtn").onclick =
-      null;
-
-  }
-
-}
-
-
-/*
-==================================================
-部屋表示
-==================================================
-*/
-
-function showRoom(room){
-
-
-  const r =
-    TODAY_DATA.find(
-      x => x.room === Number(room)
-    );
-
-
-  if(!r){
+  if(!room){
 
     alert(
-      room +
+      roomNumber +
       "号室は本日の使用部屋ではありません"
     );
 
@@ -1072,43 +1123,41 @@ function showRoom(room){
   }
 
 
-  current = r;
+  currentRoom =
+    room;
 
 
   $("vRoom").textContent =
-    r.room;
+    room.room;
 
 
   $("vAdult").textContent =
-    r.adult;
+    Number(room.adult) || 0;
 
 
   $("vChild").textContent =
-    r.child;
+    Number(room.child) || 0;
 
 
   $("vTotal").textContent =
-    total(r);
+    total(room);
 
 
   $("vSheets").textContent =
-    sheets(r);
+    sheets(room);
 
 
   $("vMeal").textContent =
     "食事：" +
-    mealName(r.meal);
+    mealName(room.meal);
 
 
-  /*
-  BOX
-  */
-
-  if(needsBox(r)){
+  if(
+    needsBox(room)
+  ){
 
     $("vBox").textContent =
       "1個 必要";
-
 
     $("vBox").className =
       "mid warn";
@@ -1118,34 +1167,26 @@ function showRoom(room){
     $("vBox").textContent =
       "不要";
 
-
     $("vBox").className =
       "mid";
 
   }
 
 
-  /*
-  特記事項
-  */
-
   $("vNote").textContent =
-    r.note ||
+    String(
+      room.note || ""
+    ).trim() ||
     "特記事項なし";
 
 
-  updateIceState();
+  renderIceState();
 
-  updateRoomNav();
-
-
-  $("home").classList.add(
-    "hidden"
-  );
+  renderRoomNav();
 
 
-  $("roomView").classList.remove(
-    "hidden"
+  showOnly(
+    "roomView"
   );
 
 
@@ -1157,63 +1198,163 @@ function showRoom(room){
 }
 
 
-/*
-==================================================
-氷状態表示
-==================================================
-*/
 
-function updateIceState(){
+/* ==================================================
+   ROOM NAV
+================================================== */
 
-  if(!current){
+function renderRoomNav(){
+
+  if(!currentRoom){
     return;
   }
 
 
+  const rooms =
+    sortedRooms();
+
+
+  const index =
+    rooms.findIndex(
+      r =>
+        Number(r.room) ===
+        Number(currentRoom.room)
+    );
+
+
+  const prev =
+    index > 0
+      ? rooms[index - 1]
+      : null;
+
+
+  const next =
+    index >= 0 &&
+    index < rooms.length - 1
+      ? rooms[index + 1]
+      : null;
+
+
+
+  if(prev){
+
+    $("prevRoomBtn").disabled =
+      false;
+
+    $("prevRoomBtn").textContent =
+      "← " +
+      prev.room +
+      "号室";
+
+    $("prevRoomBtn").onclick =
+      ()=>showRoom(
+        prev.room
+      );
+
+  }else{
+
+    $("prevRoomBtn").disabled =
+      true;
+
+    $("prevRoomBtn").textContent =
+      "← 前の部屋";
+
+    $("prevRoomBtn").onclick =
+      null;
+
+  }
+
+
+
+  if(next){
+
+    $("nextRoomBtn").disabled =
+      false;
+
+    $("nextRoomBtn").textContent =
+      next.room +
+      "号室 →";
+
+    $("nextRoomBtn").onclick =
+      ()=>showRoom(
+        next.room
+      );
+
+  }else{
+
+    $("nextRoomBtn").disabled =
+      true;
+
+    $("nextRoomBtn").textContent =
+      "次の部屋 →";
+
+    $("nextRoomBtn").onclick =
+      null;
+
+  }
+
+}
+
+
+
+/* ==================================================
+   ICE
+================================================== */
+
+function renderIceState(){
+
+  if(!currentRoom){
+    return;
+  }
+
+
+  const ice =
+    loadIce();
+
+
   const state =
-    iceData[current.room];
+    ice[currentRoom.room];
 
 
-  if(state === "yes"){
+  if(
+    state === "yes"
+  ){
 
     $("iceState").textContent =
       "確認済み：氷あり";
 
-
-    $("iceState").className =
-      "warn";
-
     $("iceState").style.color =
       "#126a2f";
 
+    $("iceState").style.fontWeight =
+      "900";
+
   }
 
-
-  else if(state === "no"){
+  else if(
+    state === "no"
+  ){
 
     $("iceState").textContent =
       "要補充：氷なし";
 
-
-    $("iceState").className =
-      "warn";
-
     $("iceState").style.color =
       "#b00020";
 
-  }
+    $("iceState").style.fontWeight =
+      "900";
 
+  }
 
   else{
 
     $("iceState").textContent =
       "未確認";
 
-
-    $("iceState").className =
-      "muted";
-
     $("iceState").style.color =
+      "";
+
+    $("iceState").style.fontWeight =
       "";
 
   }
@@ -1221,176 +1362,120 @@ function updateIceState(){
 }
 
 
-/*
-==================================================
-氷状態保存
-==================================================
-*/
-
-function saveIce(){
-
-  localStorage.setItem(
-    ICE_KEY,
-    JSON.stringify(iceData)
-  );
-
-
-  updateStats();
-
-  renderList();
-
-  updateIceState();
-
-}
-
-
-/*
-==================================================
-一覧へ戻る
-==================================================
-*/
-
-$("backBtn").onclick =
+$("iceYesBtn").onclick =
 function(){
 
-  $("roomView").classList.add(
-    "hidden"
-  );
-
-
-  $("home").classList.remove(
-    "hidden"
-  );
-
-};
-
-
-/*
-==================================================
-部屋番号検索
-==================================================
-*/
-
-$("quickBtn").onclick =
-function(){
-
-  const room =
-    $("quickRoom").value.trim();
-
-
-  if(!room){
+  if(!currentRoom){
     return;
   }
 
 
-  showRoom(room);
-
-};
-
-
-$("quickRoom").addEventListener(
-  "keydown",
-  function(e){
-
-    if(e.key === "Enter"){
-
-      $("quickBtn").click();
-
-    }
-
-  }
-);
+  const ice =
+    loadIce();
 
 
-/*
-==================================================
-氷あり
-==================================================
-*/
-
-$("iceYes").onclick =
-function(){
-
-  if(!current){
-    return;
-  }
-
-
-  iceData[current.room] =
+  ice[currentRoom.room] =
     "yes";
 
 
-  saveIce();
+  saveIce(
+    ice
+  );
+
+
+  renderIceState();
+
+  renderStats();
+
+  renderRooms();
 
 };
 
 
-/*
-==================================================
-氷なし
-==================================================
-*/
-
-$("iceNo").onclick =
+$("iceNoBtn").onclick =
 function(){
 
-  if(!current){
+  if(!currentRoom){
     return;
   }
 
 
-  iceData[current.room] =
+  const ice =
+    loadIce();
+
+
+  ice[currentRoom.room] =
     "no";
 
 
-  saveIce();
+  saveIce(
+    ice
+  );
+
+
+  renderIceState();
+
+  renderStats();
+
+  renderRooms();
 
 };
 
 
-/*
-==================================================
-氷確認リセット
-==================================================
-*/
-
-$("iceReset").onclick =
+$("iceResetBtn").onclick =
 function(){
 
-  if(!current){
+  if(!currentRoom){
     return;
   }
 
 
-  /*
-  この部屋だけ削除
-  */
-
-  delete iceData[current.room];
+  const ice =
+    loadIce();
 
 
-  saveIce();
+  delete ice[
+    currentRoom.room
+  ];
+
+
+  saveIce(
+    ice
+  );
+
+
+  renderIceState();
+
+  renderStats();
+
+  renderRooms();
 
 };
 
 
-/*
-==================================================
-氷補充リスト
-==================================================
-*/
+
+/* ==================================================
+   ICE LIST
+================================================== */
 
 $("iceListBtn").onclick =
 function(){
 
+  const ice =
+    loadIce();
+
 
   const list =
-    TODAY_DATA.filter(
-      r => iceData[r.room] === "no"
-    );
+    sortedRooms()
+      .filter(
+        r =>
+          ice[r.room] === "no"
+      );
 
 
-  if(!list.length){
+  if(
+    !list.length
+  ){
 
     alert(
       "氷補充が必要な部屋はありません"
@@ -1409,7 +1494,9 @@ function(){
 
     list
       .map(
-        r => r.room + "号室"
+        r =>
+          r.room +
+          "号室"
       )
       .join("\n")
 
@@ -1418,19 +1505,417 @@ function(){
 };
 
 
-/*
-==================================================
-初期表示
-==================================================
-*/
+
+/* ==================================================
+   QUICK ROOM
+================================================== */
+
+$("quickBtn").onclick =
+function(){
+
+  const value =
+    $("quickRoom")
+      .value
+      .trim();
+
+
+  if(!value){
+    return;
+  }
+
+
+  showRoom(
+    Number(value)
+  );
+
+};
+
+
+$("quickRoom")
+.addEventListener(
+  "keydown",
+  function(e){
+
+    if(
+      e.key === "Enter"
+    ){
+
+      $("quickBtn")
+        .click();
+
+    }
+
+  }
+);
+
+
+
+/* ==================================================
+   IMPORT VIEW
+================================================== */
+
+$("openImportBtn").onclick =
+function(){
+
+  $("importText").value =
+    "";
+
+  $("importStatus").className =
+    "hidden";
+
+  $("importStatus").textContent =
+    "";
+
+  showOnly(
+    "importView"
+  );
+
+
+  window.scrollTo(
+    0,
+    0
+  );
+
+};
+
+
+$("importBackBtn").onclick =
+function(){
+
+  showHome();
+
+};
+
+
+
+/* ==================================================
+   JSON CLEANUP
+================================================== */
+
+function cleanJsonText(text){
+
+  let value =
+    String(text || "")
+      .trim();
+
+
+  /*
+  ChatGPTのコードブロックを
+  そのままコピーした場合に対応
+  */
+
+  value =
+    value.replace(
+      /^```(?:json)?\s*/i,
+      ""
+    );
+
+
+  value =
+    value.replace(
+      /\s*```$/,
+      ""
+    );
+
+
+  return value.trim();
+
+}
+
+
+
+/* ==================================================
+   VALIDATION
+================================================== */
+
+function normalizeData(data){
+
+  if(
+    !data ||
+    typeof data !== "object"
+  ){
+
+    throw new Error(
+      "データ形式が正しくありません"
+    );
+
+  }
+
+
+  if(
+    !Array.isArray(
+      data.rooms
+    )
+  ){
+
+    throw new Error(
+      "rooms がありません"
+    );
+
+  }
+
+
+  const normalizedRooms =
+    data.rooms.map(
+      (r,index)=>{
+
+
+        const room =
+          Number(r.room);
+
+
+        if(
+          !Number.isInteger(room)
+        ){
+
+          throw new Error(
+            (index + 1) +
+            "件目の部屋番号が不正です"
+          );
+
+        }
+
+
+        const adult =
+          Math.max(
+            0,
+            Number(r.adult) || 0
+          );
+
+
+        const child =
+          Math.max(
+            0,
+            Number(r.child) || 0
+          );
+
+
+        let meal =
+          String(
+            r.meal || "unknown"
+          );
+
+
+        const allowed =
+          [
+            "dinner",
+            "premium",
+            "breakfast",
+            "none",
+            "unknown"
+          ];
+
+
+        if(
+          !allowed.includes(meal)
+        ){
+
+          meal =
+            "unknown";
+
+        }
+
+
+        return {
+
+          room,
+
+          adult,
+
+          child,
+
+          meal,
+
+          note:
+            String(
+              r.note || ""
+            )
+
+        };
+
+      }
+    );
+
+
+  /*
+  同じ部屋番号を除外
+  */
+
+  const map =
+    new Map();
+
+
+  normalizedRooms.forEach(
+    r=>{
+      map.set(
+        r.room,
+        r
+      );
+    }
+  );
+
+
+  const rooms =
+    [...map.values()]
+      .sort(
+        (a,b) =>
+          a.room -
+          b.room
+      );
+
+
+  return {
+
+    date:
+      String(
+        data.date || ""
+      ).trim(),
+
+    rooms
+
+  };
+
+}
+
+
+
+/* ==================================================
+   IMPORT
+================================================== */
+
+$("importBtn").onclick =
+function(){
+
+  const status =
+    $("importStatus");
+
+
+  try{
+
+
+    const raw =
+      cleanJsonText(
+        $("importText").value
+      );
+
+
+    if(!raw){
+
+      throw new Error(
+        "データを貼り付けてください"
+      );
+
+    }
+
+
+    const parsed =
+      JSON.parse(
+        raw
+      );
+
+
+    const normalized =
+      normalizeData(
+        parsed
+      );
+
+
+    if(
+      !normalized.rooms.length
+    ){
+
+      throw new Error(
+        "部屋データが0件です"
+      );
+
+    }
+
+
+    const oldDate =
+      appData.date;
+
+
+    const newDate =
+      normalized.date;
+
+
+    /*
+    日付が変わった場合は
+    氷状態も別保存になるので
+    前日の状態は混ざらない
+    */
+
+
+    appData =
+      normalized;
+
+
+    saveData();
+
+
+    status.className =
+      "status ok";
+
+
+    status.textContent =
+      appData.rooms.length +
+      "室を登録しました";
+
+
+    setTimeout(
+      ()=>{
+
+        showHome();
+
+      },
+      500
+    );
+
+
+  }catch(e){
+
+
+    status.className =
+      "status error";
+
+
+    status.textContent =
+      "反映できません：" +
+      e.message;
+
+  }
+
+};
+
+
+
+/* ==================================================
+   BACK
+================================================== */
+
+$("roomBackBtn").onclick =
+function(){
+
+  showHome();
+
+};
+
+
+
+/* ==================================================
+   GLOBAL
+================================================== */
 
 window.showRoom =
   showRoom;
 
 
-renderList();
 
-updateStats();
+/* ==================================================
+   INITIAL
+================================================== */
+
+renderAll();
 
 </script>
 
