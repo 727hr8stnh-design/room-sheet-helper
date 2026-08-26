@@ -8,7 +8,6 @@
 <title>客室仕込みヘルパー</title>
 
 <style>
-
 :root{
   --bg:#f4f4f4;
   --card:#ffffff;
@@ -56,7 +55,7 @@ main{
   width:100%;
   max-width:760px;
   margin:auto;
-  padding:14px 14px 120px;
+  padding:14px 14px 50px;
 }
 
 .card{
@@ -67,9 +66,7 @@ main{
   box-shadow:0 1px 8px #00000012;
 }
 
-h1,
-h2,
-h3{
+h1,h2,h3{
   margin:0 0 14px;
 }
 
@@ -112,6 +109,7 @@ button.blue{
 
 button:disabled{
   opacity:.35;
+  cursor:default;
 }
 
 input,
@@ -149,6 +147,7 @@ textarea{
   border-radius:14px;
   padding:12px 5px;
   text-align:center;
+  min-width:0;
 }
 
 .stat strong{
@@ -197,6 +196,11 @@ textarea{
   color:var(--danger);
 }
 
+.dateBox{
+  font-size:19px;
+  font-weight:900;
+}
+
 .roomRow{
   display:grid;
   grid-template-columns:68px 1fr 72px;
@@ -224,14 +228,14 @@ textarea{
   font-weight:800;
 }
 
-.pill.iceYes{
-  color:var(--ok);
+.pill.done{
   background:var(--ok-bg);
+  color:var(--ok);
 }
 
-.pill.iceNo{
-  color:var(--danger);
-  background:var(--danger-bg);
+.pill.todo{
+  background:#fff4d9;
+  color:#835c00;
 }
 
 .note{
@@ -244,39 +248,80 @@ textarea{
   white-space:pre-wrap;
 }
 
-.dateBox{
-  font-size:19px;
-  font-weight:900;
-}
-
 .importHelp{
   font-size:14px;
   line-height:1.55;
   margin-top:10px;
 }
 
+.drinkGrid{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:10px 12px;
+  align-items:center;
+}
+
+.drinkName{
+  font-size:18px;
+  font-weight:800;
+}
+
+.drinkCount{
+  font-size:26px;
+  font-weight:900;
+  text-align:right;
+}
+
+.drinkSub{
+  display:block;
+  font-size:12px;
+  color:var(--muted);
+  font-weight:600;
+  margin-top:2px;
+}
+
+.sheetDoneBox{
+  background:var(--ok-bg);
+  color:var(--ok);
+  border-radius:12px;
+  padding:12px;
+  font-weight:900;
+  font-size:18px;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.sheetTodoBox{
+  background:#f0f0f0;
+  color:#444;
+  border-radius:12px;
+  padding:12px;
+  font-weight:900;
+  font-size:18px;
+  text-align:center;
+  margin-bottom:10px;
+}
+
+.progressBar{
+  width:100%;
+  height:14px;
+  border-radius:999px;
+  overflow:hidden;
+  background:#e7e7e7;
+  margin-top:10px;
+}
+
+.progressBar > div{
+  height:100%;
+  width:0%;
+  background:#111;
+  transition:width .2s;
+}
+
 .roomNav{
   position:sticky;
-  bottom:74px;
+  bottom:10px;
   z-index:5;
-}
-
-footer{
-  position:fixed;
-  left:0;
-  right:0;
-  bottom:0;
-  z-index:30;
-  background:#fff;
-  border-top:1px solid #ddd;
-  padding:
-    10px
-    14px
-    calc(10px + env(safe-area-inset-bottom));
-}
-
-footer button{
-  width:100%;
 }
 
 @media(max-width:420px){
@@ -295,8 +340,10 @@ footer button{
     font-size:15px;
   }
 
+  .stat strong{
+    font-size:27px;
+  }
 }
-
 </style>
 </head>
 
@@ -320,10 +367,7 @@ footer button{
       現在のアサイン
     </div>
 
-    <div
-      id="currentDate"
-      class="dateBox"
-    >
+    <div id="currentDate" class="dateBox">
       データ未登録
     </div>
 
@@ -332,9 +376,7 @@ footer button{
 
   <div class="card">
 
-    <h2>
-      部屋をすぐ確認
-    </h2>
+    <h2>部屋をすぐ確認</h2>
 
     <div class="grid2">
 
@@ -355,31 +397,81 @@ footer button{
 
   <div class="card">
 
-    <h2>
-      本日の集計
-    </h2>
+    <h2>本日の集計</h2>
 
     <div class="grid3">
 
       <div class="stat">
         使用室
-        <strong id="roomCount">
-          0
-        </strong>
+        <strong id="roomCount">0</strong>
       </div>
 
       <div class="stat">
         宿泊者
-        <strong id="guestCount">
-          0
-        </strong>
+        <strong id="guestCount">0</strong>
       </div>
 
       <div class="stat">
-        氷補充
-        <strong id="iceCount">
-          0
-        </strong>
+        シーツ済
+        <strong id="sheetProgressCount">0/0</strong>
+      </div>
+
+    </div>
+
+    <div class="progressBar">
+      <div id="sheetProgressBar"></div>
+    </div>
+
+  </div>
+
+
+  <!-- ==================================================
+       本日のドリンク準備
+  ================================================== -->
+
+  <div class="card">
+
+    <h2>本日のドリンク準備</h2>
+
+    <div class="drinkGrid">
+
+      <div class="drinkName">
+        2L ペットボトル
+        <span class="drinkSub">各部屋1本</span>
+      </div>
+
+      <div class="drinkCount">
+        <span id="total2L">0</span>本
+      </div>
+
+
+      <div class="drinkName">
+        500ml 水
+        <span class="drinkSub">大人1人につき1本</span>
+      </div>
+
+      <div class="drinkCount">
+        <span id="totalWater">0</span>本
+      </div>
+
+
+      <div class="drinkName">
+        500ml 炭酸水
+        <span class="drinkSub">大人1人につき1本</span>
+      </div>
+
+      <div class="drinkCount">
+        <span id="totalSparkling">0</span>本
+      </div>
+
+
+      <div class="drinkName">
+        りんごジュース
+        <span class="drinkSub">子供1人につき1本</span>
+      </div>
+
+      <div class="drinkCount">
+        <span id="totalApple">0</span>本
       </div>
 
     </div>
@@ -402,9 +494,7 @@ footer button{
 
   <div class="card">
 
-    <h2>
-      部屋一覧
-    </h2>
+    <h2>部屋一覧</h2>
 
     <div id="roomList">
 
@@ -446,8 +536,8 @@ footer button{
 
     <div class="importHelp muted">
 
-      ChatGPTで今日の用紙を読み取ったあと、
-      出力されたJSONを下に貼り付けてください。
+      ChatGPTで今日のルームアサイン表を読み取ったあと、
+      出力されたJSONをそのまま貼り付けてください。
 
     </div>
 
@@ -492,9 +582,7 @@ footer button{
 
   <div class="card">
 
-    <h2>
-      食事区分
-    </h2>
+    <h2>食事区分</h2>
 
     <div class="muted importHelp">
 
@@ -530,9 +618,7 @@ footer button{
       ← 一覧
     </button>
 
-
     <div style="height:18px"></div>
-
 
     <h1>
       <span id="vRoom"></span>号室
@@ -543,23 +629,17 @@ footer button{
 
       <div class="stat">
         大人
-        <strong id="vAdult">
-          0
-        </strong>
+        <strong id="vAdult">0</strong>
       </div>
 
       <div class="stat">
         子供
-        <strong id="vChild">
-          0
-        </strong>
+        <strong id="vChild">0</strong>
       </div>
 
       <div class="stat">
         合計
-        <strong id="vTotal">
-          0
-        </strong>
+        <strong id="vTotal">0</strong>
       </div>
 
     </div>
@@ -568,22 +648,106 @@ footer button{
 
 
 
+  <!-- ==================================================
+       シーツ
+  ================================================== -->
+
   <div class="card">
 
-    <div class="muted">
-      シーツ
-    </div>
+    <h2>シーツ</h2>
 
     <div class="big">
-      <span id="vSheets">
-        0
-      </span>
-      セット
+      <span id="vSheets">0</span>セット
+    </div>
+
+    <div style="height:14px"></div>
+
+    <div
+      id="sheetStateBox"
+      class="sheetTodoBox"
+    >
+      未配布
+    </div>
+
+
+    <button
+      id="sheetDoneBtn"
+      class="ok"
+      style="width:100%"
+    >
+      シーツ配布済みにする
+    </button>
+
+
+    <div style="height:10px"></div>
+
+
+    <button
+      id="sheetResetBtn"
+      class="secondary"
+      style="width:100%"
+    >
+      シーツ配布をリセット
+    </button>
+
+  </div>
+
+
+
+  <!-- ==================================================
+       部屋ごとのドリンク
+  ================================================== -->
+
+  <div class="card">
+
+    <h2>この部屋のドリンク</h2>
+
+    <div class="drinkGrid">
+
+      <div class="drinkName">
+        2L ペットボトル
+      </div>
+
+      <div class="drinkCount">
+        1本
+      </div>
+
+
+      <div class="drinkName">
+        500ml 水
+      </div>
+
+      <div class="drinkCount">
+        <span id="vWater">0</span>本
+      </div>
+
+
+      <div class="drinkName">
+        500ml 炭酸水
+      </div>
+
+      <div class="drinkCount">
+        <span id="vSparkling">0</span>本
+      </div>
+
+
+      <div class="drinkName">
+        りんごジュース
+      </div>
+
+      <div class="drinkCount">
+        <span id="vApple">0</span>本
+      </div>
+
     </div>
 
   </div>
 
 
+
+  <!-- ==================================================
+       BOX
+  ================================================== -->
 
   <div class="card">
 
@@ -608,60 +772,13 @@ footer button{
 
 
 
-  <div class="card">
-
-    <h2>
-      氷確認
-    </h2>
-
-    <div class="grid2">
-
-      <button
-        id="iceYesBtn"
-        class="ok"
-      >
-        氷あり
-      </button>
-
-      <button
-        id="iceNoBtn"
-        class="danger"
-      >
-        氷なし
-      </button>
-
-    </div>
-
-
-    <div style="height:10px"></div>
-
-
-    <button
-      id="iceResetBtn"
-      class="secondary"
-      style="width:100%"
-    >
-      氷確認をリセット
-    </button>
-
-
-    <div
-      id="iceState"
-      class="muted"
-      style="margin-top:12px"
-    >
-      未確認
-    </div>
-
-  </div>
-
-
+  <!-- ==================================================
+       特記事項
+  ================================================== -->
 
   <div class="card">
 
-    <h2>
-      特記事項
-    </h2>
+    <h2>特記事項</h2>
 
     <div
       id="vNote"
@@ -673,6 +790,10 @@ footer button{
   </div>
 
 
+
+  <!-- ==================================================
+       前後の部屋
+  ================================================== -->
 
   <div class="card roomNav">
 
@@ -702,19 +823,6 @@ footer button{
 
 
 
-<footer>
-
-  <button
-    id="iceListBtn"
-    class="secondary"
-  >
-    氷補充リスト
-  </button>
-
-</footer>
-
-
-
 <script>
 
 /* ==================================================
@@ -724,8 +832,8 @@ footer button{
 const DATA_KEY =
   "room_helper_daily_data";
 
-const ICE_PREFIX =
-  "room_helper_ice_";
+const SHEET_PREFIX =
+  "room_helper_sheet_";
 
 
 let appData =
@@ -780,9 +888,9 @@ function saveData(){
 }
 
 
-function getIceKey(){
+function getSheetKey(){
 
-  return ICE_PREFIX +
+  return SHEET_PREFIX +
     (
       appData.date ||
       "unknown"
@@ -791,13 +899,13 @@ function getIceKey(){
 }
 
 
-function loadIce(){
+function loadSheetState(){
 
   try{
 
     return JSON.parse(
       localStorage.getItem(
-        getIceKey()
+        getSheetKey()
       )
     ) || {};
 
@@ -810,10 +918,10 @@ function loadIce(){
 }
 
 
-function saveIce(data){
+function saveSheetState(data){
 
   localStorage.setItem(
-    getIceKey(),
+    getSheetKey(),
     JSON.stringify(data)
   );
 
@@ -835,6 +943,10 @@ function total(r){
 
 }
 
+
+/*
+シーツ最大4セット
+*/
 
 function sheets(r){
 
@@ -900,6 +1012,55 @@ function sortedRooms(){
 
 
 /* ==================================================
+   DRINK HELPERS
+================================================== */
+
+/*
+各使用部屋
+2L = 1本
+*/
+
+function room2L(r){
+
+  return 1;
+
+}
+
+
+/*
+大人1人につき
+500ml水 = 1
+500ml炭酸水 = 1
+*/
+
+function roomWater(r){
+
+  return Number(r.adult) || 0;
+
+}
+
+
+function roomSparkling(r){
+
+  return Number(r.adult) || 0;
+
+}
+
+
+/*
+子供1人につき
+りんごジュース = 1
+*/
+
+function roomApple(r){
+
+  return Number(r.child) || 0;
+
+}
+
+
+
+/* ==================================================
    VIEW
 ================================================== */
 
@@ -942,7 +1103,7 @@ function showHome(){
 
 
 /* ==================================================
-   HOME RENDER
+   MAIN RENDER
 ================================================== */
 
 function renderAll(){
@@ -950,6 +1111,8 @@ function renderAll(){
   renderDate();
 
   renderStats();
+
+  renderDrinkTotals();
 
   renderRooms();
 
@@ -966,17 +1129,22 @@ function renderDate(){
 }
 
 
+
+/* ==================================================
+   STATS
+================================================== */
+
 function renderStats(){
 
-  const ice =
-    loadIce();
+  const sheetState =
+    loadSheetState();
 
 
-  $("roomCount").textContent =
+  const roomCount =
     appData.rooms.length;
 
 
-  $("guestCount").textContent =
+  const guestCount =
     appData.rooms.reduce(
       (sum,r) =>
         sum + total(r),
@@ -984,14 +1152,94 @@ function renderStats(){
     );
 
 
-  $("iceCount").textContent =
+  const completed =
     appData.rooms.filter(
       r =>
-        ice[r.room] === "no"
+        sheetState[r.room] === true
     ).length;
+
+
+  $("roomCount").textContent =
+    roomCount;
+
+
+  $("guestCount").textContent =
+    guestCount;
+
+
+  $("sheetProgressCount").textContent =
+    completed +
+    "/" +
+    roomCount;
+
+
+  const percent =
+    roomCount
+      ? Math.round(
+          completed /
+          roomCount *
+          100
+        )
+      : 0;
+
+
+  $("sheetProgressBar").style.width =
+    percent + "%";
 
 }
 
+
+
+/* ==================================================
+   DRINK TOTALS
+================================================== */
+
+function renderDrinkTotals(){
+
+  const roomCount =
+    appData.rooms.length;
+
+
+  const adults =
+    appData.rooms.reduce(
+      (sum,r) =>
+        sum +
+        (Number(r.adult) || 0),
+      0
+    );
+
+
+  const children =
+    appData.rooms.reduce(
+      (sum,r) =>
+        sum +
+        (Number(r.child) || 0),
+      0
+    );
+
+
+  $("total2L").textContent =
+    roomCount;
+
+
+  $("totalWater").textContent =
+    adults;
+
+
+  $("totalSparkling").textContent =
+    adults;
+
+
+  $("totalApple").textContent =
+    children;
+
+}
+
+
+
+/* ==================================================
+   ROOM LIST
+================================================== */
 
 function renderRooms(){
 
@@ -1011,87 +1259,76 @@ function renderRooms(){
   }
 
 
-  const ice =
-    loadIce();
+  const sheetState =
+    loadSheetState();
 
 
   container.innerHTML =
     sortedRooms()
-    .map(r=>{
+      .map(r=>{
 
 
-      let iceMark = "";
+        const done =
+          sheetState[r.room] === true;
 
 
-      if(
-        ice[r.room] === "yes"
-      ){
+        const sheetMark =
+          done
 
-        iceMark =
-          '<span class="pill iceYes">氷あり</span>';
+          ? '<span class="pill done">✓ シーツ済</span>'
 
-      }
+          : '<span class="pill todo">シーツ未</span>';
 
 
-      if(
-        ice[r.room] === "no"
-      ){
+        return `
 
-        iceMark =
-          '<span class="pill iceNo">氷補充</span>';
+        <div class="roomRow">
 
-      }
-
-
-      return `
-
-      <div class="roomRow">
-
-        <strong>
-          ${r.room}号室
-        </strong>
+          <strong>
+            ${r.room}号室
+          </strong>
 
 
-        <div>
+          <div>
 
-          <span class="pill">
-            ${total(r)}名
-          </span>
+            <span class="pill">
+              ${total(r)}名
+            </span>
 
-          <span class="pill">
-            大${Number(r.adult)||0}
-          </span>
+            <span class="pill">
+              大${Number(r.adult)||0}
+            </span>
 
-          <span class="pill">
-            子${Number(r.child)||0}
-          </span>
+            <span class="pill">
+              子${Number(r.child)||0}
+            </span>
 
-          <span class="pill">
-            シーツ${sheets(r)}
-          </span>
+            <span class="pill">
+              シーツ${sheets(r)}
+            </span>
 
-          <span class="pill">
-            BOX:${needsBox(r) ? "1" : "0"}
-          </span>
+            <span class="pill">
+              BOX:${needsBox(r) ? "1" : "0"}
+            </span>
 
-          ${iceMark}
+            ${sheetMark}
+
+          </div>
+
+
+          <button
+            class="secondary"
+            onclick="showRoom(${Number(r.room)})"
+          >
+            表示
+          </button>
 
         </div>
 
+        `;
 
-        <button
-          class="secondary"
-          onclick="showRoom(${Number(r.room)})"
-        >
-          表示
-        </button>
-
-      </div>
-
-      `;
-
-    })
-    .join("");
+      })
+      .join("");
 
 }
 
@@ -1147,10 +1384,34 @@ function showRoom(roomNumber){
     sheets(room);
 
 
+  /*
+  ドリンク
+  */
+
+  $("vWater").textContent =
+    roomWater(room);
+
+
+  $("vSparkling").textContent =
+    roomSparkling(room);
+
+
+  $("vApple").textContent =
+    roomApple(room);
+
+
+  /*
+  食事
+  */
+
   $("vMeal").textContent =
     "食事：" +
     mealName(room.meal);
 
+
+  /*
+  BOX
+  */
 
   if(
     needsBox(room)
@@ -1158,6 +1419,7 @@ function showRoom(roomNumber){
 
     $("vBox").textContent =
       "1個 必要";
+
 
     $("vBox").className =
       "mid warn";
@@ -1167,11 +1429,16 @@ function showRoom(roomNumber){
     $("vBox").textContent =
       "不要";
 
+
     $("vBox").className =
       "mid";
 
   }
 
+
+  /*
+  特記事項
+  */
 
   $("vNote").textContent =
     String(
@@ -1180,7 +1447,7 @@ function showRoom(roomNumber){
     "特記事項なし";
 
 
-  renderIceState();
+  renderSheetState();
 
   renderRoomNav();
 
@@ -1196,6 +1463,128 @@ function showRoom(roomNumber){
   );
 
 }
+
+
+
+/* ==================================================
+   SHEET STATUS
+================================================== */
+
+function renderSheetState(){
+
+  if(!currentRoom){
+    return;
+  }
+
+
+  const state =
+    loadSheetState();
+
+
+  const done =
+    state[currentRoom.room] === true;
+
+
+  if(done){
+
+    $("sheetStateBox").textContent =
+      "✓ シーツ配布済み";
+
+
+    $("sheetStateBox").className =
+      "sheetDoneBox";
+
+
+    $("sheetDoneBtn").disabled =
+      true;
+
+  }else{
+
+    $("sheetStateBox").textContent =
+      "シーツ未配布";
+
+
+    $("sheetStateBox").className =
+      "sheetTodoBox";
+
+
+    $("sheetDoneBtn").disabled =
+      false;
+
+  }
+
+}
+
+
+
+/*
+シーツ配布済み
+*/
+
+$("sheetDoneBtn").onclick =
+function(){
+
+  if(!currentRoom){
+    return;
+  }
+
+
+  const state =
+    loadSheetState();
+
+
+  state[currentRoom.room] =
+    true;
+
+
+  saveSheetState(
+    state
+  );
+
+
+  renderSheetState();
+
+  renderStats();
+
+  renderRooms();
+
+};
+
+
+
+/*
+シーツリセット
+*/
+
+$("sheetResetBtn").onclick =
+function(){
+
+  if(!currentRoom){
+    return;
+  }
+
+
+  const state =
+    loadSheetState();
+
+
+  delete state[
+    currentRoom.room
+  ];
+
+
+  saveSheetState(
+    state
+  );
+
+
+  renderSheetState();
+
+  renderStats();
+
+  renderRooms();
+
+};
 
 
 
@@ -1235,16 +1624,21 @@ function renderRoomNav(){
       : null;
 
 
+  /*
+  前の部屋
+  */
 
   if(prev){
 
     $("prevRoomBtn").disabled =
       false;
 
+
     $("prevRoomBtn").textContent =
       "← " +
       prev.room +
       "号室";
+
 
     $("prevRoomBtn").onclick =
       ()=>showRoom(
@@ -1256,8 +1650,10 @@ function renderRoomNav(){
     $("prevRoomBtn").disabled =
       true;
 
+
     $("prevRoomBtn").textContent =
       "← 前の部屋";
+
 
     $("prevRoomBtn").onclick =
       null;
@@ -1265,15 +1661,20 @@ function renderRoomNav(){
   }
 
 
+  /*
+  次の部屋
+  */
 
   if(next){
 
     $("nextRoomBtn").disabled =
       false;
 
+
     $("nextRoomBtn").textContent =
       next.room +
       "号室 →";
+
 
     $("nextRoomBtn").onclick =
       ()=>showRoom(
@@ -1285,8 +1686,10 @@ function renderRoomNav(){
     $("nextRoomBtn").disabled =
       true;
 
+
     $("nextRoomBtn").textContent =
       "次の部屋 →";
+
 
     $("nextRoomBtn").onclick =
       null;
@@ -1294,215 +1697,6 @@ function renderRoomNav(){
   }
 
 }
-
-
-
-/* ==================================================
-   ICE
-================================================== */
-
-function renderIceState(){
-
-  if(!currentRoom){
-    return;
-  }
-
-
-  const ice =
-    loadIce();
-
-
-  const state =
-    ice[currentRoom.room];
-
-
-  if(
-    state === "yes"
-  ){
-
-    $("iceState").textContent =
-      "確認済み：氷あり";
-
-    $("iceState").style.color =
-      "#126a2f";
-
-    $("iceState").style.fontWeight =
-      "900";
-
-  }
-
-  else if(
-    state === "no"
-  ){
-
-    $("iceState").textContent =
-      "要補充：氷なし";
-
-    $("iceState").style.color =
-      "#b00020";
-
-    $("iceState").style.fontWeight =
-      "900";
-
-  }
-
-  else{
-
-    $("iceState").textContent =
-      "未確認";
-
-    $("iceState").style.color =
-      "";
-
-    $("iceState").style.fontWeight =
-      "";
-
-  }
-
-}
-
-
-$("iceYesBtn").onclick =
-function(){
-
-  if(!currentRoom){
-    return;
-  }
-
-
-  const ice =
-    loadIce();
-
-
-  ice[currentRoom.room] =
-    "yes";
-
-
-  saveIce(
-    ice
-  );
-
-
-  renderIceState();
-
-  renderStats();
-
-  renderRooms();
-
-};
-
-
-$("iceNoBtn").onclick =
-function(){
-
-  if(!currentRoom){
-    return;
-  }
-
-
-  const ice =
-    loadIce();
-
-
-  ice[currentRoom.room] =
-    "no";
-
-
-  saveIce(
-    ice
-  );
-
-
-  renderIceState();
-
-  renderStats();
-
-  renderRooms();
-
-};
-
-
-$("iceResetBtn").onclick =
-function(){
-
-  if(!currentRoom){
-    return;
-  }
-
-
-  const ice =
-    loadIce();
-
-
-  delete ice[
-    currentRoom.room
-  ];
-
-
-  saveIce(
-    ice
-  );
-
-
-  renderIceState();
-
-  renderStats();
-
-  renderRooms();
-
-};
-
-
-
-/* ==================================================
-   ICE LIST
-================================================== */
-
-$("iceListBtn").onclick =
-function(){
-
-  const ice =
-    loadIce();
-
-
-  const list =
-    sortedRooms()
-      .filter(
-        r =>
-          ice[r.room] === "no"
-      );
-
-
-  if(
-    !list.length
-  ){
-
-    alert(
-      "氷補充が必要な部屋はありません"
-    );
-
-    return;
-
-  }
-
-
-  alert(
-
-    "氷補充：" +
-    list.length +
-    "室\n\n" +
-
-    list
-      .map(
-        r =>
-          r.room +
-          "号室"
-      )
-      .join("\n")
-
-  );
-
-};
 
 
 
@@ -1531,8 +1725,7 @@ function(){
 };
 
 
-$("quickRoom")
-.addEventListener(
+$("quickRoom").addEventListener(
   "keydown",
   function(e){
 
@@ -1560,11 +1753,14 @@ function(){
   $("importText").value =
     "";
 
+
   $("importStatus").className =
     "hidden";
 
+
   $("importStatus").textContent =
     "";
+
 
   showOnly(
     "importView"
@@ -1600,8 +1796,8 @@ function cleanJsonText(text){
 
 
   /*
-  ChatGPTのコードブロックを
-  そのままコピーした場合に対応
+  ```json
+  を含めてコピーした場合にも対応
   */
 
   value =
@@ -1738,7 +1934,8 @@ function normalizeData(data){
 
 
   /*
-  同じ部屋番号を除外
+  同じ部屋番号がある場合は
+  後のデータを採用
   */
 
   const map =
@@ -1747,10 +1944,12 @@ function normalizeData(data){
 
   normalizedRooms.forEach(
     r=>{
+
       map.set(
         r.room,
         r
       );
+
     }
   );
 
@@ -1829,21 +2028,6 @@ function(){
       );
 
     }
-
-
-    const oldDate =
-      appData.date;
-
-
-    const newDate =
-      normalized.date;
-
-
-    /*
-    日付が変わった場合は
-    氷状態も別保存になるので
-    前日の状態は混ざらない
-    */
 
 
     appData =
