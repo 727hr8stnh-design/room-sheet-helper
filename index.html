@@ -64,6 +64,9 @@ button.secondary{
 }
 button.ok{background:var(--ok)}
 button.danger{background:var(--danger)}
+button:disabled{
+  opacity:.35;
+}
 
 .grid2{
   display:grid;
@@ -243,6 +246,14 @@ footer button{
     <div id="vNote" class="note">特記事項なし</div>
   </div>
 
+
+  <div class="card">
+    <div class="grid2">
+      <button class="secondary" id="prevRoomBtn">← 前の部屋</button>
+      <button class="secondary" id="nextRoomBtn">次の部屋 →</button>
+    </div>
+  </div>
+
 </section>
 
 </main>
@@ -255,21 +266,11 @@ footer button{
 
 <script>
 
-/*
-=================================================
-2026/8/26 緊急運用データ
-adult = 男 + 女
-child = 子A + 子B + 子C + 子D
-=================================================
-*/
-
 const TODAY_DATA = [
 
 {room:1, adult:3, child:0, meal:"dinner", note:"カラオケ18時半〜"},
 {room:2, adult:2, child:1, meal:"dinner", note:""},
 {room:3, adult:1, child:1, meal:"breakfast", note:""},
-
-// 4号室 空室
 
 {room:5, adult:3, child:1, meal:"dinner", note:""},
 
@@ -277,17 +278,11 @@ const TODAY_DATA = [
  note:"前日もGRAX有り／夕食・朝食はホテルで利用（料金同額）"},
 
 {room:7, adult:2, child:1, meal:"dinner", note:""},
-
 {room:8, adult:2, child:2, meal:"breakfast", note:""},
-
 {room:9, adult:2, child:4, meal:"premium", note:""},
-
 {room:10, adult:2, child:2, meal:"dinner", note:""},
-
 {room:11, adult:3, child:1, meal:"dinner", note:""},
-
 {room:12, adult:2, child:1, meal:"none", note:"前ホテル"},
-
 {room:13, adult:2, child:0, meal:"none", note:""},
 
 {room:14, adult:1, child:0, meal:"none",
@@ -307,7 +302,6 @@ const TODAY_DATA = [
  note:"カラオケ 8/26 20:00〜21:00 1H"},
 
 {room:20, adult:3, child:1, meal:"dinner", note:""},
-
 {room:21, adult:2, child:2, meal:"breakfast", note:""},
 
 {room:22, adult:2, child:3, meal:"dinner",
@@ -319,13 +313,9 @@ const TODAY_DATA = [
  note:"朝食ホテルで利用"},
 
 {room:25, adult:2, child:3, meal:"none", note:""},
-
 {room:26, adult:2, child:2, meal:"dinner", note:""},
-
 {room:27, adult:2, child:2, meal:"dinner", note:""},
-
 {room:28, adult:2, child:1, meal:"dinner", note:""},
-
 {room:29, adult:3, child:1, meal:"dinner", note:""},
 
 {room:30, adult:3, child:2, meal:"dinner",
@@ -338,10 +328,6 @@ const TODAY_DATA = [
 
 ];
 
-
-/*
-氷チェックだけ端末に保存
-*/
 
 const ICE_KEY = "ice_20260826";
 
@@ -362,10 +348,6 @@ function total(r){
   return r.adult + r.child;
 }
 
-
-/*
-シーツは最大4セット
-*/
 
 function sheets(r){
   return Math.min(total(r),4);
@@ -394,11 +376,6 @@ function mealName(meal){
 }
 
 
-/*
-夕食付き → バッシングBOX必要
-朝食のみ・素泊まり → 不要
-*/
-
 function needsBox(r){
 
   return (
@@ -424,7 +401,6 @@ function renderList(){
         : "";
 
       return `
-
       <div class="roomRow">
 
         <strong>${r.room}号室</strong>
@@ -462,7 +438,6 @@ function renderList(){
         </button>
 
       </div>
-
       `;
 
     }).join("");
@@ -485,6 +460,83 @@ function updateStats(){
     TODAY_DATA.filter(
       r=>iceData[r.room]==="no"
     ).length;
+}
+
+
+function updateRoomNav(){
+
+  if(!current){
+    return;
+  }
+
+  const sorted =
+    [...TODAY_DATA].sort(
+      (a,b)=>a.room-b.room
+    );
+
+  const index =
+    sorted.findIndex(
+      r=>r.room===current.room
+    );
+
+  const prev =
+    index > 0
+      ? sorted[index-1]
+      : null;
+
+  const next =
+    index >= 0 &&
+    index < sorted.length-1
+      ? sorted[index+1]
+      : null;
+
+
+  if(prev){
+
+    $("prevRoomBtn").disabled =
+      false;
+
+    $("prevRoomBtn").textContent =
+      "← " + prev.room + "号室";
+
+    $("prevRoomBtn").onclick =
+      ()=>showRoom(prev.room);
+
+  }else{
+
+    $("prevRoomBtn").disabled =
+      true;
+
+    $("prevRoomBtn").textContent =
+      "← 前の部屋";
+
+    $("prevRoomBtn").onclick =
+      null;
+  }
+
+
+  if(next){
+
+    $("nextRoomBtn").disabled =
+      false;
+
+    $("nextRoomBtn").textContent =
+      next.room + "号室 →";
+
+    $("nextRoomBtn").onclick =
+      ()=>showRoom(next.room);
+
+  }else{
+
+    $("nextRoomBtn").disabled =
+      true;
+
+    $("nextRoomBtn").textContent =
+      "次の部屋 →";
+
+    $("nextRoomBtn").onclick =
+      null;
+  }
 }
 
 
@@ -551,6 +603,8 @@ function showRoom(room){
 
   updateIceState();
 
+  updateRoomNav();
+
   $("home").classList.add(
     "hidden"
   );
@@ -604,7 +658,9 @@ function saveIce(){
   );
 
   updateStats();
+
   renderList();
+
   updateIceState();
 }
 
@@ -714,6 +770,7 @@ showRoom;
 
 
 renderList();
+
 updateStats();
 
 </script>
