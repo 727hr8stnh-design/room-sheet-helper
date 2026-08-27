@@ -3,22 +3,27 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#111111">
+<meta name="theme-color" content="#10161e">
 
 <title>客室仕込みヘルパー</title>
 
 <style>
 :root{
-  --bg:#f4f4f4;
-  --card:#ffffff;
-  --text:#111111;
-  --muted:#666666;
-  --border:#dddddd;
-  --danger:#b00020;
-  --danger-bg:#fff0f2;
-  --ok:#126a2f;
-  --ok-bg:#eaf6ee;
-  --blue:#175cd3;
+  color-scheme:dark;
+  --bg:#0b0f14;
+  --card:#151b23;
+  --surface:#202833;
+  --surface-strong:#2a3441;
+  --text:#f5f7fa;
+  --muted:#aab4c0;
+  --border:#34404d;
+  --danger:#ff6b7a;
+  --danger-bg:#351920;
+  --ok:#67d68a;
+  --ok-bg:#173323;
+  --blue:#4c8dff;
+  --warning:#ffd166;
+  --warning-bg:#382e16;
 }
 
 *{
@@ -41,7 +46,7 @@ header{
   position:sticky;
   top:0;
   z-index:20;
-  background:#111;
+  background:#10161e;
   color:#fff;
   padding:
     calc(14px + env(safe-area-inset-top))
@@ -63,7 +68,8 @@ main{
   border-radius:18px;
   padding:16px;
   margin-bottom:12px;
-  box-shadow:0 1px 8px #00000012;
+  border:1px solid var(--border);
+  box-shadow:0 6px 22px #00000035;
 }
 
 h1,h2,h3{
@@ -85,14 +91,14 @@ button{
   padding:15px 14px;
   font-size:17px;
   font-weight:900;
-  background:#111;
-  color:#fff;
+  background:#eef2f7;
+  color:#10151c;
   cursor:pointer;
 }
 
 button.secondary{
-  background:#e7e7e7;
-  color:#111;
+  background:var(--surface-strong);
+  color:var(--text);
 }
 
 button.ok{
@@ -105,6 +111,7 @@ button.danger{
 
 button.blue{
   background:var(--blue);
+  color:#fff;
 }
 
 button:disabled{
@@ -118,10 +125,24 @@ select{
   width:100%;
   border:1px solid var(--border);
   border-radius:12px;
-  background:#fff;
+  background:#0f141b;
+  color:var(--text);
   padding:13px;
   font-size:18px;
   font-family:inherit;
+}
+
+input::placeholder,
+textarea::placeholder{
+  color:#778391;
+}
+
+input:focus,
+textarea:focus,
+select:focus{
+  outline:2px solid var(--blue);
+  outline-offset:1px;
+  border-color:transparent;
 }
 
 textarea{
@@ -143,7 +164,7 @@ textarea{
 }
 
 .stat{
-  background:#f0f0f0;
+  background:var(--surface);
   border-radius:14px;
   padding:12px 5px;
   text-align:center;
@@ -207,7 +228,7 @@ textarea{
   align-items:center;
   gap:7px;
   padding:12px 0;
-  border-bottom:1px solid #eee;
+  border-bottom:1px solid var(--border);
 }
 
 .roomRow:last-child{
@@ -223,7 +244,7 @@ textarea{
   border-radius:999px;
   padding:5px 8px;
   margin:2px 1px;
-  background:#eee;
+  background:var(--surface-strong);
   font-size:12px;
   font-weight:800;
 }
@@ -234,13 +255,13 @@ textarea{
 }
 
 .pill.todo{
-  background:#fff4d9;
-  color:#835c00;
+  background:var(--warning-bg);
+  color:var(--warning);
 }
 
 .note{
-  border:3px solid #d00000;
-  background:#fff1f1;
+  border:3px solid var(--danger);
+  background:var(--danger-bg);
   border-radius:12px;
   padding:12px;
   font-size:18px;
@@ -292,8 +313,8 @@ textarea{
 }
 
 .sheetTodoBox{
-  background:#f0f0f0;
-  color:#444;
+  background:var(--surface);
+  color:var(--muted);
   border-radius:12px;
   padding:12px;
   font-weight:900;
@@ -307,14 +328,14 @@ textarea{
   height:14px;
   border-radius:999px;
   overflow:hidden;
-  background:#e7e7e7;
+  background:var(--surface-strong);
   margin-top:10px;
 }
 
 .progressBar > div{
   height:100%;
   width:0%;
-  background:#111;
+  background:var(--blue);
   transition:width .2s;
 }
 
