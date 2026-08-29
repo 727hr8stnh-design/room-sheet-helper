@@ -339,10 +339,28 @@ textarea{
   transition:width .2s;
 }
 
+#roomView{
+  padding-top:82px;
+}
+
 .roomNav{
-  position:sticky;
-  bottom:10px;
-  z-index:5;
+  position:fixed;
+  top:calc(env(safe-area-inset-top) + 68px);
+  left:50%;
+  transform:translateX(-50%);
+  width:calc(100% - 28px);
+  max-width:732px;
+  z-index:19;
+  margin:0;
+  padding:10px;
+  box-shadow:0 8px 24px #00000070;
+}
+
+.appVersion{
+  text-align:center;
+  color:#66717e;
+  font-size:11px;
+  padding:8px 0 16px;
 }
 
 @media(max-width:420px){
@@ -363,6 +381,10 @@ textarea{
 
   .stat strong{
     font-size:27px;
+  }
+
+  .roomNav{
+    width:calc(100% - 20px);
   }
 }
 </style>
@@ -839,6 +861,8 @@ textarea{
   </div>
 
 </section>
+
+<div class="appVersion">v1.1.0</div>
 
 </main>
 
