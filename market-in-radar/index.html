@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Market-In Radar Dashboard</title>
+  <style>
+    :root{--bg:#0b1020;--panel:#121933;--panel2:#182144;--text:#edf2ff;--muted:#a8b2d1;--line:#25305e;--accent:#7c5cff;--accent2:#17c7ff;--chip:#1d2750;--shadow:0 10px 30px rgba(0,0,0,.25);--radius:18px}
+    *{box-sizing:border-box}body{margin:0;background:linear-gradient(180deg,#0a0f1f,#0b1020);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Hiragino Sans","Noto Sans JP",sans-serif}.wrap{width:min(1200px,calc(100% - 24px));margin:0 auto;padding:18px 0 40px}.hero{background:linear-gradient(135deg,rgba(124,92,255,.22),rgba(23,199,255,.14));border:1px solid rgba(255,255,255,.08);border-radius:24px;padding:18px;box-shadow:var(--shadow)}.hero h1{margin:0 0 8px;font-size:clamp(22px,4vw,34px)}.hero p{margin:0;color:var(--muted);line-height:1.6;font-size:14px}.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:14px 0}.chips{display:flex;flex-wrap:wrap;gap:8px}.chip{border:1px solid var(--line);background:var(--chip);color:var(--text);padding:8px 12px;border-radius:999px;font-size:13px;cursor:pointer}.chip.active{background:linear-gradient(135deg,var(--accent),var(--accent2));border-color:transparent;font-weight:700}.grid-top{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}.stat,.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow)}.stat .label{color:var(--muted);font-size:12px;margin-bottom:8px}.stat .value{font-size:28px;font-weight:800}.stat .sub{font-size:13px;color:var(--muted)}.main{display:grid;grid-template-columns:1.2fr .8fr;gap:16px}.left,.right{display:flex;flex-direction:column;gap:16px}.panel h2{margin:0 0 6px;font-size:18px}.desc{margin:0 0 14px;color:var(--muted);font-size:13px;line-height:1.6}.source-list,.rank-list{display:grid;gap:12px}.item,.rank{background:var(--panel2);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:14px}.item-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;margin-bottom:8px}.src{font-size:12px;color:var(--accent2);font-weight:800}.score{min-width:54px;text-align:center;padding:8px 10px;border-radius:12px;background:rgba(124,92,255,.16);font-weight:800}.title{font-weight:800;font-size:16px;margin-bottom:8px}.meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px}.tag{font-size:12px;background:#24305f;padding:6px 10px;border-radius:999px}.note,.opportunity,.rank-desc{color:var(--muted);font-size:13px;line-height:1.6}.opportunity{border-top:1px dashed rgba(255,255,255,.08);padding-top:10px}.rank{display:grid;grid-template-columns:32px 1fr;gap:10px}.rank-no{width:32px;height:32px;display:grid;place-items:center;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent2));font-weight:800}.rank-title{font-size:14px;font-weight:800;margin-bottom:4px}.footer-note{margin-top:18px;color:var(--muted);font-size:12px;line-height:1.7}@media(max-width:960px){.grid-top{grid-template-columns:repeat(2,1fr)}.main{grid-template-columns:1fr}}@media(max-width:560px){.wrap{width:calc(100% - 16px);padding-top:12px}.hero{border-radius:18px;padding:14px}.grid-top{grid-template-columns:1fr}.panel,.stat{padding:14px;border-radius:16px}.title{font-size:15px}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="hero"><h1>Market-In Radar Dashboard</h1><p>Google Trends、TikTok、広告、Amazon / App Storeレビュー、クラウドファンディングの情報を横断し、需要の種を見つけるためのダッシュボード。</p></div>
+  <div class="toolbar"><div class="chips" id="chips"></div></div>
+  <div class="grid-top" id="stats"></div>
+  <div class="main">
+    <div class="left"><section class="panel"><h2>シグナル一覧</h2><p class="desc">市場の兆候 → 困りごと → AIの商機を一枚で比較。</p><div class="source-list" id="signalList"></div></section></div>
+    <div class="right"><section class="panel"><h2>今日の注目テーマ</h2><div class="rank-list" id="hotList"></div></section><section class="panel"><h2>次に検証するAI案</h2><div class="rank-list" id="ideaList"></div></section></div>
+  </div>
+  <div class="footer-note">v0.1.0 / UI prototype. 現在はサンプルデータ。次段階で実データ取得・AI分析を接続予定。</div>
+</div>
+<script>
+const data=[
+{source:'Google Trends',title:'AI接客・AI電話対応',tags:['検索上昇','店舗'],problem:'問い合わせ対応に時間を取られる。',opportunity:'小規模店舗向けAI受付。',score:88},
+{source:'TikTok',title:'時短オペ・ひとり経営術',tags:['時短','業務改善'],problem:'日々のルーチンが属人化。',opportunity:'毎朝やることを自動生成するAI秘書。',score:85},
+{source:'広告',title:'採用効率化・自動化SaaS',tags:['人手不足','自動化'],problem:'人を増やせない。',opportunity:'教育・引継ぎ・現場指示のAI化。',score:90},
+{source:'Amazonレビュー',title:'機器連携・転送の不満',tags:['レビュー不満','UX'],problem:'アプリ連携や設定が複雑。',opportunity:'設定不要・単機能に特化した商品。',score:74},
+{source:'App Storeレビュー',title:'予約・シフトアプリが複雑',tags:['操作性','現場UI'],problem:'高機能すぎて現場で迷う。',opportunity:'業種特化の超単機能AI。',score:92},
+{source:'クラウドファンディング',title:'省人化・自動化プロダクト',tags:['支援','省人化'],problem:'日常の面倒を減らしたい。',opportunity:'1タップ業務自動化。',score:80}
+];
+const chips=['すべて',...data.map(d=>d.source)];let current='すべて';
+function render(){document.getElementById('chips').innerHTML=[...new Set(chips)].map(x=>`<span class="chip ${x===current?'active':''}" onclick="current='${x}';render()">${x}</span>`).join('');const f=current==='すべて'?data:data.filter(d=>d.source===current);const avg=f.length?Math.round(f.reduce((a,b)=>a+b.score,0)/f.length):0;document.getElementById('stats').innerHTML=[['表示中シグナル',f.length,'現在の絞り込み'],['平均商売度',avg,'100点満点'],['高注目案件',f.filter(d=>d.score>=85).length,'85点以上'],['対象ソース数',new Set(f.map(d=>d.source)).size,'横断比較']].map(s=>`<div class="stat"><div class="label">${s[0]}</div><div class="value">${s[1]}</div><div class="sub">${s[2]}</div></div>`).join('');document.getElementById('signalList').innerHTML=f.map(d=>`<article class="item"><div class="item-top"><div><div class="src">${d.source}</div><div class="title">${d.title}</div></div><div class="score">${d.score}</div></div><div class="meta">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div><div class="note"><b>困りごと：</b>${d.problem}</div><div class="opportunity"><b>AIの商機：</b>${d.opportunity}</div></article>`).join('')}
+render();
+document.getElementById('hotList').innerHTML=[['少人数運営の効率化','複数ソースに共通する強いテーマ。'],['高機能より迷わないUI','現場では単機能・即理解が強い。'],['予約・連絡の一元化','小規模事業者向けAI秘書の入口候補。']].map((x,i)=>`<div class="rank"><div class="rank-no">${i+1}</div><div><div class="rank-title">${x[0]}</div><div class="rank-desc">${x[1]}</div></div></div>`).join('');
+document.getElementById('ideaList').innerHTML=[['小規模店舗向けAI受付','予約・問い合わせ・FAQを集約。'],['現場用単機能AI','今日やることだけを大きく表示。'],['AI引継ぎツール','音声・写真から手順を自動化。']].map((x,i)=>`<div class="rank"><div class="rank-no">${i+1}</div><div><div class="rank-title">${x[0]}</div><div class="rank-desc">${x[1]}</div></div></div>`).join('');
+</script>
+</body>
+</html>
