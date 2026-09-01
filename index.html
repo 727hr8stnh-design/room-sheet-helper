@@ -28,8 +28,9 @@
 <div class="card"><h2>この部屋のドリンク</h2><div class="drinkGrid"><div class="drinkName">2L ペットボトル</div><div class="drinkCount">1本</div><div class="drinkName">500ml 水</div><div class="drinkCount"><span id="vWater">0</span>本</div><div class="drinkName">500ml 炭酸水</div><div class="drinkCount"><span id="vSparkling">0</span>本</div><div class="drinkName">りんごジュース</div><div class="drinkCount"><span id="vApple">0</span>本</div></div><div style="height:16px"></div><div id="drinkStateBox" class="sheetTodoBox">ドリンク未配布</div><button id="drinkDoneBtn" class="ok" style="width:100%">ドリンク配布済みにする</button><div style="height:10px"></div><button id="drinkResetBtn" class="secondary" style="width:100%">ドリンク配布を取り消す</button></div>
 <div class="card"><div class="muted">バッシングBOX</div><div id="vBox" class="mid">不要</div><div id="vMeal" class="muted" style="margin-top:8px"></div><div id="boxActionArea" class="hidden" style="margin-top:16px"><div id="boxStateBox" class="sheetTodoBox">BOX未配布</div><button id="boxDoneBtn" class="ok" style="width:100%">バッシングBOX配布済みにする</button><div style="height:10px"></div><button id="boxResetBtn" class="secondary" style="width:100%">バッシングBOX配布を取り消す</button></div></div>
 <div class="card"><h2>ボンベガスの補充確認</h2><div id="gasStateBox" class="sheetTodoBox">未確認</div><button id="gasDoneBtn" class="ok" style="width:100%">ボンベガス補充確認済みにする</button><div style="height:10px"></div><button id="gasResetBtn" class="secondary" style="width:100%">ボンベガス補充確認を取り消す</button></div>
-<div class="card"><h2>特記事項</h2><div id="vNote" class="note">特記事項なし</div></div></section>
-<div class="appVersion">v1.11.1</div>
+<div class="card"><h2>特記事項</h2><div id="vNote" class="note">特記事項なし</div></div>
+<div class="card"><button class="attention" style="width:100%" onclick="showHome()">← 部屋一覧へ戻る</button></div></section>
+<div class="appVersion">v1.11.2</div>
 </main>
 <script>
 const DATA_KEY="room_helper_daily_data",SHEET_PREFIX="room_helper_sheet_",DRINK_PREFIX="room_helper_drink_",BOX_PREFIX="room_helper_box_",GAS_PREFIX="room_helper_gas_";let currentRoom=null;const $=id=>document.getElementById(id);
