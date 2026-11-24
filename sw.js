@@ -1,4 +1,4 @@
-const CACHE='room-helper-v14';
+const CACHE='room-helper-v15';
 
 self.addEventListener('install',event=>{
   self.skipWaiting();
